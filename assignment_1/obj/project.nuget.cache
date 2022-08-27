@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "igu+7lD135HlWt+63jHOM+vjuZNnG8HYbAKIuj05YirHHLMb7WAeBbcjmWVir9wahAc1UgtMzxGRQVuIkwQSLA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Matin\\ikt201g21h\\assignments\\solutions\\assignment_1\\assignment_1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Matin\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512"
+  ],
+  "logs": []
+}
