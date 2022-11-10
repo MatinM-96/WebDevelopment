@@ -11,9 +11,7 @@ public class ApplicationDbInitializer
         db.Database.EnsureDeleted();
         db.Database.EnsureCreated();
 
-
-
-
+        
         var user = new[]
         {
             new ApplicationUser
@@ -31,11 +29,6 @@ public class ApplicationDbInitializer
         um.CreateAsync(user[0], "Tea123321!").Wait(); 
         
         
-        
-        
-       
-
-
 
         var address = new []
               {
@@ -44,11 +37,6 @@ public class ApplicationDbInitializer
        db.Addresses.AddRange(address);
 
        
-
-
-       
-
-
 
        var car = new[]
        {
@@ -64,8 +52,6 @@ public class ApplicationDbInitializer
        };
        
        
-       
-       
        db.Parkerings.AddRange(parkering); 
       
        address[0].Parkering = new List<Parkering> {parkering[0]};
@@ -76,8 +62,6 @@ public class ApplicationDbInitializer
        parkering[0].User = user[0];
        parkering[0].car = car[0];
        
-       
-
        
 
        for (int i = 0; i < parkering.Length; i++)
@@ -91,35 +75,9 @@ public class ApplicationDbInitializer
                parkering[i].Availability = false;
            }
        }
-
-
-
-
-
-
+       
 
        db.SaveChanges();
-        
        
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
