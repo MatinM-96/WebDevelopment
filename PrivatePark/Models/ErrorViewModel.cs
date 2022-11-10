@@ -1,4 +1,4 @@
-namespace PrivatePark.Models;
+namespace mnacr22.Models;
 
 public class ErrorViewModel
 {
