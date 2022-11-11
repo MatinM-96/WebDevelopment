@@ -15,7 +15,6 @@ public class Address
         ZiptCode = ziptCode;
         
     }
-
     
 
     public int Id {get; set;}
@@ -37,11 +36,6 @@ public class Address
     public ICollection<ApplicationUser?> User { get; set; }
     
     public List<Parkering> Parkering { get; set; }
-    
-    
-    
-    
-
     
     
 

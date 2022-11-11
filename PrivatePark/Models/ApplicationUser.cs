@@ -8,16 +8,16 @@ public class ApplicationUser : IdentityUser
 {
     [Required]
     [DisplayName("First Name")]
-    public string Firstname {get; set;}
+    public string Firstname { get; set; }
     
     [Required]
     [DisplayName("Last Name")]
 
-    public string Lastname {get; set;}
+    public string Lastname { get; set; }
     
     [Required]
     [DisplayName("Social security number")]
-    public long PersonNummer {get; set;}
+    public long PersonNummer { get; set; }
     
     [Required]
     [MinimumAge(18)]
