@@ -6,9 +6,11 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using mnacr22.Data;
 using mnacr22.Models;
 
 namespace mnacr22.Areas.Identity.Pages.Account.Manage
@@ -17,13 +19,16 @@ namespace mnacr22.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager,
             SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -59,18 +64,24 @@ namespace mnacr22.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            
+            [Display(Name = "Role")]
+            public string Role { get; set; }
         }
-
+        
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var role = await _userManager.GetRolesAsync(user);
+            var roleName = role[0];
 
             Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Role = roleName
             };
         }
 
@@ -109,6 +120,14 @@ namespace mnacr22.Areas.Identity.Pages.Account.Manage
                     StatusMessage = "Unexpected error when trying to set phone number.";
                     return RedirectToPage();
                 }
+                
+                var oldRole = await _userManager.GetRolesAsync(user);
+                var roleName = oldRole[0];
+                await _userManager.RemoveFromRoleAsync(user, roleName);
+                
+                var role = _roleManager.FindByNameAsync(Input.Role).Result;
+                await _userManager.AddToRoleAsync(user, role.Name);
+                
             }
 
             await _signInManager.RefreshSignInAsync(user);

@@ -6,27 +6,51 @@ namespace mnacr22.Data;
 
 public class ApplicationDbInitializer
 {
-    public static void Initializer(ApplicationDbContext db, UserManager<ApplicationUser> um)
+    public static void Initializer(ApplicationDbContext db, UserManager<ApplicationUser> um, RoleManager<IdentityRole> rm)
     {
         db.Database.EnsureDeleted();
         db.Database.EnsureCreated();
 
+        var adminRole = new IdentityRole("Admin");
+        var renterRole = new IdentityRole("Renter");
+        var renteeRole = new IdentityRole("Rentee");
+        var bothRoles = new IdentityRole("Both");
+        rm.CreateAsync(adminRole).Wait();
+        rm.CreateAsync(renterRole).Wait();
+        rm.CreateAsync(renteeRole).Wait();
+        rm.CreateAsync(bothRoles).Wait();
+        
         
         var user = new[]
         {
             new ApplicationUser
             {
-                Firstname = "Matin",
-                Lastname = "Mohammadi",
-                UserName = "matinm@uia.no",
-                Email = "matinm@uia.no",
+                Firstname = "Test",
+                Lastname = "User",
+                UserName = "user@uia.no",
+                Email = "user@uia.no",
                 EmailConfirmed = true,
                 PersonNummer = 13259696951,
                 DateOfBirth = new DateTime(1996, 08, 12)
             }
         };
+        um.CreateAsync(user[0], "Password1.").Wait();
+        um.AddToRoleAsync(user[0], "Both");
 
-        um.CreateAsync(user[0], "Tea123321!").Wait(); 
+
+        // Admin
+        var admin = new ApplicationUser()
+        {
+            Firstname = "Admin",
+            Lastname = "Admin",
+            UserName = "admin@uia.no",
+            Email = "admin@uia.no",
+            EmailConfirmed = true,
+            PersonNummer = 123456,
+            DateOfBirth = new DateTime(1950, 01, 01)
+        };
+        um.CreateAsync(admin, "Password1.").Wait();
+        um.AddToRoleAsync(admin, "Admin");
         
         
 
