@@ -124,10 +124,13 @@ namespace mnacr22.Areas.Identity.Pages.Account.Manage
             
             var oldRole = await _userManager.GetRolesAsync(user);
             var roleName = oldRole[0];
-            
-            var role = _roleManager.FindByNameAsync(Input.Role).Result;
-            await _userManager.RemoveFromRoleAsync(user, roleName);
-            await _userManager.AddToRoleAsync(user, role.Name);
+
+            if (Input.Role != roleName)
+            {
+                var role = _roleManager.FindByNameAsync(Input.Role).Result;
+                await _userManager.RemoveFromRoleAsync(user, roleName);
+                await _userManager.AddToRoleAsync(user, role.Name);
+            }
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

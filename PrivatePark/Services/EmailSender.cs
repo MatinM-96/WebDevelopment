@@ -34,7 +34,7 @@ public class EmailSender : IEmailSender
         var msg = new SendGridMessage()
         {
             // Bytte emaildomain? no-reply@privatepark.ga 
-            From = new EmailAddress("runarsekse@hotmail.com", "Email Verification"),
+            From = new EmailAddress("runarsekse@hotmail.com", "PrivatePark"),
             Subject = subject,
             PlainTextContent = message,
             HtmlContent = message
