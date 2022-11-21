@@ -8,7 +8,7 @@ public class Address
     
     public Address (){}
 
-    public Address(string street, string city, int ziptCode )
+    public Address(string street, string city, string ziptCode )
     {
         Street = street;
         City = city;
@@ -23,13 +23,16 @@ public class Address
     [DisplayName("Street")]
     public string Street {get; set;}
     
+    
+    [Required]
+    [DisplayName("Zip code")]
+    public string ZiptCode {get; set;}
+    
     [Required]
     [DisplayName("City")]
     public string City {get; set;}
     
-    [Required]
-    [DisplayName("Zip code")]
-    public int ZiptCode {get; set;}
+    
     
    
     //public string ApplicationUserId { get; set;  }

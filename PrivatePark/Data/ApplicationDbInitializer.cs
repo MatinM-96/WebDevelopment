@@ -1,14 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
 using Microsoft.AspNetCore.Identity;
 using mnacr22.Models;
+using mnacr22.Services;
+using Newtonsoft.Json;
 
 namespace mnacr22.Data;
 
 public class ApplicationDbInitializer
 {
-    public static void Initializer(ApplicationDbContext db, UserManager<ApplicationUser> um, RoleManager<IdentityRole> rm)
+    
+    public static async Task Initializer(ApplicationDbContext db, UserManager<ApplicationUser> um,
+        RoleManager<IdentityRole> rm)
     {
-        db.Database.EnsureDeleted();
+        
         db.Database.EnsureCreated();
 
         var adminRole = new IdentityRole("Admin");
@@ -19,8 +23,8 @@ public class ApplicationDbInitializer
         rm.CreateAsync(renterRole).Wait();
         rm.CreateAsync(renteeRole).Wait();
         rm.CreateAsync(bothRoles).Wait();
-        
-        
+
+
         var user = new[]
         {
             new ApplicationUser
@@ -35,7 +39,7 @@ public class ApplicationDbInitializer
             }
         };
         um.CreateAsync(user[0], "Password1.").Wait();
-        um.AddToRoleAsync(user[0], "Both");
+        await um.AddToRoleAsync(user[0], "Both");
 
 
         // Admin
@@ -50,44 +54,86 @@ public class ApplicationDbInitializer
             DateOfBirth = new DateTime(1950, 01, 01)
         };
         um.CreateAsync(admin, "Password1.").Wait();
-        um.AddToRoleAsync(admin, "Admin");
+        await um.AddToRoleAsync(admin, "Admin");
+
         
         
+        //city  
+        string city = "Mo i Rana";
+        const string zicode = "8622";
+        string street = "Vikabakken 13 ";
 
-        var address = new []
-              {
-                  new Address ("Jon lilletuns vei 2A", "Grimstd", 123),
-              };
-       db.Addresses.AddRange(address);
+        var address = new[]
+        {
+            new Address(street, city, zicode)
+        };
+        await  db.Addresses.AddRangeAsync(address);
+         
+        address[0].User = user;
 
-       
+        
+      
+        
+        
+        
+        
+        
+        //locatino 
+        Rootobject oRootObject;
+        
+        Task<string> jason_taks_string=  FindLocation.GetTheLatitudeAndLongitude(city, street, zicode);
+        string jason = jason_taks_string.Result;
+        
+        oRootObject = JsonConvert.DeserializeObject<Rootobject>(jason);
 
-       var car = new[]
+        if (oRootObject != null)
+        {
+            Location loc = oRootObject.results[0].Geometry.location;
+            db.Locations.AddRange(loc);
+            loc.Address = address[0];
+            
+        }
+
+         
+     
+        
+        
+        //Car 
+        var car = new[]
        {
            new Car("aj57220", "PersonBil"),
        };
-       db.Cars.AddRange(car);
+       await db.Cars.AddRangeAsync(car);
+        
 
-
+        //Parking  
        var parkering = new[]
        {
-           new Parkering(2, "personbil", true, 20, new DateTime(2000,12,2)),
+           new Parkering(2,
+               "personbil",
+               true,
+               20,
+               new DateTime(2000,12,2)),
          
        };
        
        
-       db.Parkerings.AddRange(parkering); 
+       await db.Parkerings.AddRangeAsync(parkering); 
       
+       
+       
+       
+       // assigning relationships between the entities  
        address[0].Parkering = new List<Parkering> {parkering[0]};
        
        user[0].Addresses = address;
-       address[0].User = user; 
+       
        parkering[0].Address = address[0];
        parkering[0].User = user[0];
        parkering[0].car = car[0];
        
        
-
+        //Check if the parking is available 
        for (int i = 0; i < parkering.Length; i++)
        {
            if (parkering[i].car == null)
@@ -101,7 +147,9 @@ public class ApplicationDbInitializer
        }
        
 
-       db.SaveChanges();
+       await db.SaveChangesAsync();
        
     }
 }
+
+

@@ -12,9 +12,13 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         
     }
 
-    public DbSet<Car> Cars => Set<Car>();
     public DbSet<Address> Addresses => Set<Address>();
+    public DbSet<Car> Cars => Set<Car>();
+    
+    
+    public DbSet<Location> Locations => Set<Location>();
     public DbSet<Parkering> Parkerings => Set<Parkering>();
+    
     
     
     
