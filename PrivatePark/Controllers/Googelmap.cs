@@ -14,7 +14,7 @@ public class Googelmap : Controller
     
     
     // GET
-    public IActionResult map()
+    public IActionResult Map()
     {
         return View();
     }

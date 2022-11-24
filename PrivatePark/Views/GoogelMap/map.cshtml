@@ -1,12 +1,14 @@
 ﻿@using mnacr22.Services
 
-
+@{
+    ViewData["Title"] = "Map";
+}
 
 <div id="map"></div>
 
 
 <script async
-        src="https://maps.googleapis.com/maps/api/js?key=@ApiKey.Key"
+        src="https://maps.googleapis.com/maps/api/js?key=@ApiKey.Key&callback=initMap"
 ></script>
 
 

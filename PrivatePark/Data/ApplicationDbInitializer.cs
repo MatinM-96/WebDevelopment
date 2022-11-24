@@ -12,7 +12,7 @@ public class ApplicationDbInitializer
     public static async Task Initializer(ApplicationDbContext db, UserManager<ApplicationUser> um,
         RoleManager<IdentityRole> rm)
     {
-        
+        db.Database.EnsureDeleted();
         db.Database.EnsureCreated();
 
         var adminRole = new IdentityRole("Admin");
@@ -67,7 +67,7 @@ public class ApplicationDbInitializer
         {
             new Address(street, city, zicode)
         };
-        await  db.Addresses.AddRangeAsync(address);
+        await db.Addresses.AddRangeAsync(address);
          
         address[0].User = user;
 
@@ -78,10 +78,10 @@ public class ApplicationDbInitializer
         
         
         
-        //locatino 
+        //location 
         Rootobject oRootObject;
         
-        Task<string> jason_taks_string=  FindLocation.GetTheLatitudeAndLongitude(city, street, zicode);
+        Task<string> jason_taks_string = FindLocation.GetTheLatitudeAndLongitude(city, street, zicode);
         string jason = jason_taks_string.Result;
         
         oRootObject = JsonConvert.DeserializeObject<Rootobject>(jason);
@@ -101,7 +101,7 @@ public class ApplicationDbInitializer
         //Car 
         var car = new[]
        {
-           new Car("aj57220", "PersonBil"),
+           new Car("aj57220", "PersonBil", user[0])
        };
        await db.Cars.AddRangeAsync(car);
         

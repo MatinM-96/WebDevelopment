@@ -16,9 +16,9 @@ public class Location
     }
     
     
-    public int Id { get; set;  }
-    public double Lat { get; set;}
-    public double Lng { get; set;}
+    public int Id { get; set; }
+    public double Lat { get; set; }
+    public double Lng { get; set; }
     
     public Address Address { get; set; }
 }
@@ -30,13 +30,13 @@ public class Geometry
 
 public class Results
 {
-    public Geometry  Geometry { get; set;}
+    public Geometry Geometry { get; set;}
 }
 
 
 public class Rootobject
 {
-    public Results[] results {get; set;}
+    public Results[] results {get; set; }
 }
 
 

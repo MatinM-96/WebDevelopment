@@ -7,10 +7,16 @@ namespace mnacr22.Controllers;
 public class AddressC : Controller
 {
     // GET
-    private readonly ApplicationDbContext _db; 
+    private readonly ApplicationDbContext _db;
 
-    public IActionResult addressV()
+    public AddressC(ApplicationDbContext db)
     {
+        _db = db;
+    }
+
+    public IActionResult AddressV()
+    {
+        
         return View();
         
     }
