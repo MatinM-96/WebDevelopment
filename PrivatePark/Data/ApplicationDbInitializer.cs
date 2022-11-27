@@ -74,7 +74,7 @@ public class ApplicationDbInitializer
             new Address(street, city, zicode),
             new Address(street2,city2,zicode2),
         };
-        await  db.Addresses.AddRangeAsync(address);
+        await db.Addresses.AddRangeAsync(address);
          
         address[0].User = new[] {user[0], admin};
         address[1].User = new[] {user[0]};
@@ -90,10 +90,10 @@ public class ApplicationDbInitializer
         
         
         
-        //locatino 
+        //location 
         Rootobject oRootObject;
         
-        Task<string> jason_taks_string=  FindLocation.GetTheLatitudeAndLongitude(city, street, zicode);
+        Task<string> jason_taks_string = FindLocation.GetTheLatitudeAndLongitude(city, street, zicode);
         string jason = jason_taks_string.Result;
         
         oRootObject = JsonConvert.DeserializeObject<Rootobject>(jason);
@@ -137,7 +137,7 @@ public class ApplicationDbInitializer
         //Car 
         var car = new[]
        {
-           new Car("aj57220", "PersonBil"),
+           new Car("aj57220", "PersonBil", user[0])
        };
        await db.Cars.AddRangeAsync(car);
         

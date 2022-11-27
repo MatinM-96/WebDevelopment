@@ -3,7 +3,10 @@
 #nullable disable
 
 using System;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace  mnacr22.Areas.Identity.Pages.Account.Manage
 {
@@ -60,6 +63,14 @@ namespace  mnacr22.Areas.Identity.Pages.Account.Manage
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
+
+        public static string AddCar => "AddCar";
+
+        public static string AddCarNavClass(ViewContext viewContext) => PageNavClass(viewContext, AddCar);
+        
+        public static string YourCars => "YourCars";
+
+        public static string YourCarsNavClass(ViewContext viewContext) => PageNavClass(viewContext, YourCars);
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
