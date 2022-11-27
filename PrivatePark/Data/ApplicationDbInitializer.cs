@@ -12,7 +12,7 @@ public class ApplicationDbInitializer
     public static async Task Initializer(ApplicationDbContext db, UserManager<ApplicationUser> um,
         RoleManager<IdentityRole> rm)
     {
-        
+        db.Database.EnsureDeleted();
         db.Database.EnsureCreated();
 
         var adminRole = new IdentityRole("Admin");
@@ -59,17 +59,29 @@ public class ApplicationDbInitializer
         
         
         //city  
-        string city = "Mo i Rana";
-        const string zicode = "8622";
-        string street = "Vikabakken 13 ";
+        string city = "Grimstad";
+        const string zicode = "4879 ";
+        string street = "jon lilletuns vei 2A";
+        
+        
+        
+        string city2 = "Grimstad";
+        const string zicode2 = "4879";
+        string street2 = "Jon Lilletuns vei 9";
 
         var address = new[]
         {
-            new Address(street, city, zicode)
+            new Address(street, city, zicode),
+            new Address(street2,city2,zicode2),
         };
         await  db.Addresses.AddRangeAsync(address);
          
-        address[0].User = user;
+        address[0].User = new[] {user[0], admin};
+        address[1].User = new[] {user[0]};
+
+        //address[0].User.Add(user[0]); 
+        //address[1].User.Add(admin);
+
 
         
       
@@ -86,18 +98,42 @@ public class ApplicationDbInitializer
         
         oRootObject = JsonConvert.DeserializeObject<Rootobject>(jason);
 
+        Location loc = new Location(); 
+        
         if (oRootObject != null)
         {
-            Location loc = oRootObject.results[0].Geometry.location;
+            loc = oRootObject.results[0].Geometry.location;
             db.Locations.AddRange(loc);
-            loc.Address = address[0];
+            //loc.Address = address[0];
+            
+        }
+        
+        
+        
+        
+        Rootobject oRootObject2;
+        
+        Task<string> jason_taks_string2=  FindLocation.GetTheLatitudeAndLongitude(city2, street2, zicode2);
+        string jason2 = jason_taks_string2.Result;
+        
+        oRootObject2 = JsonConvert.DeserializeObject<Rootobject>(jason2);
+
+        Location loc2 = new Location(); 
+        
+        if (oRootObject2 != null)
+        {
+            loc2 = oRootObject2.results[0].Geometry.location;
+            db.Locations.AddRange(loc2);
+            //loc.Address = address[0];
             
         }
 
-         
-     
-        
-        
+        address[0].Location = loc;
+        address[1].Location = loc2; 
+
+
+
+
         //Car 
         var car = new[]
        {
@@ -114,6 +150,12 @@ public class ApplicationDbInitializer
                true,
                20,
                new DateTime(2000,12,2)),
+           
+           new Parkering(1,
+               "Varebil",
+               false ,
+               20,
+               new DateTime(2000,12,2)),
          
        };
        
@@ -124,13 +166,25 @@ public class ApplicationDbInitializer
        
        
        // assigning relationships between the entities  
-       address[0].Parkering = new List<Parkering> {parkering[0]};
+       //address[0].Parkering = new List<Parkering> {parkering[0]};
        
+       loc.Parkering = new List<Parkering> {parkering[0]};
+       loc2.Parkering = new List<Parkering> {parkering[1]};
        user[0].Addresses = address;
        
-       parkering[0].Address = address[0];
+       parkering[0].Location = loc;
        parkering[0].User = user[0];
        parkering[0].car = car[0];
+
+       parkering[1].Location = loc2;
+       parkering[1].User = user[0];
+       
+       
+       
+       
+       
+       
+       
        
        
         //Check if the parking is available 

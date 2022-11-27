@@ -27,7 +27,7 @@ public class ApplicationUser : IdentityUser
     
     public ICollection<Address> Addresses { get; set; }
     public ICollection<Car> Cars { get; set; } 
-    public List<Parkering> Parkerings { get; set; }
+    //public List<Parkering> Parkerings { get; set; }
 }
 
 

@@ -37,8 +37,8 @@ public class Address
    
     //public string ApplicationUserId { get; set;  }
     public ICollection<ApplicationUser?> User { get; set; }
+    public Location Location { get; set;} 
     
-    public List<Parkering> Parkering { get; set; }
     
     
 

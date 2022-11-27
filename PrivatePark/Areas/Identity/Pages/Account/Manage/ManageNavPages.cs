@@ -77,6 +77,19 @@ namespace  mnacr22.Areas.Identity.Pages.Account.Manage
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+        
+        public static string AddAddress => "AddAddress";
+
+        public static string AddAddressNavClass(ViewContext viewContext) => PageNavClass(viewContext, AddAddress);
+        
+        
+        
+        public static string Youraddresses => "Youraddresses";
+
+        public static string YouraddressesNavClass(ViewContext viewContext) => PageNavClass(viewContext, Youraddresses);
+        
+        
+        
         public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
 
         /// <summary>
