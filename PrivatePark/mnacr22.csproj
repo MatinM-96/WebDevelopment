@@ -33,6 +33,7 @@
       <_ContentIncludedByDefault Remove="Views\AddressC\AddressEdit.cshtml" />
       <_ContentIncludedByDefault Remove="Views\AddressC\test1.cshtml" />
       <_ContentIncludedByDefault Remove="Views\AddressC\addressV.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\GoogelMap\map.cshtml" />
     </ItemGroup>
 
 </Project>

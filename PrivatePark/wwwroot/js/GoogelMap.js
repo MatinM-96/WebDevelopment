@@ -20,9 +20,6 @@ $(document).ready(function() {
 
 
 
-
-
-
 function initMap()
 {
     const myLatLng = { lat: 58.3421, lng: 8.5945 };
@@ -33,7 +30,6 @@ function initMap()
             zoom: 15,
         });
 }
-
 
 
 
@@ -67,8 +63,6 @@ function googelmarker()
         }
     })
 };
-
-
 
 
 
