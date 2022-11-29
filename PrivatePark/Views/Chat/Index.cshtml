@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Messages";
+    Layout = "_Layout";
+}
+
+<script>
+(function(t,a,l,k,j,s){
+s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.head.appendChild(s)
+;k=t.Promise;t.Talk={v:3,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l
+.push([f])},catch:function(){return k&&new k()},c:l}};})(window,document,[]);
+</script>
+
+
+<!-- container element in which TalkJS will display a chat UI -->
+<div id="talkjs-container" style="width: 90%; margin: 30px; height: 500px">
+    <i>Loading chat...</i>
+</div>
+
+<script type="text/javascript">
+Talk.ready.then(function () {
+    
+    $.get('@Url.Action("GetUser")', function(user) {
+        
+        var photo = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png'
+        
+        var me = new Talk.User({
+            id: JSON.stringify(user.id),
+            name: JSON.stringify(user.firstname) + ' ' + JSON.stringify(user.lastname),
+            email: JSON.stringify(user.email),
+            photoUrl: photo,
+            role: 'default',
+        });
+        window.talkSession = new Talk.Session({
+            appId: 't0WLJIUr',
+            me: me,
+        });
+        var other = new Talk.User({
+            id: '67890',
+            name: 'Admin',
+            email: 'admin@uia.no',
+            photoUrl: photo,
+            role: 'default',
+        });
+
+        var conversation = talkSession.getOrCreateConversation(
+            Talk.oneOnOneId(me, other)
+        );
+        
+        conversation.setParticipant(me);
+        conversation.setParticipant(other);
+        
+        var inbox = talkSession.createInbox({ selected: conversation });
+        inbox.mount(document.getElementById('talkjs-container'));
+        
+        inbox.show();
+    })
+    
+});
+</script>

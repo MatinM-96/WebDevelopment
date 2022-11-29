@@ -14,19 +14,15 @@ public class ApplicationUser : IdentityUser
     [DisplayName("Last Name")]
 
     public string Lastname { get; set; }
-    
-    [Required]
-    [DisplayName("Social security number")]
-    public long PersonNummer { get; set; }
-    
+
     [Required]
     [MinimumAge(18)]
     [DisplayName("Date of Birth")]
     [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
     public DateTime DateOfBirth { get; set; }
     
-    public ICollection<Address> Addresses { get; set; }
-    public ICollection<Car> Cars { get; set; } 
+    public ICollection<Address>? Addresses { get; set; }
+    public ICollection<Car>? Cars { get; set; } 
     //public List<Parkering> Parkerings { get; set; }
 }
 

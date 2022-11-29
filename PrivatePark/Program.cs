@@ -35,7 +35,7 @@ using (var services = app.Services.CreateScope())
     var db = services.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var um = services.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     var rm = services.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    ApplicationDbInitializer.Initializer(db, um, rm);
+    await ApplicationDbInitializer.Initializer(db, um, rm);
 }
 
 

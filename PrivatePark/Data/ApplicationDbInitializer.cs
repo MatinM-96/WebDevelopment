@@ -34,7 +34,6 @@ public class ApplicationDbInitializer
                 UserName = "user@uia.no",
                 Email = "user@uia.no",
                 EmailConfirmed = true,
-                PersonNummer = 13259696951,
                 DateOfBirth = new DateTime(1996, 08, 12)
             }
         };
@@ -50,7 +49,6 @@ public class ApplicationDbInitializer
             UserName = "admin@uia.no",
             Email = "admin@uia.no",
             EmailConfirmed = true,
-            PersonNummer = 123456,
             DateOfBirth = new DateTime(1950, 01, 01)
         };
         um.CreateAsync(admin, "Password1.").Wait();
