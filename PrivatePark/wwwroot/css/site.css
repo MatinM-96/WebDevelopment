@@ -28,6 +28,121 @@ body {
   margin-bottom: 20em;
 }
 
+.search-bar {
+  width: 70%;
+  background: rgba(255, 255, 255, 0.2);
+  align-items: center;
+  border-radius: 20px;
+  border: 0;
+  padding: 10px 20px;
+}
+
+.buttons {
+  width: 20%;
+  background: rgba(255, 255, 255, 0.6);
+  align-items: center;
+  border-radius: 20px;
+  border: 0;
+  padding: 10px 20px;
+}
+
+.dropdown-menu {
+  background: #e8eeea;
+  align-items: center;
+  border-radius: 20px;
+  border: 0;
+}
+
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+/* Customize the label (the container) */
+.CheckboxContainer {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+/* Hide the browser's default checkbox */
+.HiddenCheckbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.CheckboxContainer:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a orange background */
+.CheckboxContainer input:checked ~ .checkmark {
+  background-color: orangered;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.CheckboxContainer input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.CheckboxContainer .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+
+/* filter 
+non selectable
+*/
+/*
+.dropdown {
+  opacity: 0;
+  visibility: hidden;
+}
+
+button:focus-within .dropdown {
+  opacity: 1;
+  visibility: visible;
+}
+*/
 
 #map {
   height: 450px;
