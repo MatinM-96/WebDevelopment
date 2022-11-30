@@ -39,6 +39,7 @@ function Search_Box()
     
     var markers = [];
     
+    
 
     searchBtn.onclick = function () {
         displaySearchResults(map,searchBox,markers);
