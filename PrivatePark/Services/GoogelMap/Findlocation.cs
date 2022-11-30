@@ -14,8 +14,6 @@ public class FindLocation
         
        
         string URL = string.Format("https://maps.googleapis.com/maps/api/geocode/json?address={0}+{1},+{2}&key={3}", street, city, zipcode, ApiKey.apikey());
-
-
         using (HttpClient client = new HttpClient())
         {
 
@@ -23,11 +21,6 @@ public class FindLocation
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
-               
-                
-                Rootobject oRootObject = new Rootobject();
-                //oRootObject = JsonConvert.DeserializeObject<Rootobject>(json);
-                
                 return json; 
                 
             }

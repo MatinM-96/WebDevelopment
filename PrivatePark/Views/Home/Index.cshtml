@@ -8,41 +8,43 @@
             <div class="m-lg-2">
                 <h1 class="display-4">PrivatePark</h1>
                 <h5>Vi hjelper deg med å finne din parkeringsplass</h5>
+                
+                <form method="post">
+                    <input class="search-bar mb-lg-1" id="sok" type="text" name="sok" placeholder="Addresse, Plass eller By">
+                    <input class="buttons" id ="sokbutton" type="submit" value="Søk">
+                    <input class="search-bar mb-lg-1" type="datetime-local" name="tid" placeholder="Velg Tid">
+                    <input class="buttons dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" value="Filter">
+                    <ul class="dropdown-menu prevent-select" id="myDropdown">
+                        <li class="dropdown-item">
+                            <input type="checkbox" id="filter1" name="filter1">
+                            <label for="filter1">checkmark1</label>
+                        </li>
+                        <li class="dropdown-item">
+                            <input type="checkbox" id="filter2" name="filter2">
+                            <label for="filter2">checkmark2</label>
+                        </li>
+                        <li class="dropdown-item">
+                            <input type="checkbox" id="filter3" name="filter3">
+                            <label for="filter3">checkmark3</label>
+                        </li>
+                        <li>
+                            <label class="CheckboxContainer">ASRock
+                                <input type="checkbox" class="HiddenCheckbox">
+                                <span class="checkmark"></span>
+                            </label>
+                        </li>
+                    </ul>
+                    <input type="submit" id ="currentposition" value="current position">
+                </form>
             </div>
-            <form method="post">
-                <input class="search-bar mb-lg-1" type="text" name="sok" placeholder="Addresse, Plass eller By">
-                <input class="buttons" type="submit" value="Søk">
-                <input class="search-bar mb-lg-1" type="datetime-local" name="tid" placeholder="Velg Tid">
-                <input class="buttons dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" value="Filter">
-                <ul class="dropdown-menu prevent-select" id="myDropdown">
-                    <li class="dropdown-item">
-                        <input type="checkbox" id="filter1" name="filter1">
-                        <label for="filter1">checkmark1</label>
-                    </li>
-                    <li class="dropdown-item">
-                        <input type="checkbox" id="filter2" name="filter2">
-                        <label for="filter2">checkmark2</label>
-                    </li>
-                    <li class="dropdown-item">
-                        <input type="checkbox" id="filter3" name="filter3">
-                        <label for="filter3">checkmark3</label>
-                    </li>
-                    <li>
-                        <label class="CheckboxContainer">ASRock
-                            <input type="checkbox" class="HiddenCheckbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
-                </ul>
-            </form>
         </div>
         <div class="col-sm-8">
             <div class="rounded" id="map"></div>
-
-            <script type="text/javascript"
-                    src="https://maps.googleapis.com/maps/api/js?key=@ApiKey.apikey()"></script>
-
-
+            
+            <script type="text/javascript" 
+                    src="https://maps.googleapis.com/maps/api/js?key=@ApiKey.apikey()&libraries=places"
+            ></script>
+            
         </div>
     </div>
 
@@ -59,7 +61,6 @@
     </div>
 </div>
 
-<<<<<<< HEAD
 <div class="container mt-5 mb-5">
     <div class="container-fluid p-4 text-center">
         <h2>How PrivatePark Works</h2>
