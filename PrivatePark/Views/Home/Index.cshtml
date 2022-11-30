@@ -9,17 +9,18 @@
                 <h1 class="display-4">PrivatePark</h1>
                 <h5>Vi hjelper deg med å finne din parkeringsplass</h5>
                 <form method="post">
-                    <input type="text" name="sok" placeholder="Addresse, Plass eller By">
+                    <input type="text" id="sok" name="sok" placeholder="Addresse, Plass eller By">
                     <input type="datetime-local" name="tid" placeholder="Velg Tid">
-                    <input type="submit" value="Søk">
+                    <input type="submit" id ="sokbutton" value="Søk">
                     <input type="submit" name="filter" value="Filter" placeholder="Søk etter parkeringsplass">
+                     <input type="submit" id ="currentposition" value="current position">
                 </form>
             </div>
             <div class="col-sm-8">
                 <div id="map"></div>
                 
                 <script type="text/javascript" 
-                        src="https://maps.googleapis.com/maps/api/js?key=@ApiKey.apikey()"
+                        src="https://maps.googleapis.com/maps/api/js?key=@ApiKey.apikey()&libraries=places"
                 ></script>
                 
                 
