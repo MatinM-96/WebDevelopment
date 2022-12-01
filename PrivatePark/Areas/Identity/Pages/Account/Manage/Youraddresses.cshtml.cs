@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using mnacr22.Data;
 using mnacr22.Models;
@@ -24,6 +25,9 @@ public class Youraddresses: PageModel
 
     
     public IEnumerable<Address> DisplayAddresses { get; set; }
+    
+    
+    
     [BindProperty] 
     public InputModel Input { get; set; }
 
@@ -48,7 +52,6 @@ public class Youraddresses: PageModel
     {
         var user = _um.GetUserAsync(User).Result;
         DisplayAddresses = _db.Addresses.Where(x => x.User.Contains(user));
-        
     }
    
     
@@ -60,6 +63,7 @@ public class Youraddresses: PageModel
         {
             return NotFound($"Unable to load user with ID '{_um.GetUserId(User)}'.");
         }
+       //var address = await _db.Addresses.
 
         int id = Input.Id;
         if (id == null)

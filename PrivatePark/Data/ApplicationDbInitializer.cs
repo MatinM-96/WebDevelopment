@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using mnacr22.Models;
 using mnacr22.Services;
 using Newtonsoft.Json;
@@ -73,9 +74,14 @@ public class ApplicationDbInitializer
             new Address(street2,city2,zicode2),
         };
         await db.Addresses.AddRangeAsync(address);
-         
+        
+        
         address[0].User = new[] {user[0], admin};
         address[1].User = new[] {user[0]};
+        
+       
+        
+        
 
         //address[0].User.Add(user[0]); 
         //address[1].User.Add(admin);

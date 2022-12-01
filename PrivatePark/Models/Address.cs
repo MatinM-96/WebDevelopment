@@ -16,7 +16,6 @@ public class Address
         
     }
     
-
     public int Id {get; set;}
     
     [Required]
@@ -33,10 +32,12 @@ public class Address
     public string City {get; set;}
     
     
-    
    
     //public string ApplicationUserId { get; set;  }
+
     public ICollection<ApplicationUser>? User { get; set; }
+    
+
     public Location Location { get; set;} 
     
     

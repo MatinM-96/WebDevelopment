@@ -10,8 +10,10 @@ var red = {
 
 $(document).ready(function() {
     initMap();
+    Search_Box();
     googelmarker();
-    
+    currentposition()
+
 
 });
 
@@ -20,21 +22,95 @@ $(document).ready(function() {
 
 
 
-function initMap()
-{
-    const myLatLng = { lat: 58.3421, lng: 8.5945 };
 
-    map = new google.maps.Map(document.getElementById("map"),
-        {
-            center: myLatLng,
-            zoom: 15,
-        });
+
+
+
+
+function Search_Box()
+{
+
+    var searchInput = document.getElementById('sok');
+    var searchBtn = document.getElementById('sokbutton');
+
+    
+    var searchBox = new google.maps.places.SearchBox(searchInput);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('sokbutton'));
+    
+    var markers = [];
+    
+    
+
+    searchBtn.onclick = function () {
+        displaySearchResults(map,searchBox,markers);
+    }
+    
+    
+}
+
+
+
+function displaySearchResults(map, searchBox, markers) {
+    
+    var places = searchBox.getPlaces();
+    
+    if (places.length === 0) {
+        return;
+    }
+
+    
+    markers.forEach(function (marker) {
+        marker.setMap(null);
+    });
+    
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    
+    
+    
+    places.forEach(function (place) {
+        if (!place.geometry) {
+            console.log("Returned place contains no geometry");
+            return;
+        }
+
+
+        markers.push(new google.maps.Marker({
+            map: map,
+            position: place.geometry.location
+        }));
+
+        if (place.geometry.viewport) {
+            
+            bounds.union(place.geometry.viewport);
+        } else {
+            bounds.extend(place.geometry.location);
+        }
+        
+    });
+    map.fitBounds(bounds);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+function currentposition()
+{
     infoWindow = new google.maps.InfoWindow();
 
-    const locationButton = document.createElement("button");
-
-    locationButton.textContent = "Pan to Current Location";
-    locationButton.classList.add("custom-map-control-button");
+    const locationButton = document.getElementById("currentposition")
+    
+    
+    
+    
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
     locationButton.addEventListener("click", () => {
         // Try HTML5 geolocation.
@@ -74,15 +150,11 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 
 
 
-
-
-
-
 function googelmarker()
 {
     $.get("/info/GetAllParkings", function (parking)
     {
-        var mark = [];
+        var parkingmark = [];
         var icon;
         for(var i=0;i<parking.length;i++)
 
@@ -96,16 +168,34 @@ function googelmarker()
                 icon = green;
             }
 
-            mark [i] =  new google.maps.Marker(
+            parkingmark [i] =  new google.maps.Marker(
                 {
                     position: {lat: parking[i].location.lat, lng:parking[i].location.lng},
                     map : map,
                     icon:icon
-                }
-            );
+                });
         }
     })
 };
+
+
+
+
+
+function initMap()
+{
+    const myLatLng = { lat: 58.3421, lng: 8.5945 };
+
+    map = new google.maps.Map(document.getElementById("map"),
+        {
+            center: myLatLng,
+            zoom: 12,
+        });
+
+}
+
+
+
 
 
 

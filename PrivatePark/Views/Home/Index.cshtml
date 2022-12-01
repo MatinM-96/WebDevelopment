@@ -1,76 +1,104 @@
 ﻿@using mnacr22.Services
 
+
 @{
     ViewBag.Title = "Home";
 }
 
+
 <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="50">
 
 
-    <div class="container m-50">
-        <div class="row">
-            <div class="col-sm-4 mb-3">
+<div class="container m-50">
+    <div class="row">
+        <div class="col-sm-4 mb-3">
+            <div class="m-lg-2">
                 <h1 class="display-4">PrivatePark</h1>
                 <h5>Vi hjelper deg med å finne din parkeringsplass</h5>
+                
                 <form method="post">
-                    <input type="text" name="sok" placeholder="Addresse, Plass eller By">
-                    <input type="datetime-local" name="tid" placeholder="Velg Tid">
-                    <input type="submit" value="Søk">
-                    <input type="submit" name="filter" value="Filter" placeholder="Søk etter parkeringsplass">
+                    <input class="search-bar mb-lg-1" id="sok" type="text" name="sok" placeholder="Addresse, Plass eller By">
+                    <input class="buttons" id ="sokbutton" type="submit" value="Søk">
+                    <input class="search-bar mb-lg-1" type="datetime-local" name="tid" placeholder="Velg Tid">
+                    <input class="buttons dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" value="Filter">
+                    <ul class="dropdown-menu prevent-select" id="myDropdown">
+                        <li class="dropdown-item">
+                            <input type="checkbox" id="filter1" name="filter1">
+                            <label for="filter1">checkmark1</label>
+                        </li>
+                        <li class="dropdown-item">
+                            <input type="checkbox" id="filter2" name="filter2">
+                            <label for="filter2">checkmark2</label>
+                        </li>
+                        <li class="dropdown-item">
+                            <input type="checkbox" id="filter3" name="filter3">
+                            <label for="filter3">checkmark3</label>
+                        </li>
+                        <li>
+                            <label class="CheckboxContainer">ASRock
+                                <input type="checkbox" class="HiddenCheckbox">
+                                <span class="checkmark"></span>
+                            </label>
+                        </li>
+                    </ul>
+                    <input type="submit" id ="currentposition" value="current position">
                 </form>
             </div>
-            <div class="col-sm-8">
-                <div id="map"></div>
-                
-                <script type="text/javascript" 
-                        src="https://maps.googleapis.com/maps/api/js?key=@ApiKey.apikey()"
-                ></script>
-                
-                
-            </div>
         </div>
-        
-    </div>
-
-    <div class="container">
-        <div class="col-sm mt-5">
-            <h3>What is PrivatePark</h3>
-            <!-- fant dette et sted vv -->
-            <p>PrivatePark is a platform that connects people who have parking spaces with people who need parking
-                spaces. It is a simple and easy way to find parking spaces in your area.</p>
+        <div class="col-sm-8">
+            <div class="rounded" id="map"></div>
+            
+            <script type="text/javascript" 
+                    src="https://maps.googleapis.com/maps/api/js?key=@ApiKey.apikey()&libraries=places"
+            ></script>
+            
         </div>
     </div>
 
-<<<<<<< HEAD
-    <div class="container mt-5 mb-5">
-        <div class="container-fluid p-4 text-center">
-            <h2>How PrivatePark Works</h2>
-        </div>
-        <div class="row">
-            <!-- mb-3 eller margin bottom 1em
+</div>
+
+<div class="container">
+    <div class="col-sm mt-5">
+        <h3>What is PrivatePark</h3>
+        <!-- fant dette et sted vv -->
+        <p>
+            PrivatePark is a platform that connects people who have parking spaces with people who need parking
+            spaces. It is a simple and easy way to find parking spaces in your area.
+        </p>
+    </div>
+</div>
+
+<div class="container mt-5 mb-5">
+    <div class="container-fluid p-4 text-center">
+        <h2>How PrivatePark Works</h2>
+    </div>
+    <div class="row">
+        <!-- mb-3 eller margin bottom 1em
         lage det greit for mobil
         -->
-            <div class="col-sm-4">
-                <img alt="Map" class="rounded" style="margin-bottom: 1em" width="300em"
-                    src="https://img.freepik.com/free-photo/travel-concept-with-map-background_23-2147982089.jpg?w=1380&t=st=1668520589~exp=1668521189~hmac=8eae2379f3dc28bb06451903619cd217aedbdf5fa7b5f9651ed9d48da1fbc9c5">
-                <h3>Search</h3>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam, eos?</p>
-            </div>
-            <div class="col-sm-4">
-                <img alt="Calendar" class="rounded mb-3" width="300em"
-                    src="https://img.freepik.com/free-photo/businessman-marking-calendar-appointment_53876-14778.jpg?w=1380&t=st=1668520667~exp=1668521267~hmac=6c1eac16c5ecf2c146394ad51fbb6b654b6e1c3ffdc000720118e8c41f284113">
-                <h3>Book</h3>
-                <p>Lorem ipsum, dolor sit <span style="font-weight:bold">amet</span> consectetur adipisicing elit. Rem,
-                    saepe.</p>
-            </div>
-            <div class="col-sm-4">
-                <img alt="Parkinglot" class="rounded mb-3" style="margin-bottom: 1em" width="300em"
-                    src="https://images.pexels.com/photos/1004409/pexels-photo-1004409.jpeg?cs=srgb&dl=pexels-pok-rie-1004409.jpg&fm=jpg&_gl=1*hwlck0*_ga*OTA3MjQzNzI0LjE2Njg1MTk4MDI.*_ga_8JE65Q40S6*MTY2ODUxOTgwMi4xLjEuMTY2ODUxOTgyNS4wLjAuMA..">
-                <h3>Park</h3>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem, saepe.</p>
-            </div>
+        <div class="col-sm-4">
+            <img alt="Map" class="rounded" style="margin-bottom: 1em" width="300em"
+                 src="https://img.freepik.com/free-photo/travel-concept-with-map-background_23-2147982089.jpg?w=1380&t=st=1668520589~exp=1668521189~hmac=8eae2379f3dc28bb06451903619cd217aedbdf5fa7b5f9651ed9d48da1fbc9c5">
+            <h3>Search</h3>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam, eos?</p>
+        </div>
+        <div class="col-sm-4">
+            <img alt="Calendar" class="rounded mb-3" width="300em"
+                 src="https://img.freepik.com/free-photo/businessman-marking-calendar-appointment_53876-14778.jpg?w=1380&t=st=1668520667~exp=1668521267~hmac=6c1eac16c5ecf2c146394ad51fbb6b654b6e1c3ffdc000720118e8c41f284113">
+            <h3>Book</h3>
+            <p>
+                Lorem ipsum, dolor sit <span style="font-weight:bold">amet</span> consectetur adipisicing elit. Rem,
+                saepe.
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <img alt="Parkinglot" class="rounded mb-3" style="margin-bottom: 1em" width="300em"
+                 src="https://images.pexels.com/photos/1004409/pexels-photo-1004409.jpeg?cs=srgb&dl=pexels-pok-rie-1004409.jpg&fm=jpg&_gl=1*hwlck0*_ga*OTA3MjQzNzI0LjE2Njg1MTk4MDI.*_ga_8JE65Q40S6*MTY2ODUxOTgwMi4xLjEuMTY2ODUxOTgyNS4wLjAuMA..">
+            <h3>Park</h3>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem, saepe.</p>
         </div>
     </div>
+</div>
 
 
 </body>
@@ -78,10 +106,12 @@
 
 <div class="container mb-5">
     <h2>PrivatePark</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil perspiciatis architecto cupiditate veritatis
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil perspiciatis architecto cupiditate veritatis
         neque hic magni accusamus ex error doloribus ullam iusto animi rerum accusantium, itaque ipsa excepturi,
         veniam similique quasi eveniet nisi labore non! Neque fugiat, natus assumenda, maiores ex hic facilis
         repellendus itaque voluptatum nemo quia facere doloremque delectus necessitatibus aliquid earum sunt saepe
         perferendis nam molestiae ipsam, odit fuga. Aperiam fugit praesentium quia expedita repellendus numquam
-        alias, illum eligendi</p>
+        alias, illum eligendi
+    </p>
 </div>

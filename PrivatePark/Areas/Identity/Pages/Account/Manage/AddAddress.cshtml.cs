@@ -64,7 +64,7 @@ public class AddAddress : PageModel
 
 
 
-    public Location coordinates(Address address)
+    public static Location coordinates(Address address)
     {
         Rootobject? oRootObject;
 
