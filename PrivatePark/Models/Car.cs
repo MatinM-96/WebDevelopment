@@ -27,6 +27,6 @@ public class Car
     public string CarType { get; set; }
     
     //public string ApplicationUserId { get; set;  }
-    public ICollection<ApplicationUser?>? User { get; set; }
+    public ICollection<ApplicationUser?> User { get; set; }
 
 }
