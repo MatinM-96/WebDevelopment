@@ -138,9 +138,9 @@ public class ApplicationDbInitializer
            new Car("aj57220", "PersonBil", user[0])
        };
        await db.Cars.AddRangeAsync(car);
-        
 
-        //Parking  
+
+       //Parking  
        var parkering = new[]
        {
            new Parkering(2,

@@ -7,13 +7,13 @@ namespace mnacr22.Models;
 public class Car
 {
     
-    public Car (){}
+    public Car () {}
 
     public Car (string registrationNumber, string carType, ApplicationUser user)
     {
         RegistrationNumber = registrationNumber;
         CarType = carType;
-        User = user;
+        User = new[] {user};
     }
     
     public int Id { get; set; }
@@ -21,13 +21,12 @@ public class Car
     [Required]
     [DisplayName("Registration Number")]
     public string RegistrationNumber { get; set; }
-    
-    [Required]
-    [DisplayName("Car Type")]
+
+    [Required] 
+    [DisplayName("Car Type")] 
     public string CarType { get; set; }
     
     //public string ApplicationUserId { get; set;  }
-    public ApplicationUser User { get; set; }
-    //Nødvendig med ICollection?? Må i såfall ikke være mulig å opprette to like biler + mulighet for å søke etter bil i databasen
-    
+    public ICollection<ApplicationUser?>? User { get; set; }
+
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Immutable;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -30,7 +31,6 @@ public class Youraddresses: PageModel
     {
         public int Id {get; set;}
         
-        
         [Required] 
         [Display(Name = "Street")] 
         public string Street { get; set; }
@@ -47,7 +47,7 @@ public class Youraddresses: PageModel
     public void OnGetAsync()
     {
         var user = _um.GetUserAsync(User).Result;
-        DisplayAddresses = _db.Addresses.ToList();
+        DisplayAddresses = _db.Addresses.Where(x => x.User.Contains(user));
         
     }
    
@@ -95,7 +95,7 @@ public class Youraddresses: PageModel
         else if (buttonType == "Delete")
         {
             Console.WriteLine("\n\nDeleting from database...\n");
-            _db.Entry(address).State = EntityState.Deleted;
+            _db.Entry(address.User.First(x => x.Id == user.Id)).State = EntityState.Deleted;
             await _db.SaveChangesAsync();
         }
         

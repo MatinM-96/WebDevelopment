@@ -20,16 +20,15 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div><input type="hidden" value="@user.Id" asp-for="Input.Id"/></div>
                 <div class="form-floating">
-                    <input asp-for="Input.RegistrationNumber" value="@user.RegistrationNumber" class="form-control"/>
-                    <label asp-for="Input.RegistrationNumber" class="form-label"></label>
-                    <span asp-validation-for="Input.RegistrationNumber" class="text-danger"></span>
+                    <input asp-for="Input.RegistrationNumber" value="@user.RegistrationNumber" class="form-control" readonly/>
+                    <label asp-for="Input.RegistrationNumber" class="form-label" readonly></label>
+                    <span asp-validation-for="Input.RegistrationNumber" class="text-danger" readonly></span>
                 </div>
                 <div class="form-floating">
-                    <input asp-for="Input.CarType" class="form-control" value="@user.CarType"/>
-                    <label asp-for="Input.CarType" class="form-label"></label>
-                    <span asp-validation-for="Input.CarType" class="text-danger"></span>
+                    <input asp-for="Input.CarType" class="form-control" value="@user.CarType" readonly/>
+                    <label asp-for="Input.CarType" class="form-label" readonly></label>
+                    <span asp-validation-for="Input.CarType" class="text-danger" readonly></span>
                 </div>
-                <input id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary" name="buttonType" value="Update"/>
                 <input id="delete-profile-button" type="submit" class="btn-danger" name="buttonType" value="Delete"/>
             </form>
             <div><p></p></div>

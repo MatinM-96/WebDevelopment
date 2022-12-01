@@ -23,17 +23,19 @@ Talk.ready.then(function () {
         
         var photo = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png'
         
-        var me = new Talk.User({
+        const me = new Talk.User({
             id: JSON.stringify(user.id),
             name: JSON.stringify(user.firstname) + ' ' + JSON.stringify(user.lastname),
             email: JSON.stringify(user.email),
             photoUrl: photo,
             role: 'default',
         });
-        window.talkSession = new Talk.Session({
-            appId: 't0WLJIUr',
-            me: me,
-        });
+        if (!window.talkSession) {
+            window.talkSession = new Talk.Session({
+                appId: 't0WLJIUr',
+                me: me,
+            });
+        }
         var other = new Talk.User({
             id: '67890',
             name: 'Admin',

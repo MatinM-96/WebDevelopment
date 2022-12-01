@@ -31,7 +31,7 @@ public class ChatController : Controller
     public JsonResult GetUser()
     {
         var user = _userManager.GetUserAsync(User).Result;
-
+        
         return Json(user);
     }
 }
