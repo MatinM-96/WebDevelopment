@@ -55,15 +55,13 @@ public class Youraddresses: PageModel
     }
    
     
-    
-    public async Task<IActionResult> OnPostAsync(string buttonType)
+    public async Task<IActionResult> OnPostAsync()
     {
         var user = await _um.GetUserAsync(User);
         if (user == null)
         {
             return NotFound($"Unable to load user with ID '{_um.GetUserId(User)}'.");
         }
-       //var address = await _db.Addresses.
 
         int id = Input.Id;
         if (id == null)
@@ -72,64 +70,16 @@ public class Youraddresses: PageModel
             return Redirect("./SomeError");
         }
         
-        Address address = _db.Addresses.Find(id);
+        var address = _db.Addresses.Include(x => x.User)
+            .SingleOrDefault(c => c.Id == id);
 
-        address.Id = id;
-        address.Street = Input.Street;
-        address.ZiptCode = Input.ZiptCode;
-        address.City = Input.City;
-        address.User = new[] {user};
-        Location loc = coordinates(address);
-        
-        
-        
 
-        address.Location = loc;
-        
-        
-        
-        
+        Console.WriteLine("\n\nDeleting from database...\n");
 
-        if (buttonType == "Update")
-        {
-            Console.WriteLine("\n\nUpdating information...\n");
-            _db.Entry(address).State = EntityState.Modified;
-            await _db.SaveChangesAsync();  
-        }
-        else if (buttonType == "Delete")
-        {
-            Console.WriteLine("\n\nDeleting from database...\n");
-            _db.Entry(address.User.First(x => x.Id == user.Id)).State = EntityState.Deleted;
-            await _db.SaveChangesAsync();
-        }
+        address.User.Remove(user);
+        await _db.SaveChangesAsync();
         
         return RedirectToPage();
     }
-    
-    
-    
-    public Location coordinates(Address address)
-    {
-        Rootobject? oRootObject;
-
-        Task<string> jason_taks_string =
-            FindLocation.GetTheLatitudeAndLongitude(address.City, address.Street, address.ZiptCode);
-        string jason = jason_taks_string.Result;
-
-        oRootObject = JsonConvert.DeserializeObject<Rootobject>(jason);
-
-        Location loc = new Location();
-
-        if (oRootObject != null)
-        {
-            loc = oRootObject.results[0].Geometry.location;
-        }
-
-        return loc; 
-    }
-
-    
-    
-    
     
 }

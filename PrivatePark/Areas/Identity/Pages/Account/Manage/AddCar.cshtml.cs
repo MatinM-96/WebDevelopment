@@ -48,9 +48,9 @@ public class AddCarModel : PageModel
         }
 
         var checkDb = _db.Cars.Where(x => x.RegistrationNumber == Input.RegistrationNumber).ToList();
-        var test = checkDb.Count;
+        var count = checkDb.Count;
         
-        if (test > 0)
+        if (count > 0)
         {
             car = _db.Cars.Find(checkDb[0].Id);
 

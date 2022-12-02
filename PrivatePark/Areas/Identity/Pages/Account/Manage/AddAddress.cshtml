@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Mvc.RazorPages
 @model AddAddress
 @{
-    ViewData["Title"] = "Add a Address";
+    ViewData["Title"] = "Add a address";
     ViewData["ActivePage"] = ManageNavPages.AddAddress;
 }
 
@@ -27,9 +27,6 @@
                 <label asp-for="Input.City" class="form-label"></label>
                 <span asp-validation-for="Input.City" class="text-danger"></span>
             </div>
-            
-            
-            
             
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </form>

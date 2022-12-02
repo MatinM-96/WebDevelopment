@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using mnacr22.Data;
 using mnacr22.Models;
 using mnacr22.Services;
@@ -45,21 +46,36 @@ public class AddAddress : PageModel
         {
             return NotFound($"Unable to load user with ID '{_um.GetUserId(User)}'.");
         }
-        
-        address.City = Input.City;
-        address.Street = Input.Street;
-        address.ZiptCode = Input.ZiptCode;
 
-        Location loc = coordinates(address);  
-       
+        var checkDb = _db.Addresses
+            .Where(x => x.Street == Input.Street && x.ZiptCode == Input.ZiptCode && x.City == Input.City)
+            .ToList();
 
-        address.Location = loc;
-        address.User = new[] {user};
+        var count = checkDb.Count;
+
+        if (count > 0)
+        {
+            address = _db.Addresses.Find(checkDb[0].Id);
+            address.User = new[] {user};
+            _db.Entry(address).State = EntityState.Modified;
+            await _db.SaveChangesAsync();
+        }
+        else
+        {
+            address.City = Input.City;
+            address.Street = Input.Street;
+            address.ZiptCode = Input.ZiptCode;
+
+            Location loc = coordinates(address);  
         
-        _db.AddRange(address);
-        await _db.SaveChangesAsync();
+            address.Location = loc;
+            address.User = new[] {user};
+        
+            _db.Addresses.AddRange(address);
+            await _db.SaveChangesAsync();
+        }
+        
         return RedirectToPage();
-
     }
 
 

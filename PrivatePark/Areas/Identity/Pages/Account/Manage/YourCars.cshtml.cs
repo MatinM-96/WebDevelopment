@@ -66,8 +66,9 @@ public class YourCarsModel : PageModel
             Console.WriteLine("Id is null");
             return Redirect("./SomeError");
         }
-        
-        Car car = _db.Cars.Find(id);
+
+        var car = _db.Cars.Include(x => x.User)
+            .SingleOrDefault(c => c.Id == id);
 
         Console.WriteLine("\n\nDeleting from database...\n");
 
