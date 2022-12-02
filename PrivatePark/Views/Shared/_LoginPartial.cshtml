@@ -10,7 +10,7 @@
     @if (SignInManager.IsSignedIn(User) && applicationUser != null)
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @applicationUser.Firstname!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Index" title="Chat">Messages</a>

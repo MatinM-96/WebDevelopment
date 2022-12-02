@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using mnacr22.Models;
 
@@ -83,6 +84,11 @@ namespace mnacr22.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
             
+            [Required]
+            [Display(Name = "Nickname")]
+            public string Nickname { get; set; }
+            
+            
             //Creating the additional fields
             [Required]
             [Display(Name = "FirstName")]
@@ -140,6 +146,7 @@ namespace mnacr22.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
+                user.Nickname = Input.Nickname;
                 user.Firstname = Input.Firstname;
                 user.Lastname = Input.Lastname;
                 user.DateOfBirth = Input.DateOfBirth;

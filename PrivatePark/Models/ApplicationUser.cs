@@ -6,6 +6,10 @@ namespace mnacr22.Models;
 
 public class ApplicationUser : IdentityUser
 {
+    [Required]
+    [DisplayName("Nickname")]
+    public string Nickname { get; set; }
+    
     [Required] 
     [DisplayName("First Name")] 
     public string Firstname { get; set; }

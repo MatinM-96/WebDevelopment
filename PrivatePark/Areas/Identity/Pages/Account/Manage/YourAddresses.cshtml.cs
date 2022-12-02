@@ -12,12 +12,12 @@ using Newtonsoft.Json;
 
 namespace mnacr22.Areas.Identity.Pages.Account.Manage;
 
-public class Youraddresses: PageModel
+public class YourAddresses: PageModel
 {
     private readonly UserManager<ApplicationUser> _um;
     private readonly ApplicationDbContext _db;
 
-    public Youraddresses(UserManager<ApplicationUser> um, ApplicationDbContext db)
+    public YourAddresses(UserManager<ApplicationUser> um, ApplicationDbContext db)
     {
         _um = um;
         _db = db;

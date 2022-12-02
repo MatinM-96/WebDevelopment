@@ -65,21 +65,25 @@ namespace mnacr22.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
             
+            [Display(Name = "Nickname")]
+            public string Nickname { get; set; }
+            
             [Display(Name = "Role")]
             public string Role { get; set; }
         }
         
         private async Task LoadAsync(ApplicationUser user)
         {
-            var userName = await _userManager.GetUserNameAsync(user);
+            var userName = user.Nickname;
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var role = await _userManager.GetRolesAsync(user);
             var roleName = role[0];
 
-            Username = userName;
+            
 
             Input = new InputModel
             {
+                Nickname = userName,
                 PhoneNumber = phoneNumber,
                 Role = roleName
             };
@@ -120,6 +124,13 @@ namespace mnacr22.Areas.Identity.Pages.Account.Manage
                     StatusMessage = "Unexpected error when trying to set phone number.";
                     return RedirectToPage();
                 }
+            }
+
+            var username = user.Nickname;
+            if (Input.Nickname != username)
+            {
+                user.Nickname = Input.Nickname;
+                await _userManager.UpdateAsync(user);
             }
             
             var oldRole = await _userManager.GetRolesAsync(user);

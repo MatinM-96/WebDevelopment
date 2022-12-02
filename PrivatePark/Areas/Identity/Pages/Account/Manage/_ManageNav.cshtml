@@ -21,7 +21,7 @@
         if (currentRole == "Renter")
         {
             <li class="nav-item"><a class="nav-link @ManageNavPages.AddAddressNavClass(ViewContext)" id="add-address" asp-page="./AddAddress">Add address</a></li>
-            <li class="nav-item"><a class="nav-link @ManageNavPages.AddAddressNavClass(ViewContext)" id="your-addresses" asp-page="./Youraddresses">Your addresses</a></li>
+            <li class="nav-item"><a class="nav-link @ManageNavPages.YourAddressesNavClass(ViewContext)" id="your-addresses" asp-page="./YourAddresses">Manage your addresses</a></li>
         }
         else if (currentRole == "Rentee")
         {
@@ -31,7 +31,7 @@
         else if (currentRole == "Both" || currentRole == "Admin")
         {
             <li class="nav-item"><a class="nav-link @ManageNavPages.AddAddressNavClass(ViewContext)" id="add-address" asp-page="./AddAddress">Add address</a></li>
-            <li class="nav-item"><a class="nav-link @ManageNavPages.AddAddressNavClass(ViewContext)" id="your-addresses" asp-page="./Youraddresses">Manage your addresses</a></li>
+            <li class="nav-item"><a class="nav-link @ManageNavPages.YourAddressesNavClass(ViewContext)" id="your-addresses" asp-page="./YourAddresses">Manage your addresses</a></li>
             <li class="nav-item"><a class="nav-link @ManageNavPages.AddCarNavClass(ViewContext)" id="add-car" asp-page="./AddCar">Add car</a></li>
             <li class="nav-item"><a class="nav-link @ManageNavPages.YourCarsNavClass(ViewContext)" id="your-car" asp-page="./YourCars">Manage your cars</a></li>
         }
