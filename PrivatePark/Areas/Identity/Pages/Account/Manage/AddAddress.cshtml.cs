@@ -46,6 +46,10 @@ public class AddAddress : PageModel
         [Required]
         [Display(Name = "Active")]
         public bool Active { get; set; }
+        
+        [Required]
+        [Display(Name = "Suitability")]
+        public string Suitability { get; set; }
     }
     
     public async Task<IActionResult> OnPostAsync(Address address)
@@ -76,6 +80,7 @@ public class AddAddress : PageModel
             address.ZiptCode = Input.ZiptCode;
             address.Price = Input.Price;
             address.Active = Input.Active;
+            address.Suitability = Input.Suitability;
 
             Location loc = coordinates(address);  
         

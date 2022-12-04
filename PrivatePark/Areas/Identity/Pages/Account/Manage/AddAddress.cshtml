@@ -12,27 +12,39 @@
         <form id="add-address-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
-                <input asp-for="Input.Street" class="form-control" />
+                <input asp-for="Input.Street" class="form-control" required/>
                 <label asp-for="Input.Street" class="form-label"></label>
                 <span asp-validation-for="Input.Street" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.ZiptCode" class="form-control"/>
+                <input asp-for="Input.ZiptCode" class="form-control" required/>
                 <label asp-for="Input.ZiptCode" class="form-label"></label>
                 <span asp-validation-for="Input.ZiptCode" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.City" class="form-control"/>
+                <input asp-for="Input.City" class="form-control" required/>
                 <label asp-for="Input.City" class="form-label"></label>
                 <span asp-validation-for="Input.City" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input type="number" min="1" max="100" asp-for="Input.Price" class="form-control"/>
+                <input type="number" min="1" max="100" asp-for="Input.Price" class="form-control" required/>
                 <label asp-for="Input.Price" class="form-label">Price pr hour</label>
                 <span asp-validation-for="Input.Price" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <select asp-for="Input.Active" class="form-control" autocomplete="" aria-required="true">
+                <select asp-for="Input.Suitability" class="form-control" autocomplete="" aria-required="true" required>
+                    <option selected disabled hidden></option>
+                    <option value="Motorcycle">Motorcycle</option>
+                    <option value="Car">Car</option>
+                    <option value="Camper van">Camper van</option>
+                    <option value="Truck">Truck</option>
+                </select>
+                <label asp-for="Input.Suitability"></label>
+                <span asp-validation-for="Input.Suitability" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <select asp-for="Input.Active" class="form-control" autocomplete="" aria-required="true" required>
+                    <option selected disabled hidden></option>
                     <option value="true">Yes</option>
                     <option value="false">No</option>
                 </select>

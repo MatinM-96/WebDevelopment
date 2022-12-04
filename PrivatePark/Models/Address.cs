@@ -8,13 +8,14 @@ public class Address
     
     public Address (){}
 
-    public Address(string street, string city, string ziptCode, float price, bool active)
+    public Address(string street, string city, string ziptCode, float price, bool active, string suitability)
     {
         Street = street;
         City = city;
         ZiptCode = ziptCode;
         Price = price;
         Active = active;
+        Suitability = suitability;
     }
     
     public int Id { get; set; }
@@ -39,6 +40,10 @@ public class Address
     public bool Rented { get; set; } = false;
 
     public bool Active { get; set; }
+    
+    [Required]
+    [DisplayName("Suitability")]
+    public string Suitability { get; set; }
     
     public ApplicationUser User { get; set; }
     

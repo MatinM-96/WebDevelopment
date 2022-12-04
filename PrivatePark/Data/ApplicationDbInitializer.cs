@@ -74,8 +74,8 @@ public class ApplicationDbInitializer
 
         var address = new[]
         {
-            new Address(street, city, zicode, price, false),
-            new Address(street2,city2,zicode2, price2, true),
+            new Address(street, city, zicode, price, false, "Car"),
+            new Address(street2,city2,zicode2, price2, true, "Motorcycle"),
         };
         await db.Addresses.AddRangeAsync(address);
 

@@ -46,6 +46,14 @@ public class YourAddresses: PageModel
         [Required] 
         [Display(Name = "City")] 
         public string City { get; set; }
+        
+        [Required]
+        [Display(Name = "Price")]
+        public float Price { get; set; }
+        
+        [Required]
+        [Display(Name = "Suitability")]
+        public string Suitability { get; set; }
     }
     
     public void OnGetAsync()
@@ -69,9 +77,8 @@ public class YourAddresses: PageModel
             Console.WriteLine("Id is null");
             return Redirect("./SomeError");
         }
-        
-        var address = _db.Addresses.Include(x => x.User)
-            .SingleOrDefault(c => c.Id == id);
+
+        var address = _db.Addresses.Find(id);
 
         if (buttonType == "Delete")
         {
@@ -92,9 +99,45 @@ public class YourAddresses: PageModel
             _db.Addresses.Update(address);
             await _db.SaveChangesAsync();
         }
+        else if (buttonType == "Update")
+        {
+            address.City = Input.City;
+            address.Street = Input.Street;
+            address.ZiptCode = Input.ZiptCode;
+            address.Price = Input.Price;
+            address.Suitability = Input.Suitability;
+
+            Location loc = coordinates(address);  
+        
+            address.Location = loc;
+            address.User = user;
+        
+            _db.Addresses.Update(address);
+            await _db.SaveChangesAsync();
+        }
         
         
         return RedirectToPage();
     }
     
+    
+    public static Location coordinates(Address address)
+    {
+        Rootobject? oRootObject;
+
+        Task<string> jason_taks_string =
+            FindLocation.GetTheLatitudeAndLongitude(address.City, address.Street, address.ZiptCode);
+        string jason = jason_taks_string.Result;
+
+        oRootObject = JsonConvert.DeserializeObject<Rootobject>(jason);
+
+        Location loc = new Location();
+
+        if (oRootObject != null)
+        {
+            loc = oRootObject.results[0].Geometry.location;
+        }
+
+        return loc; 
+    }
 }
