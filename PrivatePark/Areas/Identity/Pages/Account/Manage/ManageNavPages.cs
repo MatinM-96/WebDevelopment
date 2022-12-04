@@ -94,6 +94,11 @@ namespace  mnacr22.Areas.Identity.Pages.Account.Manage
         public static string AddAddressNavClass(ViewContext viewContext) => PageNavClass(viewContext, AddAddress);
         
         
+        public static string AddParking => "AddParking";
+
+        public static string AddParkingNavClass(ViewContext viewContext) => PageNavClass(viewContext, AddParking);
+        
+        
         
         public static string YourAddresses => "YourAddresses";
 

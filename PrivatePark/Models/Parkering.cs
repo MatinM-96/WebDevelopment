@@ -32,6 +32,7 @@ public class Parkering
     
     
     public ApplicationUser Renter { get; set; }
+
     
     
     public Car? Car { get; set;}

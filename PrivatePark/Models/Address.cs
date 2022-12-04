@@ -36,9 +36,9 @@ public class Address
     [Required]
     [DisplayName("Price")]
     public float Price { get; set; }
-
+    
     public bool Rented { get; set; } = false;
-
+    
     public bool Active { get; set; }
     
     [Required]

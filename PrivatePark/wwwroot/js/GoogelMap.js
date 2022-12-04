@@ -20,13 +20,6 @@ $(document).ready(function() {
 
 
 
-
-
-
-
-
-
-
 function Search_Box()
 {
 
@@ -44,6 +37,8 @@ function Search_Box()
     searchBtn.onclick = function () {
         displaySearchResults(map,searchBox,markers);
     }
+    
+    var m = document.getElementById('sok').value;
     
     
 }
@@ -73,8 +68,7 @@ function displaySearchResults(map, searchBox, markers) {
             console.log("Returned place contains no geometry");
             return;
         }
-
-
+        
         markers.push(new google.maps.Marker({
             map: map,
             position: place.geometry.location
@@ -94,22 +88,14 @@ function displaySearchResults(map, searchBox, markers) {
 
 
 
-
-
-
-
-
-
-
-
 function currentposition()
 {
     infoWindow = new google.maps.InfoWindow();
+    
+    
+    
 
     const locationButton = document.getElementById("currentposition")
-    
-    
-    
     
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
     locationButton.addEventListener("click", () => {
