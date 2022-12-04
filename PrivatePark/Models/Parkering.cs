@@ -26,6 +26,8 @@ public class Parkering
     [DisplayName("End time")] 
     public DateTime? EndTime { get; set; }
     
+    public TimeSpan TotalTime { get; set; }
+    
     public Address Address { get; set; }
     
     

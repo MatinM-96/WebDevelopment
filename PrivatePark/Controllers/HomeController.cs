@@ -5,6 +5,8 @@ using mnacr22.Models;
 using mnacr22.Data;
 using Microsoft.AspNetCore.Identity;
 using NuGet.Versioning;
+using Stripe;
+using Stripe.Checkout;
 
 namespace mnacr22.Controllers;
 
@@ -48,16 +50,24 @@ public class HomeController : Controller
             Address = address,
             Renter = renter,
             //Car = car, Legge til at man kan velge hvilken bil i formen
-            EndTime = time 
+            EndTime = time, 
+            TotalTime = time - DateTime.Now
         };
+
+        if (park.EndTime < park.StartTime)
+        {
+            return RedirectToPage("Error");
+        }
+
+        var price = (long)(park.TotalTime.TotalHours * address.Price);
 
         address.Rented = true;
 
         _db.Addresses.Update(address);
         _db.Parkerings.AddRange(park);
-        _db.SaveChanges();
+        _db.SaveChanges(); // Endre slik at endringene blir bekreftet etter at betalingen er bekreftet
         
-        return View();
+        return RedirectToAction("CreatePayment", new {priceToPay = price});
     }
     
     [HttpGet]
@@ -78,17 +88,64 @@ public class HomeController : Controller
     {
         return View();
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    public IActionResult CreatePayment(long priceToPay)
+    {
+        StripeConfiguration.ApiKey =
+            "sk_test_51M1RCrH7GdmlJf4XKjrBTbzb9OZnX8gGIV28NeUUDcJ50Exbw4iJTEjy5LUTIhInLuACZcJg7vT3qZoJ5EkA9QEI00MJJSOwuC";
+        
+        var domain = "https://localhost:7034";
+
+        if (priceToPay < 3)
+        {
+            priceToPay = 3;
+        }
+        
+        var pOptions = new PriceCreateOptions
+        {
+            UnitAmount = priceToPay * 100,
+            Currency = "nok",
+            Product = "prod_MvELkaTH4SLlUO"
+        };
+
+        var pService = new PriceService();
+        Price price = pService.Create(pOptions);
+
+        var options = new SessionCreateOptions
+        {
+            LineItems = new List<SessionLineItemOptions>
+            {
+                new SessionLineItemOptions
+                {
+                    Price = price.Id,
+                    Quantity = 1,
+                },
+            },
+            Mode = "payment",
+            SuccessUrl = domain + "/Home/Success",
+            CancelUrl = domain + "/Home/Cancel"
+        };
+
+        var service = new SessionService();
+        Session session = service.Create(options);
+        
+        Response.Headers.Add("Location", session.Url);
+
+        return new StatusCodeResult(303);
+    }
+
+    [HttpGet]
+    public IActionResult Success()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult Cancel()
+    {
+        return View();
+    }
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
