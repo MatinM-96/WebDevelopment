@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Humanizer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -37,6 +38,14 @@ public class AddAddress : PageModel
         [Required]
         [Display(Name = "City")]
         public string City { get; set; }
+
+        [Required] 
+        [Display(Name = "Price")] 
+        public float Price { get; set; }
+        
+        [Required]
+        [Display(Name = "Active")]
+        public bool Active { get; set; }
     }
     
     public async Task<IActionResult> OnPostAsync(Address address)
@@ -56,7 +65,7 @@ public class AddAddress : PageModel
         if (count > 0)
         {
             address = _db.Addresses.Find(checkDb[0].Id);
-            address.User = new[] {user};
+            address.User = user;
             _db.Entry(address).State = EntityState.Modified;
             await _db.SaveChangesAsync();
         }
@@ -65,11 +74,13 @@ public class AddAddress : PageModel
             address.City = Input.City;
             address.Street = Input.Street;
             address.ZiptCode = Input.ZiptCode;
+            address.Price = Input.Price;
+            address.Active = Input.Active;
 
             Location loc = coordinates(address);  
         
             address.Location = loc;
-            address.User = new[] {user};
+            address.User = user;
         
             _db.Addresses.AddRange(address);
             await _db.SaveChangesAsync();

@@ -37,6 +37,15 @@
                     <span asp-validation-for="Input.City" class="text-danger" readonly></span>
                 </div>
                 
+                @if (user.Active == false)
+                {
+                    <input id="activate-as-parkingspot" type="submit" class="w-100 btn btn-lg btn-primary" name="buttonType" value="Activate"/> 
+                }
+                else
+                {
+                    <input id="activate-as-parkingspot" type="submit" class="w-100 btn btn-lg btn-primary" name="buttonType" value="Deactivate"/>
+                }
+                
                 <input id="delete-profile-button" type="submit" class="btn-danger" name="buttonType" value="Delete"/>
             </form>
             <div><p></p></div>

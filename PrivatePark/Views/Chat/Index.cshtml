@@ -35,15 +35,16 @@
         Talk.ready.then(function () {
             
             var user1Id = '@ViewData["User1Id"]';                    
-            var user1Name = '@ViewData["User1Name"]';            
+            var user1Firstname = '@ViewData["User1Firstname"]';
+            var user1Lastname = '@ViewData["User1Lastname"]';
             var user1Email = '@ViewData["User1Email"]';
             console.log('user1Id:', user1Id);
-            console.log('user1Name:', user1Name);
+            console.log('user1Firstname:', user1Firstname);
             console.log('user1Email:', user1Email);
               
             var me = new Talk.User({
                 id: user1Id,
-                name: user1Name,
+                name: user1Firstname + ' ' + user1Lastname,
                 email: user1Email,
                 role: 'default',
             });
@@ -54,16 +55,17 @@
             });
             
             var user2Id = '@ViewData["User2Id"]';
-            var user2Name = '@ViewData["User2Name"]';
+            var user2Firstname = '@ViewData["User2Firstname"]';
+            var user2Lastname = '@ViewData["User2Lastname"]';
             var user2Email = '@ViewData["User2Email"]';
                 
             console.log('user2Id:', user2Id);
-            console.log('user2Name:', user2Name);
+            console.log('user2Name:', user2Firstname);
             console.log('user2Email:', user2Email);
             
             var other = new Talk.User({
                 id: user2Id,
-                name: user2Name,
+                name: user2Firstname + ' ' + user2Lastname,
                 email: user2Email,
                 role: 'default',
             });
@@ -98,15 +100,16 @@
         Talk.ready.then(function () {
             
             var user1Id = '@ViewData["User1Id"]';                    
-            var user1Name = '@ViewData["User1Name"]';            
+            var user1Firstname = '@ViewData["User1Firstname"]';
+            var user1Lastname = '@ViewData["User1Lastname"]';
             var user1Email = '@ViewData["User1Email"]';
             console.log('user1Id:', user1Id);
-            console.log('user1Name:', user1Name);
+            console.log('user1Firstname:', user1Firstname);
             console.log('user1Email:', user1Email);
               
             var me = new Talk.User({
                 id: user1Id,
-                name: user1Name,
+                name: user1Firstname + ' ' + user1Lastname,
                 email: user1Email,
                 role: 'default',
             });
@@ -129,7 +132,7 @@
                 name: user2Name,
                 email: user2Email,
                 role: 'default',
-                welcomeMessage: 'Hey, welcome to the chat system! On your left you can see your inbox. You can always start chats with other users by entering their email in the search field above'
+                welcomeMessage: 'Welcome to the chat system! On your left you can see your inbox. You can always start chats with other users by entering their email in the search field above'
             });
                         
             var conversation = talkSession.getOrCreateConversation(

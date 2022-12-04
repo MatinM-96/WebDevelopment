@@ -21,7 +21,7 @@ public class info : Controller
     public JsonResult GetAllParkings()
     {
       
-        var location = _db.Parkerings.Include(parkering => parkering.Location)
+        var location = _db.Addresses.Where(x => x.Active == true).Include(a => a.Location)
             .ToList();
         return Json(location);
     }

@@ -7,45 +7,33 @@ public class Parkering
 {
     public Parkering (){}
 
-    public Parkering(int parkingNumber, string parkingType, bool availability, int price, DateTime date)
+    public Parkering(DateTime startTime, Address address, Car car)
     {
-        ParkingNumber = parkingNumber;
-        ParkingType = parkingType;
-        Availability = availability;
-        Price = price;
-        Date = date;
-        
+        StartTime = startTime;
+        Address = address;
+        Car = car;
     }
     
     
     public int Id { get; set; }
+
+    [Required]
+    [DisplayName("Start time")]
+    public DateTime StartTime { get; set; }
     
     [Required]
-    [DisplayName("Parking Number")]
-    public int ParkingNumber {get; set;}
+    [DisplayName("End time")]
+    public DateTime? EndTime { get; set; }
     
-    [Required]
-    [DisplayName("Parking Type")]
-    public string ParkingType {get; set;}
-    
-    [Required]
-    [DisplayName("Availability")]
-    public bool Availability {get; set;}
-    
-    [Required]
-    [DisplayName("Price")]
-    public int Price {get; set;}
-    
-    [Required]
-    [DisplayName("Time")]
-    public DateTime Date {get; set;}
-    
-    //public int AddressId { get; set;}
-    public Location Location { get; set; }
-    public ApplicationUser User { get; set; }
+    public Address Address { get; set; }
     
     
-    public Car? car { get; set;}
+    //Den som leier ut, eller den som leier?
+    public ApplicationUser Renter { get; set; }
+    
+    public ApplicationUser Rentee { get; set; }
+    
+    public Car? Car { get; set;}
 
     
 

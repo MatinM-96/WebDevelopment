@@ -51,11 +51,11 @@ public class YourAddresses: PageModel
     public void OnGetAsync()
     {
         var user = _um.GetUserAsync(User).Result;
-        DisplayAddresses = _db.Addresses.Where(x => x.User.Contains(user));
+        DisplayAddresses = _db.Addresses.Where(x => x.User == user);
     }
    
     
-    public async Task<IActionResult> OnPostAsync()
+    public async Task<IActionResult> OnPostAsync(string buttonType)
     {
         var user = await _um.GetUserAsync(User);
         if (user == null)
@@ -73,11 +73,26 @@ public class YourAddresses: PageModel
         var address = _db.Addresses.Include(x => x.User)
             .SingleOrDefault(c => c.Id == id);
 
+        if (buttonType == "Delete")
+        {
+            Console.WriteLine("\n\nDeleting from database...\n");
 
-        Console.WriteLine("\n\nDeleting from database...\n");
-
-        address.User.Remove(user);
-        await _db.SaveChangesAsync();
+            _db.Addresses.RemoveRange(address);
+            await _db.SaveChangesAsync();
+        }
+        else if (buttonType == "Activate")
+        {
+            address.Active = true;
+            _db.Addresses.Update(address);
+            await _db.SaveChangesAsync();
+        }
+        else if (buttonType == "Deactivate")
+        {
+            address.Active = false;
+            _db.Addresses.Update(address);
+            await _db.SaveChangesAsync();
+        }
+        
         
         return RedirectToPage();
     }

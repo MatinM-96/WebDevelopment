@@ -63,23 +63,25 @@ public class ApplicationDbInitializer
         string city = "Grimstad";
         const string zicode = "4879 ";
         string street = "jon lilletuns vei 2A";
-        
-        
-        
+        float price = 20;
+
+
         string city2 = "Grimstad";
         const string zicode2 = "4879";
         string street2 = "Jon Lilletuns vei 9";
+        float price2 = 15;
+        
 
         var address = new[]
         {
-            new Address(street, city, zicode),
-            new Address(street2,city2,zicode2),
+            new Address(street, city, zicode, price, false),
+            new Address(street2,city2,zicode2, price2, true),
         };
         await db.Addresses.AddRangeAsync(address);
-        
-        
-        address[0].User = new[] {user[0], admin};
-        address[1].User = new[] {user[0]};
+
+
+        address[0].User = admin;
+        address[1].User = user[0];
         
        
         
@@ -143,22 +145,22 @@ public class ApplicationDbInitializer
         //Car 
         var car = new[]
        {
-           new Car("aj57220", "PersonBil", user[0])
+           new Car("AJ57220", "Car", user[0])
        };
        await db.Cars.AddRangeAsync(car);
 
 
-       //Parking  
+       /*  
        var parkering = new[]
        {
            new Parkering(2,
-               "personbil",
+               "Truck",
                true,
                20,
                new DateTime(2000,12,2)),
            
            new Parkering(1,
-               "Varebil",
+               "Car",
                false ,
                20,
                new DateTime(2000,12,2)),
@@ -180,7 +182,7 @@ public class ApplicationDbInitializer
        
        parkering[0].Location = loc;
        parkering[0].User = user[0];
-       parkering[0].car = car[0];
+       parkering[0].Car = car[0];
 
        parkering[1].Location = loc2;
        parkering[1].User = user[0];
@@ -196,7 +198,7 @@ public class ApplicationDbInitializer
         //Check if the parking is available 
        for (int i = 0; i < parkering.Length; i++)
        {
-           if (parkering[i].car == null)
+           if (parkering[i].Car == null)
            {
                parkering[i].Availability = true;
            }
@@ -205,7 +207,7 @@ public class ApplicationDbInitializer
                parkering[i].Availability = false;
            }
        }
-       
+       */
 
        await db.SaveChangesAsync();
        

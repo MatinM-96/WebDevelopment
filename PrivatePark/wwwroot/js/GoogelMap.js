@@ -156,10 +156,13 @@ function googelmarker()
     {
         var parkingmark = [];
         var icon;
-        for(var i=0;i<parking.length;i++)
-
+        var infowindow = new google.maps.InfoWindow();
+        var markerContent;
+        var buttonId;
+        
+        for(var i = 0; i < parking.length; i++)
         {
-            if(parking[i].availability == false)
+            if(parking[i].rented == true)
             {
                 icon  = red;
             }
@@ -167,16 +170,37 @@ function googelmarker()
             {
                 icon = green;
             }
-
-            parkingmark [i] =  new google.maps.Marker(
+            
+            parkingmark[i] =  new google.maps.Marker(
                 {
                     position: {lat: parking[i].location.lat, lng:parking[i].location.lng},
                     map : map,
                     icon:icon
                 });
+            
+            buttonId = 'rent-button-' + i;
+            google.maps.event.addListener(parkingmark[i], 'click', function () {
+                markerContent = '<button id="'+buttonId+'" type="button">Click to rent!</button>';
+                infowindow.setContent(markerContent);
+                infowindow.open(map, this);
+            })
+            console.log(parking[i].id)
         }
-    })
-};
+
+        $('#parentElement').on('click', '#' + buttonId, function () {
+            $.ajax({
+                url: '/HomeController/Rent',
+                type: 'POST',
+                data: {
+                    addressId: parking[i].id
+                },
+                success: function (response) {
+                    // Code to handle response
+                }
+            });
+        });
+    });
+}
 
 
 

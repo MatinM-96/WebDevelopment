@@ -60,11 +60,13 @@ public class ChatController : Controller
         if (user2 != null)
         {
             ViewData["User1Id"] = user.Id;
-            ViewData["User1Name"] = user.Nickname;
+            ViewData["User1Firstname"] = user.Firstname;
+            ViewData["User1Lastname"] = user.Lastname;
             ViewData["User1Email"] = user.Email;
             
             ViewData["User2Id"] = user2.Id;
-            ViewData["User2Name"] = user2.Nickname;
+            ViewData["User2Firstname"] = user2.Firstname;
+            ViewData["User2Lastname"] = user2.Lastname;
             ViewData["User2Email"] = user2.Email;
 
             return View("Index");
