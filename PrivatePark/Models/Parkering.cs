@@ -42,6 +42,7 @@ public class Parkering
     
     //public int AddressId { get; set;}
     public Location Location { get; set; }
+    public Address Aadress { get; set; }
     public ApplicationUser User { get; set; }
     
     

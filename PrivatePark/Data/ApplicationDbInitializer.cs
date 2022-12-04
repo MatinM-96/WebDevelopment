@@ -172,22 +172,19 @@ public class ApplicationDbInitializer
        // assigning relationships between the entities  
        //address[0].Parkering = new List<Parkering> {parkering[0]};
        
-       loc.Parkering = new List<Parkering> {parkering[0]};
-       loc2.Parkering = new List<Parkering> {parkering[1]};
+       loc.Parkerings= new List<Parkering> {parkering[0]};
+       loc2.Parkerings = new List<Parkering> {parkering[1]};
        user[0].Addresses = address;
        
        parkering[0].Location = loc;
        parkering[0].User = user[0];
        parkering[0].car = car[0];
+       parkering[0].Aadress = address[0];
+
+       parkering[1].Aadress = address[1]; 
 
        parkering[1].Location = loc2;
        parkering[1].User = user[0];
-       
-       
-       
-       
-       
-       
        
        
        

@@ -37,6 +37,8 @@ public class Address
 
     public ICollection<ApplicationUser>? User { get; set; }
     
+    public ICollection<Parkering> Parkerings { get; set; }
+    
 
     public Location Location { get; set;} 
     

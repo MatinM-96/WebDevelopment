@@ -1,0 +1,43 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@model AddParking
+@{
+    ViewData["Title"] = "Add a Parking";
+    ViewData["ActivePage"] = ManageNavPages.AddParking;
+}
+
+<h3>@ViewData["Title"]</h3>
+<div class="row">
+    <div class="col-md-6">
+        <form id="add-car-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-floating">
+                <input asp-for="Input" class="form-control" />
+                <label asp-for="Input.ParkingNumber" class="form-label"></label>
+                <span asp-validation-for="Input.ParkingNumber" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.ParkingType" class="form-control"/>
+                <label asp-for="Input.ParkingType" class="form-label"></label>
+                <span asp-validation-for="Input.ParkingType" class="text-danger"></span>
+            </div>
+            
+            
+            <div class="form-floating">
+                <input asp-for="Input.Price" class="form-control"/>
+                <label asp-for="Input.Price" class="form-label"></label>
+                <span asp-validation-for="Input.Price" class="text-danger"></span>
+            </div>
+            
+                        
+            
+            
+            
+            
+            
+            
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        </form>
+    </div>
+</div>
