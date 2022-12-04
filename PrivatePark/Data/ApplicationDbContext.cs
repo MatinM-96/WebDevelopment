@@ -18,8 +18,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     
     public DbSet<Location> Locations => Set<Location>();
     public DbSet<Parkering> Parkerings => Set<Parkering>();
-    
-    
-    
-    
+
+
 }
