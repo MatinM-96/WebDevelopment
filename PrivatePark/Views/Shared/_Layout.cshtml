@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> _userManager
+@inject SignInManager<ApplicationUser> _signInManager
+@{
+    var applicationUser = await _userManager.GetUserAsync(User);
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -28,6 +35,25 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
+                    @{
+                        if (_signInManager.IsSignedIn(User) && applicationUser != null)
+                        {
+                            var role = await _userManager.GetRolesAsync(applicationUser);
+                            var currentRole = role[0];
+                            if (currentRole == "Renter" || currentRole == "Both" || currentRole == "Admin")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="RenterHistory">RenterHistory</a>
+                                </li>  
+                            }   
+                            if (currentRole == "Rentee" || currentRole == "Both" || currentRole == "Admin")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="RenteeHistory">RenteeHistory</a>
+                                </li>  
+                            }
+                        }
+                    }
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>

@@ -179,26 +179,30 @@ function googelmarker()
                 });
             
             buttonId = 'rent-button-' + i;
-            google.maps.event.addListener(parkingmark[i], 'click', function () {
-                markerContent = '<button id="'+buttonId+'" type="button">Click to rent!</button>';
-                infowindow.setContent(markerContent);
-                infowindow.open(map, this);
-            })
+            var addressId = parking[i].id;
+            
+            if (icon == green) {
+                google.maps.event.addListener(parkingmark[i], 'click', function () {
+                    markerContent = '<form method="post">' +
+                        '<div><input name="addressId" value="'+addressId+'" hidden/></div>' +
+                        '<div><label for="parking-time">Rent until: </label>' +
+                        '<input id="parking-time" name="time" type="time" required/></div>' +
+                        '<div><input id="'+buttonId+'" type="submit" value="Click to rent!"/></div>' +
+                        '</form>';
+                    infowindow.setContent(markerContent);
+                    infowindow.open(map, this);
+                })
+            }
+            else {
+                google.maps.event.addListener(parkingmark[i], 'click', function () {
+                    markerContent = '<p>Spot currently unavailable</p>';
+                    infowindow.setContent(markerContent);
+                    infowindow.open(map, this);
+                })
+            }
+            
             console.log(parking[i].id)
         }
-
-        $('#parentElement').on('click', '#' + buttonId, function () {
-            $.ajax({
-                url: '/HomeController/Rent',
-                type: 'POST',
-                data: {
-                    addressId: parking[i].id
-                },
-                success: function (response) {
-                    // Code to handle response
-                }
-            });
-        });
     });
 }
 

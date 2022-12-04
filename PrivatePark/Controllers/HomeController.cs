@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using mnacr22.Models;
 using mnacr22.Data;
 using Microsoft.AspNetCore.Identity;
+using NuGet.Versioning;
 
 namespace mnacr22.Controllers;
 
@@ -23,32 +24,52 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
+        var user = _userManager.GetUserAsync(User).Result;
+        var cars = _db.Cars.Where(x => x.User.Contains(user));
+
+        
+        
         return View();
     }
 
-    [HttpGet]
-    public IActionResult Rent(int addressId)
+    [HttpPost]
+    [Authorize]
+    public IActionResult Index(int addressId, DateTime time)
     {
-        var rentee = _userManager.GetUserAsync(User).Result;
-        var address = _db.Addresses.Find(addressId);
-        var renter = address.User;
+        Console.WriteLine("\n\n" + addressId + "\n\n");
         
+        var rentee = _userManager.GetUserAsync(User).Result;
+        var address = _db.Addresses.FirstOrDefault(a => a.Id == addressId);
+        var renter = address.User;
+
         Parkering park = new Parkering()
         {
             StartTime = DateTime.Now,
             Address = address,
             Renter = renter,
-            Rentee = rentee
+            //Car = car, Legge til at man kan velge hvilken bil i formen
+            EndTime = time 
         };
-        
+
+        address.Rented = true;
+
+        _db.Addresses.Update(address);
         _db.Parkerings.AddRange(park);
         _db.SaveChanges();
         
         return View();
     }
     
-    [HttpPost]
-    public IActionResult Rent()
+    [HttpGet]
+    public IActionResult RenterHistory()
+    {
+        var user = _userManager.GetUserAsync(User).Result;
+        
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult RenteeHistory()
     {
         return View();
     }

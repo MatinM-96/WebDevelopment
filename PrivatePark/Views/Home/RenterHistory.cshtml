@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Parkering>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> _userManager
+@{
+    var applicationUser = await _userManager.GetUserAsync(User);
+}
+
+@{
+    ViewBag.Title = "History";
+    Layout = "_Layout";
+}
+
+<h2>Parkingspot history</h2>
+
+@{
+    /*
+    foreach (var park in Model)
+    {
+        if (park.Renter == applicationUser)
+        {
+            <p></p>
+            <div>Street: @park.Address.Street</div>
+            <div>City: @park.Address.City</div>
+            <div>Zip: @park.Address.ZiptCode</div>
+            <div>Start: @park.StartTime</div>
+            <div>End: @park.EndTime</div>
+            <div>Veichle: @park.Car</div>
+            <p></p>
+        }
+    }   
+    */
+}
