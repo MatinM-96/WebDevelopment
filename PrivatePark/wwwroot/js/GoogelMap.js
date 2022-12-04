@@ -191,7 +191,7 @@ function googelmarker()
                         '</form>';
                     infowindow.setContent(markerContent);
                     infowindow.open(map, this);
-                })
+                }) // Find method to add car when renting
             }
             else {
                 google.maps.event.addListener(parkingmark[i], 'click', function () {
