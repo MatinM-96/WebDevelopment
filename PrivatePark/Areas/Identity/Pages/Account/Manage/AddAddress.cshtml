@@ -28,7 +28,7 @@
             </div>
             <div class="form-floating">
                 <input type="number" min="3" max="500" asp-for="Input.Price" class="form-control" required/>
-                <label asp-for="Input.Price" class="form-label">Price pr hour</label>
+                <label asp-for="Input.Price" class="form-label">Price in NOK pr hour</label>
                 <span asp-validation-for="Input.Price" class="text-danger"></span>
             </div>
             <div class="form-floating">
@@ -50,6 +50,10 @@
                 </select>
                 <label asp-for="Input.Active"></label>
                 <span asp-validation-for="Input.Active" class="text-danger"></span>
+            </div>
+            <div>
+                <label for="fileupload">Confirm ownership of parkingspot by uploading pdf:</label>
+                <input type="file" name="fileupload" value="fileupload" id="fileupload">
             </div>
             
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>

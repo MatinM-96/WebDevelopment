@@ -30,6 +30,8 @@ public class Parkering
     
     public Address Address { get; set; }
     
+    public ApplicationUser Rentee { get; set; }
+    
     
     public ApplicationUser Renter { get; set; }
 

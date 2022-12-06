@@ -11,16 +11,16 @@ public class info : Controller
 
     public info(ApplicationDbContext db)
     {
-        _db = db; 
+        _db = db;
     }
-    
-    
+
+
     // GET
-  
+
 
     public JsonResult GetAllParkings()
     {
-      
+
         var location = _db.Addresses.Where(x => x.Active == true).Include(a => a.Location)
             .ToList();
         return Json(location);

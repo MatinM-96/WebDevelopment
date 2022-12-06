@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<Parkering>
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@using mnacr22.Data
 @inject UserManager<ApplicationUser> _userManager
+@inject ApplicationDbContext _db
 @{
     var applicationUser = await _userManager.GetUserAsync(User);
 }
@@ -13,20 +16,17 @@
 <h2>Parkingspot history</h2>
 
 @{
-    /*
-    foreach (var park in Model)
+    IEnumerable<Parkering> test = _db.Parkerings.Where(x => x.Renter == applicationUser).Include(c => c.Address).Include(d => d.Rentee).Include(e => e.Car);
+
+    foreach (var park in test)
     {
-        if (park.Renter == applicationUser)
-        {
-            <p></p>
-            <div>Street: @park.Address.Street</div>
-            <div>City: @park.Address.City</div>
-            <div>Zip: @park.Address.ZiptCode</div>
-            <div>Start: @park.StartTime</div>
-            <div>End: @park.EndTime</div>
-            <div>Veichle: @park.Car</div>
-            <p></p>
-        }
-    }   
-    */
+        <p></p>
+        <div>Street: @park.Address.Street</div>
+        <div>City: @park.Address.City</div>
+        <div>Zip: @park.Address.ZiptCode</div>
+        <div>Start time: @park.StartTime</div>
+        <div>End time: @park.EndTime</div>
+        <div>Veichle: @park.Car.RegistrationNumber</div>
+        <p></p>
+    }
 }
