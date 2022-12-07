@@ -30,8 +30,6 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        var user = _userManager.GetUserAsync(User).Result;
-        var cars = _db.Cars.Where(x => x.User.Contains(user));
         return View();
     }
    
@@ -44,8 +42,9 @@ public class HomeController : Controller
         Console.WriteLine("\n\n" + addressId + "\n\n");
         
         var address = _db.Addresses.FirstOrDefault(a => a.Id == addressId);
+        var user = _userManager.GetUserAsync(User).Result;
 
-        if (time < DateTime.Now)
+        if (time < DateTime.Now || user == null)
         {
             return RedirectToPage("Error");
         }
@@ -120,18 +119,19 @@ public class HomeController : Controller
         Response.Headers.Add("Location", session.Url);
 
         TempData["addressId"] = aId;
-
         string time = t.ToString("yy-MM-dd HH:mm:ss");
         TempData["time"] = time;
-
+        TempData["pricePaid"] = (int)priceToPay;
+        
         return new StatusCodeResult(303);
     }
 
     [HttpGet]
     public IActionResult Success()
     {
-        int addressId = (int) TempData["addressId"];
-        string timeString = (string) TempData["time"];
+        int addressId = (int)TempData["addressId"];
+        string timeString = (string)TempData["time"];
+        int pricePaid = (int)TempData["pricePaid"];
 
         DateTime time = DateTime.ParseExact(timeString, "yy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
         
@@ -148,7 +148,8 @@ public class HomeController : Controller
             Rentee = rentee,
             //Car = car,
             EndTime = time, 
-            TotalTime = time - DateTime.Now
+            TotalTime = time - DateTime.Now,
+            PricePaid = pricePaid
         };
         
         address.Rented = true;
@@ -156,6 +157,8 @@ public class HomeController : Controller
         _db.Addresses.Update(address);
         _db.Parkerings.AddRange(park);
         _db.SaveChanges();
+
+        ViewBag.ParkId = park.Id;
         
         return View();
     }

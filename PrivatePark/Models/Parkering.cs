@@ -32,10 +32,10 @@ public class Parkering
     
     public ApplicationUser Rentee { get; set; }
     
-    
     public ApplicationUser Renter { get; set; }
-
     
+    public int PricePaid { get; set; } 
+
     
     public Car? Car { get; set;}
 

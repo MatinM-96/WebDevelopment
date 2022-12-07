@@ -153,7 +153,8 @@ public class ApplicationDbInitializer
            Rentee = admin,
            Car = car[0],
            EndTime = DateTime.Now,
-           TotalTime = DateTime.Now - DateTime.Now
+           TotalTime = DateTime.Now - DateTime.Now,
+           PricePaid = 123
        };
        
        var park2 = new Parkering
@@ -164,7 +165,8 @@ public class ApplicationDbInitializer
            Rentee = admin,
            Car = car[0],
            EndTime = DateTime.Now,
-           TotalTime = DateTime.Now - DateTime.Now
+           TotalTime = DateTime.Now - DateTime.Now,
+           PricePaid = 100
        };
 
        await db.Parkerings.AddRangeAsync(park);
