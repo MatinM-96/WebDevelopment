@@ -145,7 +145,10 @@ public class ApplicationDbInitializer
         //Car 
         var car = new[]
        {
-           new Car("AJ57220", "Car", user[0])
+           new Car("AJ57220", "Car", user[0]),
+           new Car("AJ57221", "motorcyscl", admin),
+           new Car("AJ57222", "vareBil", user[0]),
+           new Car("AJ57223", "Lastebil", user[0]),
        };
        await db.Cars.AddRangeAsync(car);
 

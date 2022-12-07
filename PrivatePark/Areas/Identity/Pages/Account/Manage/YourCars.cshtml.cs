@@ -49,7 +49,8 @@ public class YourCarsModel : PageModel
         var user = _userManager.GetUserAsync(User).Result;
         DisplayCars = _db.Cars.Where(x => x.User.Contains(user)).ToList();
     }
-    
+
+   
     
     public async Task<IActionResult> OnPostAsync()
     {

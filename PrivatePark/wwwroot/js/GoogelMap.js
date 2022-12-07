@@ -12,11 +12,25 @@ $(document).ready(function() {
     initMap();
     Search_Box();
     googelmarker();
-    currentposition()
-
-
+    currentposition();
+    car();
 });
 
+
+
+function car()
+{
+    $.get("/info/GetAllcarForEachUser", function (car)
+    {
+        var cars = JSON.parse(car); 
+        console.log(cars)
+        
+        for( i =0; i <cars.length; i++)
+        {
+            console.log(cars[i]);
+        }
+    })
+}
 
 
 
@@ -167,7 +181,7 @@ function googelmarker()
             buttonId = 'rent-button-' + i;
             var addressId = parking[i].id;
             
-            if (icon == green) {
+            if (icon === green) {
                 google.maps.event.addListener(parkingmark[i], 'click', function () {
                     markerContent = '<form method="post">' +
                         '<div><input name="addressId" value="'+addressId+'" hidden/></div>' +

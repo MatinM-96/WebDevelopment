@@ -28,11 +28,10 @@ public class HomeController : Controller
     {
         var user = _userManager.GetUserAsync(User).Result;
         var cars = _db.Cars.Where(x => x.User.Contains(user));
-
-        
-        
         return View();
     }
+   
+
 
     [HttpPost]
     [Authorize]
