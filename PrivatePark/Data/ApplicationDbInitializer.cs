@@ -83,17 +83,6 @@ public class ApplicationDbInitializer
         address[0].User = admin;
         address[1].User = user[0];
         
-       
-        
-        
-
-        //address[0].User.Add(user[0]); 
-        //address[1].User.Add(admin);
-
-
-        
-      
-        
         
         
         

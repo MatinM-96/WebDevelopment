@@ -16,23 +16,6 @@
 <h2>Parkingspot history</h2>
 
 @{
-
-   
-    foreach (var park in Model)
-    {
-        if (park.Renter == applicationUser)
-        {
-            <p></p>
-            <div>Street: @park.Address.Street</div>
-            <div>City: @park.Address.City</div>
-            <div>Zip: @park.Address.ZiptCode</div>
-            <div>Start: @park.StartTime</div>
-            <div>End: @park.EndTime</div>
-            <div>Veichle: @park.Car</div>
-            <p></p>
-        }
-    }  
-
     IEnumerable<Parkering> test = _db.Parkerings.Where(x => x.Renter == applicationUser).Include(c => c.Address).Include(d => d.Rentee).Include(e => e.Car);
 
     foreach (var park in test)
@@ -46,5 +29,4 @@
         <div>Veichle: @park.Car.RegistrationNumber</div>
         <p></p>
     }
-
 }

@@ -24,8 +24,6 @@ public class ChatController : Controller
 
     [Authorize]
     [HttpGet]
-  
-    
     public IActionResult Index()
     {
         var user = _userManager.GetUserAsync(User).Result;
