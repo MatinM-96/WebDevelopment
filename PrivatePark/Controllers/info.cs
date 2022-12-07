@@ -17,14 +17,13 @@ public class Info : Controller
     {
         _db = db;
         _um = um; 
-
     }
     
-   
+
 
     public JsonResult GetAllParkings()
     {
-      
+
         var location = _db.Addresses.Where(x => x.Active == true).Include(a => a.Location)
             .ToList();
         return Json(location)

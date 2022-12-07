@@ -186,7 +186,7 @@ function googelmarker()
                     markerContent = '<form method="post">' +
                         '<div><input name="addressId" value="'+addressId+'" hidden/></div>' +
                         '<div><label for="parking-time">Rent until: </label>' +
-                        '<input id="parking-time" name="time" type="time" required/></div>' +
+                        '<input id="parking-time" name="time" type="datetime-local" required/></div>' +
                         '<div><input id="'+buttonId+'" type="submit" value="Click to rent!"/></div>' +
                         '</form>';
                     infowindow.setContent(markerContent);
@@ -202,7 +202,7 @@ function googelmarker()
                 })
             }
             
-            console.log(parking[i].id)
+            console.log(parking[i].id);
         }
     });
 }

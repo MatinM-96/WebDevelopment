@@ -1,12 +1,16 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using mnacr22.Models;
 using mnacr22.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using NuGet.Versioning;
 using Stripe;
 using Stripe.Checkout;
+using Stripe.Issuing;
 
 namespace mnacr22.Controllers;
 
@@ -39,34 +43,18 @@ public class HomeController : Controller
     {
         Console.WriteLine("\n\n" + addressId + "\n\n");
         
-        var rentee = _userManager.GetUserAsync(User).Result;
         var address = _db.Addresses.FirstOrDefault(a => a.Id == addressId);
-        var renter = address.User;
 
-        Parkering park = new Parkering()
-        {
-            StartTime = DateTime.Now,
-            Address = address,
-            Renter = renter,
-            //Car = car, Legge til at man kan velge hvilken bil i formen
-            EndTime = time, 
-            TotalTime = time - DateTime.Now
-        };
-
-        if (park.EndTime < park.StartTime)
+        if (time < DateTime.Now)
         {
             return RedirectToPage("Error");
         }
 
-        var price = (long)(park.TotalTime.TotalHours * address.Price);
+        TimeSpan tTime = time - DateTime.Now;
 
-        address.Rented = true;
+        var price = (long)(tTime.TotalHours * address.Price);
 
-        _db.Addresses.Update(address);
-        _db.Parkerings.AddRange(park);
-        _db.SaveChanges(); // Endre slik at endringene blir bekreftet etter at betalingen er bekreftet
-        
-        return RedirectToAction("CreatePayment", new {priceToPay = price});
+        return RedirectToAction("CreatePayment", new {priceToPay = price, aId = addressId, t = time});
     }
     
     [HttpGet]
@@ -88,7 +76,8 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult CreatePayment(long priceToPay)
+    [Authorize]
+    public IActionResult CreatePayment(long priceToPay, int aId, DateTime t)
     {
         StripeConfiguration.ApiKey =
             "sk_test_51M1RCrH7GdmlJf4XKjrBTbzb9OZnX8gGIV28NeUUDcJ50Exbw4iJTEjy5LUTIhInLuACZcJg7vT3qZoJ5EkA9QEI00MJJSOwuC";
@@ -130,12 +119,44 @@ public class HomeController : Controller
         
         Response.Headers.Add("Location", session.Url);
 
+        TempData["addressId"] = aId;
+
+        string time = t.ToString("yy-MM-dd HH:mm:ss");
+        TempData["time"] = time;
+
         return new StatusCodeResult(303);
     }
 
     [HttpGet]
     public IActionResult Success()
     {
+        int addressId = (int) TempData["addressId"];
+        string timeString = (string) TempData["time"];
+
+        DateTime time = DateTime.ParseExact(timeString, "yy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+        
+        var rentee = _userManager.GetUserAsync(User).Result;
+        var address = _db.Addresses.FirstOrDefault(a => a.Id == addressId);
+        var user = _db.Addresses.Where(b => b.Id == addressId).Include(c => c.User).FirstOrDefault();
+        var renter = user.User;
+
+        Parkering park = new Parkering
+        {
+            StartTime = DateTime.Now,
+            Address = address,
+            Renter = renter,
+            Rentee = rentee,
+            //Car = car,
+            EndTime = time, 
+            TotalTime = time - DateTime.Now
+        };
+        
+        address.Rented = true;
+        
+        _db.Addresses.Update(address);
+        _db.Parkerings.AddRange(park);
+        _db.SaveChanges();
+        
         return View();
     }
 

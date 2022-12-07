@@ -145,73 +145,42 @@ public class ApplicationDbInitializer
         //Car 
         var car = new[]
        {
+
            new Car("AJ57220", "Car", user[0]),
            new Car("AJ57221", "motorcyscl", admin),
            new Car("AJ57222", "vareBil", user[0]),
            new Car("AJ57223", "Lastebil", user[0]),
+
+           new Car("AJ57220", "Car", admin)
+
        };
        await db.Cars.AddRangeAsync(car);
 
-
-       /*  
-       var parkering = new[]
+       var park = new Parkering
        {
-           new Parkering(2,
-               "Truck",
-               true,
-               20,
-               new DateTime(2000,12,2)),
-           
-           new Parkering(1,
-               "Car",
-               false ,
-               20,
-               new DateTime(2000,12,2)),
-         
+           StartTime = DateTime.Now,
+           Address = address[0],
+           Renter = user[0],
+           Rentee = admin,
+           Car = car[0],
+           EndTime = DateTime.Now,
+           TotalTime = DateTime.Now - DateTime.Now
        };
        
-       
-       await db.Parkerings.AddRangeAsync(parkering); 
-      
-       
-       
-       
-       // assigning relationships between the entities  
-       //address[0].Parkering = new List<Parkering> {parkering[0]};
-       
-       loc.Parkerings= new List<Parkering> {parkering[0]};
-       loc2.Parkerings = new List<Parkering> {parkering[1]};
-       user[0].Addresses = address;
-       
-       parkering[0].Location = loc;
-       parkering[0].User = user[0];
-<<<<<<< HEAD
-       parkering[0].Car = car[0];
-=======
-       parkering[0].car = car[0];
-       parkering[0].Aadress = address[0];
-
-       parkering[1].Aadress = address[1]; 
->>>>>>> dd850e7dd396e66ed5b68716b05f096c16265bd1
-
-       parkering[1].Location = loc2;
-       parkering[1].User = user[0];
-       
-       
-       
-        //Check if the parking is available 
-       for (int i = 0; i < parkering.Length; i++)
+       var park2 = new Parkering
        {
-           if (parkering[i].Car == null)
-           {
-               parkering[i].Availability = true;
-           }
-           else
-           {
-               parkering[i].Availability = false;
-           }
-       }
-       */
+           StartTime = DateTime.Now,
+           Address = address[0],
+           Renter = user[0],
+           Rentee = admin,
+           Car = car[0],
+           EndTime = DateTime.Now,
+           TotalTime = DateTime.Now - DateTime.Now
+       };
+
+       await db.Parkerings.AddRangeAsync(park);
+       await db.Parkerings.AddRangeAsync(park2);
+      
 
        await db.SaveChangesAsync();
        
