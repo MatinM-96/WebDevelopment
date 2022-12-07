@@ -50,6 +50,10 @@ public class AddAddress : PageModel
         [Required]
         [Display(Name = "Suitability")]
         public string Suitability { get; set; }
+        
+        [Required]
+        [Display(Name = "Quantity")]
+        public int Quantity { get; set; }
     }
     
     public async Task<IActionResult> OnPostAsync(Address address)
@@ -81,6 +85,8 @@ public class AddAddress : PageModel
             address.Price = Input.Price;
             address.Active = Input.Active;
             address.Suitability = Input.Suitability;
+            address.Quantity = Input.Quantity;
+            address.MaxQuantity = Input.Quantity;
 
             Location loc = coordinates(address);  
         

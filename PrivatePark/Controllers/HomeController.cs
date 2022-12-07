@@ -30,6 +30,23 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
+        var check = _db.Parkerings.Include(a => a.Address);
+        foreach (var park in check)
+        {
+            if (park.EndTime < DateTime.Now)
+            {
+                var address = _db.Addresses.FirstOrDefault(x => x.Id == park.Address.Id);
+
+                if (address.Quantity < address.MaxQuantity)
+                {
+                    address.Quantity++;
+
+                    _db.Addresses.Update(address);
+                    _db.SaveChanges();   
+                }
+            }
+        }
+        
         return View();
     }
    
@@ -152,7 +169,7 @@ public class HomeController : Controller
             PricePaid = pricePaid
         };
         
-        address.Rented = true;
+        address.Quantity -= 1;
         
         _db.Addresses.Update(address);
         _db.Parkerings.AddRange(park);

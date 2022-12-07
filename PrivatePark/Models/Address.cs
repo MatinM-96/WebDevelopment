@@ -8,7 +8,7 @@ public class Address
     
     public Address (){}
 
-    public Address(string street, string city, string ziptCode, float price, bool active, string suitability)
+    public Address(string street, string city, string ziptCode, float price, bool active, string suitability, int quantity)
     {
         Street = street;
         City = city;
@@ -16,6 +16,8 @@ public class Address
         Price = price;
         Active = active;
         Suitability = suitability;
+        Quantity = quantity;
+        MaxQuantity = quantity;
     }
     
     public int Id { get; set; }
@@ -37,7 +39,9 @@ public class Address
     [DisplayName("Price")]
     public float Price { get; set; }
     
-    public bool Rented { get; set; } = false;
+    public int MaxQuantity { get; set; }
+    
+    public int Quantity { get; set; }
     
     public bool Active { get; set; }
     

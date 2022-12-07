@@ -162,7 +162,7 @@ function googelmarker()
         
         for(var i = 0; i < parking.length; i++)
         {
-            if(parking[i].rented == true)
+            if(parking[i].quantity < 1)
             {
                 icon  = red;
             }
