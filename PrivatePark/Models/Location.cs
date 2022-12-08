@@ -20,7 +20,7 @@ public class Location
     public double Lat { get; set; }
     public double Lng { get; set; }
     
-    public List<Parkering> Parkering { get; set; }
+
 }
 
 public class Geometry

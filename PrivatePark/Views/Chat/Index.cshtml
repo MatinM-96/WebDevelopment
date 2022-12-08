@@ -1,0 +1,152 @@
+﻿@{
+    ViewBag.Title = "Messages";
+    Layout = "_Layout";
+}
+
+@using (Html.BeginForm("Index", "Chat", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-6">
+            <div>Enter email of user to start a chat with:</div>
+            <div class="form-floating">
+                <input id="username" name="username" type="text" class="form-control"/>
+                <span class="text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Start chat</button>
+        </div>
+    </div> 
+}
+
+@{
+    if (ViewData["User2Id"]?.ToString() != null)
+    {
+        <script>
+        (function(t,a,l,k,j,s){
+        s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.head.appendChild(s)
+        ;k=t.Promise;t.Talk={v:3,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l
+        .push([f])},catch:function(){return k&&new k()},c:l}};})(window,document,[]);
+        </script>
+        
+        <div id="talkjs-container" style="width: 90%; margin: 30px; height: 500px">
+            <i>You dont have any messages...</i>
+        </div>
+        
+        <script type="text/javascript">
+        Talk.ready.then(function () {
+            
+            var user1Id = '@ViewData["User1Id"]';                    
+            var user1Firstname = '@ViewData["User1Firstname"]';
+            var user1Lastname = '@ViewData["User1Lastname"]';
+            var user1Email = '@ViewData["User1Email"]';
+            console.log('user1Id:', user1Id);
+            console.log('user1Firstname:', user1Firstname);
+            console.log('user1Email:', user1Email);
+              
+            var me = new Talk.User({
+                id: user1Id,
+                name: user1Firstname + ' ' + user1Lastname,
+                email: user1Email,
+                role: 'default',
+            });
+            
+            window.talkSession = new Talk.Session({
+                appId: 't0WLJIUr',
+                me: me,
+            });
+            
+            var user2Id = '@ViewData["User2Id"]';
+            var user2Firstname = '@ViewData["User2Firstname"]';
+            var user2Lastname = '@ViewData["User2Lastname"]';
+            var user2Email = '@ViewData["User2Email"]';
+                
+            console.log('user2Id:', user2Id);
+            console.log('user2Name:', user2Firstname);
+            console.log('user2Email:', user2Email);
+            
+            var other = new Talk.User({
+                id: user2Id,
+                name: user2Firstname + ' ' + user2Lastname,
+                email: user2Email,
+                role: 'default',
+            });
+                        
+            var conversation = talkSession.getOrCreateConversation(
+                Talk.oneOnOneId(me, other)
+            );
+                        
+            conversation.setParticipant(me);
+            conversation.setParticipant(other);   
+                    
+            var inbox = talkSession.createInbox({ selected: conversation });
+            
+            inbox.mount(document.getElementById('talkjs-container'));   
+        });
+        </script>
+    }
+    else
+    {
+        <script>
+        (function(t,a,l,k,j,s){
+        s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.head.appendChild(s)
+        ;k=t.Promise;t.Talk={v:3,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l
+        .push([f])},catch:function(){return k&&new k()},c:l}};})(window,document,[]);
+        </script>
+        
+        <div id="talkjs-container" style="width: 90%; margin: 30px; height: 500px">
+            <i>You dont have any messages...</i>
+        </div>
+        
+        <script type="text/javascript">
+        Talk.ready.then(function () {
+            
+            var user1Id = '@ViewData["User1Id"]';                    
+            var user1Firstname = '@ViewData["User1Firstname"]';
+            var user1Lastname = '@ViewData["User1Lastname"]';
+            var user1Email = '@ViewData["User1Email"]';
+            console.log('user1Id:', user1Id);
+            console.log('user1Firstname:', user1Firstname);
+            console.log('user1Email:', user1Email);
+              
+            var me = new Talk.User({
+                id: user1Id,
+                name: user1Firstname + ' ' + user1Lastname,
+                email: user1Email,
+                role: 'default',
+            });
+            
+            window.talkSession = new Talk.Session({
+                appId: 't0WLJIUr',
+                me: me,
+            });
+            
+            var user2Id = 'dummy';
+            var user2Name = 'no-reply';
+            var user2Email = 'no-reply';
+                
+            console.log('user2Id:', user2Id);
+            console.log('user2Name:', user2Name);
+            console.log('user2Email:', user2Email);
+            
+            var other = new Talk.User({
+                id: user2Id,
+                name: user2Name,
+                email: user2Email,
+                role: 'default',
+                welcomeMessage: 'Welcome to the chat system! On your left you can see your inbox. You can always start chats with other users by entering their email in the search field above'
+            });
+                        
+            var conversation = talkSession.getOrCreateConversation(
+                Talk.oneOnOneId(me, other)
+            );
+                        
+            conversation.setParticipant(me);
+            conversation.setParticipant(other);   
+                    
+            var inbox = talkSession.createInbox({ selected: conversation });
+            
+            inbox.mount(document.getElementById('talkjs-container'));
+        });
+        </Script>
+    }
+}
+

@@ -12,19 +12,34 @@ $(document).ready(function() {
     initMap();
     Search_Box();
     googelmarker();
-    currentposition()
-
-
+    currentposition();
+    car();
 });
 
 
 
+<<<<<<< HEAD
 
 
 
 
 var searchBtn = document.getElementById('sokbutton');
 
+=======
+function car()
+{
+    $.get("/info/GetAllcarForEachUser", function (car)
+    {
+        var cars = JSON.parse(car); 
+        console.log(cars)
+        
+        for( i =0; i <cars.length; i++)
+        {
+            console.log(cars[i]);
+        }
+    })
+}
+>>>>>>> d52ab911e625ac1396b7f4a211feda913e36d92d
 
 
 
@@ -38,10 +53,13 @@ function Search_Box()
     
     var markers = [];
     
+    
 
     searchBtn.onclick = function () {
         displaySearchResults(map,searchBox,markers);
     }
+    
+    var m = document.getElementById('sok').value;
     
     
 }
@@ -71,8 +89,7 @@ function displaySearchResults(map, searchBox, markers) {
             console.log("Returned place contains no geometry");
             return;
         }
-
-
+        
         markers.push(new google.maps.Marker({
             map: map,
             position: place.geometry.location
@@ -92,22 +109,14 @@ function displaySearchResults(map, searchBox, markers) {
 
 
 
-
-
-
-
-
-
-
-
 function currentposition()
 {
     infoWindow = new google.maps.InfoWindow();
+    
+    
+    
 
     const locationButton = document.getElementById("currentposition")
-    
-    
-    
     
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
     locationButton.addEventListener("click", () => {
@@ -154,10 +163,13 @@ function googelmarker()
     {
         var parkingmark = [];
         var icon;
-        for(var i=0;i<parking.length;i++)
-
+        var infowindow = new google.maps.InfoWindow();
+        var markerContent;
+        var buttonId;
+        
+        for(var i = 0; i < parking.length; i++)
         {
-            if(parking[i].availability == false)
+            if(parking[i].quantity < 1)
             {
                 icon  = red;
             }
@@ -165,16 +177,42 @@ function googelmarker()
             {
                 icon = green;
             }
-
-            parkingmark [i] =  new google.maps.Marker(
+            
+            parkingmark[i] =  new google.maps.Marker(
                 {
                     position: {lat: parking[i].location.lat, lng:parking[i].location.lng},
                     map : map,
                     icon:icon
                 });
+            
+            buttonId = 'rent-button-' + i;
+            var addressId = parking[i].id;
+            
+            if (icon === green) {
+                google.maps.event.addListener(parkingmark[i], 'click', function () {
+                    markerContent = '<form method="post">' +
+                        '<div><input name="addressId" value="'+addressId+'" hidden/></div>' +
+                        '<div><label for="parking-time">Rent until: </label>' +
+                        '<input id="parking-time" name="time" type="datetime-local" required/></div>' +
+                        '<div><input id="'+buttonId+'" type="submit" value="Click to rent!"/></div>' +
+                        '</form>';
+                    infowindow.setContent(markerContent);
+                    infowindow.open(map, this);
+                }) // Find method to add car when renting 
+                // Also add button to message renter for questions
+            }
+            else {
+                google.maps.event.addListener(parkingmark[i], 'click', function () {
+                    markerContent = '<p>Spot currently unavailable</p>';
+                    infowindow.setContent(markerContent);
+                    infowindow.open(map, this);
+                })
+            }
+            
+            console.log(parking[i].id);
         }
-    })
-};
+    });
+}
 
 
 

@@ -1,0 +1,72 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using Microsoft.AspNetCore.Identity
+@using mnacr22.Areas.Identity.Pages.Account.Manage
+@model YourAddresses
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Manage your address";
+    ViewData["ActivePage"] = ManageNavPages.YourAddresses;
+}
+
+<h3>@ViewData["Title"]</h3>
+
+
+@foreach (var user in Model.DisplayAddresses)
+{
+    <div class="row">
+        <div class="col-md-6">
+            <form id="edit-Address-form" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div><input type="hidden" value="@user.Id" asp-for="Input.Id"/></div>
+                <div class="form-floating">
+                    <input asp-for="Input.Street" value="@user.Street" class="form-control" required/>
+                    <label asp-for="Input.Street" class="form-label"></label>
+                    <span asp-validation-for="Input.Street" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
+                    <input asp-for="Input.ZiptCode" class="form-control" value="@user.ZiptCode" required/>
+                    <label asp-for="Input.ZiptCode" class="form-label"></label>
+                    <span asp-validation-for="Input.ZiptCode" class="text-danger"></span>
+                </div>
+                
+                <div class="form-floating">
+                    <input asp-for="Input.City" class="form-control" value="@user.City" required/>
+                    <label asp-for="Input.City" class="form-label"></label>
+                    <span asp-validation-for="Input.City" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
+                    <input type="number" min="1" max="100" asp-for="Input.Price" value="@user.Price" class="form-control" required/>
+                    <label asp-for="Input.Price" class="form-label">Price pr hour</label>
+                    <span asp-validation-for="Input.Price" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
+                    <select asp-for="Input.Suitability" class="form-control" autocomplete="" aria-required="true" required>
+                        <option value="@user.Suitability" selected>@user.Suitability</option>
+                        <option value="Motorcycle">Motorcycle</option>
+                        <option value="Car">Car</option>
+                        <option value="Camper van">Camper van</option>
+                        <option value="Truck">Truck</option>
+                    </select>
+                    <label asp-for="Input.Suitability"></label>
+                    <span asp-validation-for="Input.Suitability" class="text-danger"></span>
+                </div>
+                
+                <input id="update-parkingspot" type="submit" class="w-100 btn btn-lg btn-primary" name="buttonType" value="Update"/>
+                
+                @if (user.Active == false)
+                {
+                    <input id="activate-as-parkingspot" type="submit" class="w-100 btn btn-lg btn-primary" name="buttonType" value="Activate"/> 
+                }
+                else
+                {
+                    <input id="activate-as-parkingspot" type="submit" class="w-100 btn btn-lg btn-primary" name="buttonType" value="Deactivate"/>
+                }
+                
+                <input id="delete-profile-button" type="submit" class="btn-danger" name="buttonType" value="Delete"/>
+            </form>
+            <div><p></p></div>
+        </div>
+    </div>
+}

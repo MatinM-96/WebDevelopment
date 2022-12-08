@@ -21,10 +21,13 @@ builder.Services.AddControllersWithViews();
 
 
 
+
+
+
 builder.Services.AddControllers().AddJsonOptions(x =>
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-    // Add the two lines under when email verification should be used (max 100/day). & change DisplayConfirmAccountLink to false in RegisterConfirmation.cshtml.cs
+// Add the two lines under when email verification should be used (max 100/day). & change DisplayConfirmAccountLink to false in RegisterConfirmation.cshtml.cs
 //builder.Services.AddTransient<IEmailSender, EmailSender>();
 //builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
@@ -35,7 +38,7 @@ using (var services = app.Services.CreateScope())
     var db = services.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var um = services.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     var rm = services.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    ApplicationDbInitializer.Initializer(db, um, rm);
+    await ApplicationDbInitializer.Initializer(db, um, rm);
 }
 
 

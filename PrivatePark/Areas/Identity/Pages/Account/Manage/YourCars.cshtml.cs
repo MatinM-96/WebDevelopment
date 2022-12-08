@@ -47,11 +47,12 @@ public class YourCarsModel : PageModel
     public void OnGetAsync()
     {
         var user = _userManager.GetUserAsync(User).Result;
-        DisplayCars = _db.Cars.Where(x => x.User == user).ToList();
+        DisplayCars = _db.Cars.Where(x => x.User.Contains(user)).ToList();
     }
+
+   
     
-    
-    public async Task<IActionResult> OnPostAsync(string buttonType)
+    public async Task<IActionResult> OnPostAsync()
     {
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
@@ -60,32 +61,21 @@ public class YourCarsModel : PageModel
         }
 
         int id = Input.Id;
+        
         if (id == null)
         {
             Console.WriteLine("Id is null");
             return Redirect("./SomeError");
         }
-        
-        Car car = _db.Cars.Find(id);
 
-        car.Id = id;
-        car.RegistrationNumber = Input.RegistrationNumber;
-        car.CarType = Input.CarType;
-        car.User = user;
+        var car = _db.Cars.Include(x => x.User)
+            .SingleOrDefault(c => c.Id == id);
 
-        if (buttonType == "Update")
-        {
-            Console.WriteLine("\n\nUpdating information...\n");
-            _db.Entry(car).State = EntityState.Modified;
-            await _db.SaveChangesAsync();  
-        }
-        else if (buttonType == "Delete")
-        {
-            Console.WriteLine("\n\nDeleting from database...\n");
-            _db.Entry(car).State = EntityState.Deleted;
-            await _db.SaveChangesAsync();
-        }
+        Console.WriteLine("\n\nDeleting from database...\n");
+
+        car.User.Remove(user);
         
+        await _db.SaveChangesAsync();
         return RedirectToPage();
     }
 }

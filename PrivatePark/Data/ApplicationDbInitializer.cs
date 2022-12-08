@@ -33,9 +33,9 @@ public class ApplicationDbInitializer
                 Firstname = "Test",
                 Lastname = "User",
                 UserName = "user@uia.no",
+                Nickname = "User1",
                 Email = "user@uia.no",
                 EmailConfirmed = true,
-                PersonNummer = 13259696951,
                 DateOfBirth = new DateTime(1996, 08, 12)
             }
         };
@@ -49,9 +49,9 @@ public class ApplicationDbInitializer
             Firstname = "Admin",
             Lastname = "Admin",
             UserName = "admin@uia.no",
+            Nickname = "Admin1",
             Email = "admin@uia.no",
             EmailConfirmed = true,
-            PersonNummer = 123456,
             DateOfBirth = new DateTime(1950, 01, 01)
         };
         um.CreateAsync(admin, "Password1.").Wait();
@@ -63,34 +63,25 @@ public class ApplicationDbInitializer
         string city = "Grimstad";
         const string zicode = "4879 ";
         string street = "jon lilletuns vei 2A";
-        
-        
-        
+        float price = 20;
+
+
         string city2 = "Grimstad";
         const string zicode2 = "4879";
         string street2 = "Jon Lilletuns vei 9";
+        float price2 = 15;
+        
 
         var address = new[]
         {
-            new Address(street, city, zicode),
-            new Address(street2,city2,zicode2),
+            new Address(street, city, zicode, price, false, "Car", 1),
+            new Address(street2,city2,zicode2, price2, true, "Motorcycle", 2),
         };
         await db.Addresses.AddRangeAsync(address);
-        
-        
-        address[0].User = new[] {user[0], admin};
-        address[1].User = new[] {user[0]};
-        
-       
-        
-        
-
-        //address[0].User.Add(user[0]); 
-        //address[1].User.Add(admin);
 
 
-        
-      
+        address[0].User = admin;
+        address[1].User = user[0];
         
         
         
@@ -143,69 +134,44 @@ public class ApplicationDbInitializer
         //Car 
         var car = new[]
        {
-           new Car("aj57220", "PersonBil", user[0])
+
+           new Car("AJ57220", "Car", user[0]),
+           new Car("AJ57221", "motorcyscl", admin),
+           new Car("AJ57222", "vareBil", user[0]),
+           new Car("AJ57223", "Lastebil", user[0]),
+
+           new Car("AJ57220", "Car", admin)
+
        };
        await db.Cars.AddRangeAsync(car);
-        
 
-        //Parking  
-       var parkering = new[]
+       var park = new Parkering
        {
-           new Parkering(2,
-               "personbil",
-               true,
-               20,
-               new DateTime(2000,12,2)),
-           
-           new Parkering(1,
-               "Varebil",
-               false ,
-               20,
-               new DateTime(2000,12,2)),
-         
+           StartTime = DateTime.Now,
+           Address = address[0],
+           Renter = user[0],
+           Rentee = admin,
+           Car = car[0],
+           EndTime = DateTime.Now,
+           TotalTime = DateTime.Now - DateTime.Now,
+           PricePaid = 123
        };
        
-       
-       await db.Parkerings.AddRangeAsync(parkering); 
-      
-       
-       
-       
-       // assigning relationships between the entities  
-       //address[0].Parkering = new List<Parkering> {parkering[0]};
-       
-       loc.Parkering = new List<Parkering> {parkering[0]};
-       loc2.Parkering = new List<Parkering> {parkering[1]};
-       user[0].Addresses = address;
-       
-       parkering[0].Location = loc;
-       parkering[0].User = user[0];
-       parkering[0].car = car[0];
-
-       parkering[1].Location = loc2;
-       parkering[1].User = user[0];
-       
-       
-       
-       
-       
-       
-       
-       
-       
-        //Check if the parking is available 
-       for (int i = 0; i < parkering.Length; i++)
+       var park2 = new Parkering
        {
-           if (parkering[i].car == null)
-           {
-               parkering[i].Availability = true;
-           }
-           else
-           {
-               parkering[i].Availability = false;
-           }
-       }
-       
+           StartTime = DateTime.Now,
+           Address = address[0],
+           Renter = user[0],
+           Rentee = admin,
+           Car = car[0],
+           EndTime = DateTime.Now,
+           TotalTime = DateTime.Now - DateTime.Now,
+           PricePaid = 100
+       };
+
+       await db.Parkerings.AddRangeAsync(park);
+       await db.Parkerings.AddRangeAsync(park2);
+      
 
        await db.SaveChangesAsync();
        

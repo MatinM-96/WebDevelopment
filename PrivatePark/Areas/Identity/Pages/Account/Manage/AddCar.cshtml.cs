@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using mnacr22.Data;
 using mnacr22.Models;
 using NuGet.Packaging;
@@ -45,13 +46,28 @@ public class AddCarModel : PageModel
         {
             return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
         }
-        
-        car.RegistrationNumber = Input.RegistrationNumber;
-        car.CarType = Input.CarType;
-        car.User = user;
 
-        _db.Cars.AddRange(car);
-        await _db.SaveChangesAsync();
+        var checkDb = _db.Cars.Where(x => x.RegistrationNumber == Input.RegistrationNumber).ToList();
+        var count = checkDb.Count;
+        
+        if (count > 0)
+        {
+            car = _db.Cars.Find(checkDb[0].Id);
+
+            car.User = new[] {user};
+            _db.Entry(car).State = EntityState.Modified;
+            await _db.SaveChangesAsync();
+        }
+        else
+        {
+            car.RegistrationNumber = Input.RegistrationNumber;
+            car.CarType = Input.CarType;
+            car.User = new[] {user};
+
+            _db.Cars.AddRange(car);
+            await _db.SaveChangesAsync();
+        }
+        
         return RedirectToPage();
     }
 }

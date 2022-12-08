@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Immutable;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,12 +12,12 @@ using Newtonsoft.Json;
 
 namespace mnacr22.Areas.Identity.Pages.Account.Manage;
 
-public class Youraddresses: PageModel
+public class YourAddresses: PageModel
 {
     private readonly UserManager<ApplicationUser> _um;
     private readonly ApplicationDbContext _db;
 
-    public Youraddresses(UserManager<ApplicationUser> um, ApplicationDbContext db)
+    public YourAddresses(UserManager<ApplicationUser> um, ApplicationDbContext db)
     {
         _um = um;
         _db = db;
@@ -25,18 +26,14 @@ public class Youraddresses: PageModel
     
     public IEnumerable<Address> DisplayAddresses { get; set; }
     
-   
     
     
-
-
     [BindProperty] 
     public InputModel Input { get; set; }
 
     public class InputModel
     {
         public int Id {get; set;}
-        
         
         [Required] 
         [Display(Name = "Street")] 
@@ -49,35 +46,22 @@ public class Youraddresses: PageModel
         [Required] 
         [Display(Name = "City")] 
         public string City { get; set; }
+        
+        [Required]
+        [Display(Name = "Price")]
+        public float Price { get; set; }
+        
+        [Required]
+        [Display(Name = "Suitability")]
+        public string Suitability { get; set; }
     }
     
     public void OnGetAsync()
     {
-       
-        var user =  _um.GetUserAsync(User).Result;
-        var db = _db.Addresses.Include(u=>u.User)
-            
-            .ToList();
-
-
-        
-
-
-        DisplayAddresses = user.Addresses; 
-
-
-
-
-
-
-
-
-
-
-
+        var user = _um.GetUserAsync(User).Result;
+        DisplayAddresses = _db.Addresses.Where(x => x.User == user);
     }
    
-    
     
     public async Task<IActionResult> OnPostAsync(string buttonType)
     {
@@ -86,7 +70,6 @@ public class Youraddresses: PageModel
         {
             return NotFound($"Unable to load user with ID '{_um.GetUserId(User)}'.");
         }
-       //var address = await _db.Addresses.
 
         int id = Input.Id;
         if (id == null)
@@ -94,44 +77,51 @@ public class Youraddresses: PageModel
             Console.WriteLine("Id is null");
             return Redirect("./SomeError");
         }
-        
-        Address address = _db.Addresses.Find(id);
 
-        address.Id = id;
-        address.Street = Input.Street;
-        address.ZiptCode = Input.ZiptCode;
-        address.City = Input.City;
-        address.User = new[] {user};
-        Location loc = coordinates(address);
-        
-        
-        
+        var address = _db.Addresses.Find(id);
 
-        address.Location = loc;
-        
-        
-        
-        
-
-        if (buttonType == "Update")
-        {
-            Console.WriteLine("\n\nUpdating information...\n");
-            _db.Entry(address).State = EntityState.Modified;
-            await _db.SaveChangesAsync();  
-        }
-        else if (buttonType == "Delete")
+        if (buttonType == "Delete")
         {
             Console.WriteLine("\n\nDeleting from database...\n");
-            _db.Entry(address).State = EntityState.Deleted;
+
+            _db.Addresses.RemoveRange(address);
             await _db.SaveChangesAsync();
         }
+        else if (buttonType == "Activate")
+        {
+            address.Active = true;
+            _db.Addresses.Update(address);
+            await _db.SaveChangesAsync();
+        }
+        else if (buttonType == "Deactivate")
+        {
+            address.Active = false;
+            _db.Addresses.Update(address);
+            await _db.SaveChangesAsync();
+        }
+        else if (buttonType == "Update")
+        {
+            address.City = Input.City;
+            address.Street = Input.Street;
+            address.ZiptCode = Input.ZiptCode;
+            address.Price = Input.Price;
+            address.Suitability = Input.Suitability;
+
+            Location loc = coordinates(address);  
+        
+            address.Location = loc;
+            address.User = user;
+        
+            _db.Addresses.Update(address);
+            await _db.SaveChangesAsync();
+        }
+        
         
         return RedirectToPage();
     }
     
     
-    
-    public Location coordinates(Address address)
+    public static Location coordinates(Address address)
     {
         Rootobject? oRootObject;
 
@@ -150,9 +140,4 @@ public class Youraddresses: PageModel
 
         return loc; 
     }
-
-    
-    
-    
-    
 }
