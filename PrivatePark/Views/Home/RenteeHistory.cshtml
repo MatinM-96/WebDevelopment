@@ -1,7 +1,35 @@
-﻿@model IEnumerable<Parkering>
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@using mnacr22.Data
+@model IEnumerable<Parkering>
+@inject UserManager<ApplicationUser> _userManager
+@inject ApplicationDbContext _db
 @{
     ViewBag.Title = "History";
     Layout = "_Layout";
 }
+@{
+    var applicationUser = await _userManager.GetUserAsync(User);
+}
 
-<h2>Rentee history</h2>
+
+<h1><strong>Rentee history</strong></h1>
+<h2><strong>Your parking history</strong></h2>
+
+@{
+    IEnumerable<Parkering> test = _db.Parkerings.Where(x => x.Rentee == applicationUser).Include(c => c.Address).Include(d => d.Car).Include(e => e.Rentee);
+
+    foreach (var park in test)
+    {
+        <p></p>
+        <div>Street: @park.Address.Street</div>
+        <div>City: @park.Address.City</div>
+        <div>Zip: @park.Address.ZiptCode</div>
+        <div>Start time: @park.StartTime</div>
+        <div>End time: @park.EndTime</div>
+        <div>Vehicle: @park.Car.RegistrationNumber</div>
+        <div>Cost: @park.PricePaid NOK</div>
+        <p></p>
+    }
+}
+

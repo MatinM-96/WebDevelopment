@@ -13,7 +13,8 @@
     Layout = "_Layout";
 }
 
-<h2>Parkingspot history</h2>
+<h1><strong>Parkingspot history</strong></h1>
+<h2><strong>Your rented parkingspots</strong></h2>
 
 @{
     IEnumerable<Parkering> test = _db.Parkerings.Where(x => x.Renter == applicationUser).Include(c => c.Address).Include(d => d.Rentee).Include(e => e.Car);
@@ -28,6 +29,7 @@
         <div>End time: @park.EndTime</div>
         <div>Vehicle: @park.Car.RegistrationNumber</div>
         <div>Payment recieved: @park.PricePaid NOK</div>
+        <div>Name of rentee: @park.Renter.Firstname @park.Renter.Lastname</div>
         <p></p>
     }
 }
