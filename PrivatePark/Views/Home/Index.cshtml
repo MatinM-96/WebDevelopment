@@ -9,23 +9,23 @@
                 <h1 class="display-4">PrivatePark</h1>
                 <h5>Vi hjelper deg med å finne din parkeringsplass</h5>
                 
-                <form method="post">
+                <div>
                     <input class="search-bar mb-lg-1" id="sok" type="text" name="sok" placeholder="Addresse, Plass eller By">
-                    <input class="buttons" id ="sokbutton" type="submit" value="Søk">
+                    <input class="buttons" id="sokbutton" type="submit" value="Søk">
                     <input class="search-bar mb-lg-1" type="datetime-local" name="tid" placeholder="Velg Tid">
                     <input class="buttons dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" value="Filter">
                     <ul class="dropdown-menu prevent-select" id="myDropdown">
                         <li class="dropdown-item">
-                            <input type="checkbox" id="filter1" name="filter1">
-                            <label for="filter1">checkmark1</label>
+                            <input type="checkbox" value="Handikap" class="filter" id="handikap">
+                            <label for="filter1">Handikap</label>
                         </li>
                         <li class="dropdown-item">
-                            <input type="checkbox" id="filter2" name="filter2">
-                            <label for="filter2">checkmark2</label>
+                            <input type="checkbox" value="El-Bil" class="filter" id="el-bil">
+                            <label for="filter2">El-Bil</label>
                         </li>
                         <li class="dropdown-item">
-                            <input type="checkbox" id="filter3" name="filter3">
-                            <label for="filter3">checkmark3</label>
+                            <input type="checkbox" value="Garasje" class="filter" id="Garasje">
+                            <label for="filter3">Garasje</label>
                         </li>
                         <li>
                             <label class="CheckboxContainer">ASRock
@@ -33,9 +33,12 @@
                                 <span class="checkmark"></span>
                             </label>
                         </li>
+                        <div class="print-values">
+                            <p id="valueList"></p>
+                        </div>
                     </ul>
                     <input type="submit" id ="currentposition" value="current position">
-                </form>
+                </div>
             </div>
         </div>
         <div class="col-sm-8">

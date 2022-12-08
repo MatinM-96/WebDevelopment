@@ -23,6 +23,7 @@ $(document).ready(function() {
 
 
 
+var searchBtn = document.getElementById('sokbutton');
 
 
 
@@ -31,11 +32,9 @@ function Search_Box()
 {
 
     var searchInput = document.getElementById('sok');
-    var searchBtn = document.getElementById('sokbutton');
 
     
     var searchBox = new google.maps.places.SearchBox(searchInput);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('sokbutton'));
     
     var markers = [];
     
