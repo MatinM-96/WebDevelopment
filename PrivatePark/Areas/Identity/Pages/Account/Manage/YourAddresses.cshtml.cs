@@ -110,7 +110,10 @@ public class YourAddresses: PageModel
             address.ZiptCode = Input.ZiptCode;
             address.Price = Input.Price;
             address.Suitability = Input.Suitability;
-            address.Quantity = Input.Quantity;
+
+            var diff = Input.Quantity - address.MaxQuantity;
+            address.Quantity += diff;
+            
             address.MaxQuantity = Input.Quantity;
             
 

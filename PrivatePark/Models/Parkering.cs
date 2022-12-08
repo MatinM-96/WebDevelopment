@@ -34,7 +34,9 @@ public class Parkering
     
     public ApplicationUser Renter { get; set; }
     
-    public int PricePaid { get; set; } 
+    public int PricePaid { get; set; }
+
+    public bool CheckFinished { get; set; } = false;
 
     
     public Car? Car { get; set;}

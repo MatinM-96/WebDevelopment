@@ -179,12 +179,13 @@ function googelmarker()
                 });
             
             var addressId = parking[i].id;
+            var buttonId = 'rent-button-' + i;
             
             var contentAvailable = '<form method="post">' +
                             '<div><input name="addressId" value="'+addressId+'" hidden/></div>' +
                             '<div><label for="parking-time">Rent until: </label>' +
                             '<input id="parking-time" name="time" type="datetime-local" required/></div>' +
-                            '<div><input type="submit" value="Click to rent!"/></div>' +
+                            '<div><input id="'+buttonId+'" type="submit" value="Click to rent!"/></div>' +
                             '</form>';
             
             var contentOccupied = '<p>Spot currently unavailable</p>';

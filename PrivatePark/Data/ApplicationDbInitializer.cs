@@ -197,7 +197,8 @@ public class ApplicationDbInitializer
            Car = car[0],
            EndTime = DateTime.Now,
            TotalTime = DateTime.Now - DateTime.Now,
-           PricePaid = 123
+           PricePaid = 123,
+           CheckFinished = true
        };
        
        var park2 = new Parkering
@@ -209,7 +210,8 @@ public class ApplicationDbInitializer
            Car = car[0],
            EndTime = DateTime.Now,
            TotalTime = DateTime.Now - DateTime.Now,
-           PricePaid = 100
+           PricePaid = 100,
+           CheckFinished = true
        };
        
        var park3 = new Parkering
@@ -221,7 +223,8 @@ public class ApplicationDbInitializer
            Car = car[0],
            EndTime = DateTime.Now,
            TotalTime = DateTime.Now - DateTime.Now,
-           PricePaid = 200
+           PricePaid = 200,
+           CheckFinished = true
        };
        
        var park4 = new Parkering
@@ -233,7 +236,8 @@ public class ApplicationDbInitializer
            Car = car[2],
            EndTime = DateTime.Now,
            TotalTime = DateTime.Now - DateTime.Now,
-           PricePaid = 200
+           PricePaid = 200,
+           CheckFinished = true
        };
 
        await db.Parkerings.AddRangeAsync(park);

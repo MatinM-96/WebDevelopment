@@ -33,16 +33,17 @@ public class HomeController : Controller
         var check = _db.Parkerings.Include(a => a.Address);
         foreach (var park in check)
         {
-            if (park.EndTime < DateTime.Now)
+            if (park.EndTime < DateTime.Now && !park.CheckFinished)
             {
                 var address = _db.Addresses.FirstOrDefault(x => x.Id == park.Address.Id);
 
                 if (address.Quantity < address.MaxQuantity)
                 {
                     address.Quantity++;
+                    park.CheckFinished = true;
 
                     _db.Addresses.Update(address);
-                    _db.SaveChanges();   
+                    _db.SaveChanges();
                 }
             }
         }
@@ -156,8 +157,8 @@ public class HomeController : Controller
         
         var rentee = _userManager.GetUserAsync(User).Result;
         var address = _db.Addresses.FirstOrDefault(a => a.Id == addressId);
-        var user = _db.Addresses.Where(b => b.Id == addressId).Include(c => c.User).FirstOrDefault();
-        var renter = user.User;
+        var test = _db.Addresses.Where(b => b.Id == addressId).Include(c => c.User).FirstOrDefault();
+        var renter = test.User;
 
         Parkering park = new Parkering
         {
@@ -171,7 +172,7 @@ public class HomeController : Controller
             PricePaid = pricePaid
         };
         
-        address.Quantity -= 1;
+        test.Quantity -= 1;
         
         _db.Addresses.Update(address);
         _db.Parkerings.AddRange(park);
