@@ -36,8 +36,4 @@
       <_ContentIncludedByDefault Remove="Views\GoogelMap\map.cshtml" />
     </ItemGroup>
 
-    <ItemGroup>
-      <TypeScriptCompile Include="wwwroot\ts\site.ts" />
-    </ItemGroup>
-
 </Project>
