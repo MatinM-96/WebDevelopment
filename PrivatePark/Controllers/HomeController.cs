@@ -63,7 +63,7 @@ public class HomeController : Controller
 
         if (time < DateTime.Now || user == null)
         {
-            return RedirectToPage("Error");
+            return RedirectToAction("Error");
         }
 
         TimeSpan tTime = time - DateTime.Now;
@@ -74,6 +74,7 @@ public class HomeController : Controller
     }
     
     [HttpGet]
+    [Authorize]
     public IActionResult RenterHistory()
     {
         var user = _userManager.GetUserAsync(User).Result;
@@ -82,6 +83,7 @@ public class HomeController : Controller
     }
 
     [HttpGet]
+    [Authorize]
     public IActionResult RenteeHistory()
     {
         return View();

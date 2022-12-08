@@ -37,6 +37,11 @@
                     <span asp-validation-for="Input.City" class="text-danger"></span>
                 </div>
                 <div class="form-floating">
+                    <input type="number" min="1" max="500" asp-for="Input.Quantity" class="form-control" value="@user.MaxQuantity" required/>
+                    <label asp-for="Input.Quantity" class="form-label">Number of parkingspots</label>
+                    <span asp-validation-for="Input.Quantity" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
                     <input type="number" min="1" max="100" asp-for="Input.Price" value="@user.Price" class="form-control" required/>
                     <label asp-for="Input.Price" class="form-label">Price pr hour</label>
                     <span asp-validation-for="Input.Price" class="text-danger"></span>

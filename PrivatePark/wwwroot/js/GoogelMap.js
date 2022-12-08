@@ -158,55 +158,56 @@ function googelmarker()
 {
     $.get("/info/GetAllParkings", function (parking)
     {
-        var parkingmark = [];
         var icon;
-        var infowindow = new google.maps.InfoWindow();
-        var markerContent;
-        var buttonId;
-        
+
         for(var i = 0; i < parking.length; i++)
         {
             if(parking[i].quantity < 1)
             {
-                icon  = red;
+                icon = red;
             }
             else
             {
                 icon = green;
             }
-            
-            parkingmark[i] =  new google.maps.Marker(
+
+            var parkingmark =  new google.maps.Marker(
                 {
                     position: {lat: parking[i].location.lat, lng:parking[i].location.lng},
                     map : map,
-                    icon:icon
+                    icon: icon
                 });
             
-            buttonId = 'rent-button-' + i;
             var addressId = parking[i].id;
             
+            var contentAvailable = '<form method="post">' +
+                            '<div><input name="addressId" value="'+addressId+'" hidden/></div>' +
+                            '<div><label for="parking-time">Rent until: </label>' +
+                            '<input id="parking-time" name="time" type="datetime-local" required/></div>' +
+                            '<div><input type="submit" value="Click to rent!"/></div>' +
+                            '</form>';
+            
+            var contentOccupied = '<p>Spot currently unavailable</p>';
+
+            var infowindow = new google.maps.InfoWindow();
+            
             if (icon === green) {
-                google.maps.event.addListener(parkingmark[i], 'click', function () {
-                    markerContent = '<form method="post">' +
-                        '<div><input name="addressId" value="'+addressId+'" hidden/></div>' +
-                        '<div><label for="parking-time">Rent until: </label>' +
-                        '<input id="parking-time" name="time" type="datetime-local" required/></div>' +
-                        '<div><input id="'+buttonId+'" type="submit" value="Click to rent!"/></div>' +
-                        '</form>';
-                    infowindow.setContent(markerContent);
-                    infowindow.open(map, this);
-                }) // Find method to add car when renting 
-                // Also add button to message renter for questions
+                
+                google.maps.event.addListener(parkingmark, 'click', (function(parkingmark, contentAvailable, infowindow) {
+                    return function() {
+                        infowindow.setContent(contentAvailable);
+                        infowindow.open(map, parkingmark);
+                    };
+                })(parkingmark, contentAvailable, infowindow)); 
             }
             else {
-                google.maps.event.addListener(parkingmark[i], 'click', function () {
-                    markerContent = '<p>Spot currently unavailable</p>';
-                    infowindow.setContent(markerContent);
-                    infowindow.open(map, this);
-                })
+                google.maps.event.addListener(parkingmark, 'click', (function(parkingmark, contentOccupied, infowindow) {
+                    return function() {
+                        infowindow.setContent(contentOccupied);
+                        infowindow.open(map, parkingmark); 
+                    }
+                })(parkingmark, contentOccupied, infowindow));
             }
-            
-            console.log(parking[i].id);
         }
     });
 }

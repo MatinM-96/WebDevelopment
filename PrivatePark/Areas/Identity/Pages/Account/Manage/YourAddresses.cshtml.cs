@@ -54,6 +54,10 @@ public class YourAddresses: PageModel
         [Required]
         [Display(Name = "Suitability")]
         public string Suitability { get; set; }
+        
+        [Required]
+        [Display(Name = "Quantity")]
+        public int Quantity { get; set; }
     }
     
     public void OnGetAsync()
@@ -106,6 +110,9 @@ public class YourAddresses: PageModel
             address.ZiptCode = Input.ZiptCode;
             address.Price = Input.Price;
             address.Suitability = Input.Suitability;
+            address.Quantity = Input.Quantity;
+            address.MaxQuantity = Input.Quantity;
+            
 
             Location loc = coordinates(address);  
         

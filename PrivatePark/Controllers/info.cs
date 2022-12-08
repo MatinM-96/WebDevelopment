@@ -26,8 +26,7 @@ public class Info : Controller
 
         var location = _db.Addresses.Where(x => x.Active == true).Include(a => a.Location)
             .ToList();
-        return Json(location)
-            ;
+        return Json(location);
     }
     
     

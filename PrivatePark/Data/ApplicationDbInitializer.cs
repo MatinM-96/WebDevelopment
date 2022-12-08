@@ -55,7 +55,7 @@ public class ApplicationDbInitializer
         await um.AddToRoleAsync(user[0], "Both");
         
         um.CreateAsync(user2, "Password1.").Wait();
-        await um.AddToRoleAsync(user[0], "Both");
+        await um.AddToRoleAsync(user2, "Both");
 
 
         // Admin
