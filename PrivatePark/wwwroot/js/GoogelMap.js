@@ -18,14 +18,11 @@ $(document).ready(function() {
 
 
 
-<<<<<<< HEAD
-
 
 
 
 var searchBtn = document.getElementById('sokbutton');
 
-=======
 function car()
 {
     $.get("/info/GetAllcarForEachUser", function (car)
@@ -39,7 +36,7 @@ function car()
         }
     })
 }
->>>>>>> d52ab911e625ac1396b7f4a211feda913e36d92d
+
 
 
 

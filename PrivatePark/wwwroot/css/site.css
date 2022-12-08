@@ -59,6 +59,15 @@ body {
   user-select: none; /* Standard syntax */
 }
 
+#currentposition {
+  background: #F3F6F5;
+  align-items: center;
+  border-radius: 10px;
+  border: 0;
+  padding: 10px 20px;
+  margin-top: 10px;
+}
+
 /* Customize the label (the container) */
 .CheckboxContainer {
   display: block;
