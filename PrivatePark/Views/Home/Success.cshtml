@@ -34,6 +34,24 @@
       //<div>Vehicle: @x.Car.RegistrationNumber</div>
     }
   </p>
+  @{
+    if (park.Renter != park.Rentee)
+    {
+      @using (Html.BeginForm("Index", "Chat", FormMethod.Post))
+      {
+        <div class="row">
+          <div class="col-md-6">
+            <div>Have any questions about your booked parkingspot?</div>
+            <div class="form-floating">
+              <input id="username" name="username" type="text" value="@park.Renter.Email" class="form-control" hidden/>
+              <span class="text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Send a message to the renter</button>
+          </div>
+        </div> 
+      }
+    }
+  }
 </section>
 </body>
 </html>
