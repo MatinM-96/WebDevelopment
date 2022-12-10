@@ -61,7 +61,7 @@ namespace mnacr22.Areas.Identity.Pages.Account
 
             Email = email;
             // true -> displays link on page when registering an account, false -> only sending email
-            DisplayConfirmAccountLink = true;
+            DisplayConfirmAccountLink = false;
             if (DisplayConfirmAccountLink)
             {
                 var userId = await _userManager.GetUserIdAsync(user);

@@ -17,7 +17,9 @@
 <h2><strong>Your parking history</strong></h2>
 
 @{
-    IEnumerable<Parkering> test = _db.Parkerings.Where(x => x.Rentee == applicationUser).Include(c => c.Address).Include(d => d.Car).Include(e => e.Rentee);
+    IEnumerable<Parkering> test = _db.Parkerings.Where(x => x.Rentee == applicationUser)
+        .Include(c => c.Address).Include(d => d.Car)
+        .Include(e => e.Rentee). Include(f => f.Renter);
 
     foreach (var park in test)
     {
@@ -29,6 +31,23 @@
         <div>End time: @park.EndTime</div>
         <div>Vehicle: @park.Car.RegistrationNumber</div>
         <div>Cost: @park.PricePaid NOK</div>
+        <div>Renter: @park.Renter.Firstname @park.Renter.Lastname</div>
+        
+        if (park.Renter != park.Rentee)
+        {
+            @using (Html.BeginForm("Index", "Chat", FormMethod.Post))
+            {
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input id="username" name="username" type="text" value="@park.Renter.Email" class="form-control" hidden/>
+                            <span class="text-danger"></span>
+                        </div>
+                        <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Send a message to the renter</button>
+                    </div>
+                </div> 
+            }
+        }
         <p></p>
     }
 }

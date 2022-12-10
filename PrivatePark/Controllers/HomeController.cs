@@ -6,11 +6,13 @@ using mnacr22.Models;
 using mnacr22.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using mnacr22.Services;
 using Newtonsoft.Json;
 using NuGet.Versioning;
 using Stripe;
 using Stripe.Checkout;
 using Stripe.Issuing;
+using Microsoft.Extensions.Options;
 
 namespace mnacr22.Controllers;
 
@@ -20,11 +22,12 @@ public class HomeController : Controller
     private readonly ApplicationDbContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, UserManager<ApplicationUser> userManager, IOptions<AuthMessageSenderOptions> optionsAccessor)
     {
         _logger = logger;
         _db = db;
         _userManager = userManager;
+        Options = optionsAccessor.Value;
     }
     
     [HttpGet]
@@ -95,11 +98,12 @@ public class HomeController : Controller
         return View();
     }
 
+    public AuthMessageSenderOptions Options { get; }
+    
     [Authorize]
     public IActionResult CreatePayment(long priceToPay, int aId, DateTime t)
     {
-        StripeConfiguration.ApiKey =
-            "sk_test_51M1RCrH7GdmlJf4XKjrBTbzb9OZnX8gGIV28NeUUDcJ50Exbw4iJTEjy5LUTIhInLuACZcJg7vT3qZoJ5EkA9QEI00MJJSOwuC";
+        StripeConfiguration.ApiKey = Options.StripeKey;
         
         var domain = "https://localhost:7034";
 
