@@ -18,8 +18,8 @@
 
 @{
     IEnumerable<Parkering> test = _db.Parkerings.Where(x => x.Rentee == applicationUser)
-        .Include(c => c.Address).Include(d => d.Car)
-        .Include(e => e.Rentee). Include(f => f.Renter);
+        .Include(c => c.Address).Include(e => e.Rentee)
+        .Include(f => f.Renter);
 
     foreach (var park in test)
     {
@@ -29,12 +29,10 @@
         <div>Zip: @park.Address.ZiptCode</div>
         <div>Start time: @park.StartTime</div>
         <div>End time: @park.EndTime</div>
-        <div>Vehicle: @park.Car.RegistrationNumber</div>
+        <div>Vehicle: @park.Car</div>
         <div>Cost: @park.PricePaid NOK</div>
         <div>Renter: @park.Renter.Firstname @park.Renter.Lastname</div>
-        
-        if (park.Renter != park.Rentee)
-        {
+                                                                 
             @using (Html.BeginForm("Index", "Chat", FormMethod.Post))
             {
                 <div class="row">
@@ -47,7 +45,6 @@
                     </div>
                 </div> 
             }
-        }
         <p></p>
     }
 }

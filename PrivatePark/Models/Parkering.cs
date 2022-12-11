@@ -7,7 +7,7 @@ public class Parkering
 {
     public Parkering (){}
 
-    public Parkering(DateTime startTime, Address address, ApplicationUser renter, Car car)
+    public Parkering(DateTime startTime, Address address, ApplicationUser renter, string car)
     {
         StartTime = startTime;
         Address = address;
@@ -39,7 +39,7 @@ public class Parkering
     public bool CheckFinished { get; set; } = false;
 
     
-    public Car? Car { get; set;}
+    public string Car { get; set;}
 
     
 

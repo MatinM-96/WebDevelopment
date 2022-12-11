@@ -95,7 +95,7 @@ public class ApplicationDbInitializer
         var address = new[]
         {
             new Address(street, city, zicode, price, false, "Car", 1),
-            new Address(street2,city2,zicode2, price2, true, "Motorcycle", 2),
+            new Address(street2,city2,zicode2, price2, true, "Motorcycle", 1),
             new Address(street3,city3,zicode3, price3, true, "Motorcycle", 2)
         };
         await db.Addresses.AddRangeAsync(address);
@@ -194,7 +194,7 @@ public class ApplicationDbInitializer
            Address = address[0],
            Renter = user[0],
            Rentee = admin,
-           Car = car[0],
+           Car = car[0].RegistrationNumber,
            EndTime = DateTime.Now,
            TotalTime = DateTime.Now - DateTime.Now,
            PricePaid = 123,
@@ -207,7 +207,7 @@ public class ApplicationDbInitializer
            Address = address[1],
            Renter = user[0],
            Rentee = admin,
-           Car = car[0],
+           Car = car[0].RegistrationNumber,
            EndTime = DateTime.Now,
            TotalTime = DateTime.Now - DateTime.Now,
            PricePaid = 100,
@@ -220,7 +220,7 @@ public class ApplicationDbInitializer
            Address = address[0],
            Renter = admin,
            Rentee = user[0],
-           Car = car[0],
+           Car = car[0].RegistrationNumber,
            EndTime = DateTime.Now,
            TotalTime = DateTime.Now - DateTime.Now,
            PricePaid = 200,
@@ -233,7 +233,7 @@ public class ApplicationDbInitializer
            Address = address[2],
            Renter = user2,
            Rentee = user[0],
-           Car = car[2],
+           Car = car[2].RegistrationNumber,
            EndTime = DateTime.Now,
            TotalTime = DateTime.Now - DateTime.Now,
            PricePaid = 200,

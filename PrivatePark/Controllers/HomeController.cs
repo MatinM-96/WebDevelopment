@@ -58,7 +58,7 @@ public class HomeController : Controller
 
     [HttpPost]
     [Authorize]
-    public IActionResult Index(int addressId, DateTime time)
+    public IActionResult Index(int addressId, string car, DateTime time)
     {
         Console.WriteLine("\n\n" + addressId + "\n\n");
         
@@ -74,7 +74,7 @@ public class HomeController : Controller
 
         var price = (long)(tTime.TotalHours * address.Price);
 
-        return RedirectToAction("CreatePayment", new {priceToPay = price, aId = addressId, t = time});
+        return RedirectToAction("CreatePayment", new {priceToPay = price, aId = addressId, t = time, cr = car});
     }
     
     [HttpGet]
@@ -101,7 +101,7 @@ public class HomeController : Controller
     public AuthMessageSenderOptions Options { get; }
     
     [Authorize]
-    public IActionResult CreatePayment(long priceToPay, int aId, DateTime t)
+    public IActionResult CreatePayment(long priceToPay, int aId, DateTime t, string cr)
     {
         StripeConfiguration.ApiKey = Options.StripeKey;
         
@@ -146,6 +146,7 @@ public class HomeController : Controller
         string time = t.ToString("yy-MM-dd HH:mm:ss");
         TempData["time"] = time;
         TempData["pricePaid"] = (int)priceToPay;
+        TempData["car"] = cr;
         
         return new StatusCodeResult(303);
     }
@@ -156,6 +157,7 @@ public class HomeController : Controller
         int addressId = (int)TempData["addressId"];
         string timeString = (string)TempData["time"];
         int pricePaid = (int)TempData["pricePaid"];
+        string car = (string) TempData["car"];
 
         DateTime time = DateTime.ParseExact(timeString, "yy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
         
@@ -170,7 +172,7 @@ public class HomeController : Controller
             Address = address,
             Renter = renter,
             Rentee = rentee,
-            //Car = car,
+            Car = car,
             EndTime = time, 
             TotalTime = time - DateTime.Now,
             PricePaid = pricePaid

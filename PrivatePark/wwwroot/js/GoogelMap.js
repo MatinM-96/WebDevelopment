@@ -13,30 +13,12 @@ $(document).ready(function() {
     Search_Box();
     googelmarker();
     currentposition();
-    car();
 });
 
 
 
 
-
-
 var searchBtn = document.getElementById('sokbutton');
-
-function car()
-{
-    $.get("/info/GetAllcarForEachUser", function (car)
-    {
-        var cars = JSON.parse(car); 
-        console.log(cars)
-        
-        for( i =0; i <cars.length; i++)
-        {
-            console.log(cars[i]);
-        }
-    })
-}
-
 
 
 
@@ -159,57 +141,95 @@ function googelmarker()
     $.get("/info/GetAllParkings", function (parking)
     {
         var icon;
+        var userMail = [];
+        var userCars = '';
 
-        for(var i = 0; i < parking.length; i++)
-        {
-            if(parking[i].quantity < 1)
-            {
-                icon = red;
-            }
-            else
-            {
-                icon = green;
+        $.get("/info/GetAddressUser", function(user) {
+            for (var j = 0; j < user.length; j++) {
+                userMail[j] = user[j].user.email;
+                console.log(userMail[j]);
             }
 
-            var parkingmark =  new google.maps.Marker(
+            $.get("/info/GetAllcarForEachUser", function (car) {
+                var cars = JSON.parse(car);
+
+                for (var k = 0; k < cars.length; k++) {
+                    userCars += '<option>'+ cars[k].RegistrationNumber +'</option>';
+                    console.log(cars[k].RegistrationNumber);
+                }
+                console.log(userCars);
+
+                for(var i = 0; i < parking.length; i++)
                 {
-                    position: {lat: parking[i].location.lat, lng:parking[i].location.lng},
-                    map : map,
-                    icon: icon
-                });
-            
-            var addressId = parking[i].id;
-            var buttonId = 'rent-button-' + i;
-            
-            var contentAvailable = '<form method="post">' +
-                            '<div><input name="addressId" value="'+addressId+'" hidden/></div>' +
-                            '<div><label for="parking-time">Rent until: </label>' +
-                            '<input id="parking-time" name="time" type="datetime-local" required/></div>' +
-                            '<div><input id="'+buttonId+'" type="submit" value="Click to rent!"/></div>' +
-                            '</form>';
-            
-            var contentOccupied = '<p>Spot currently unavailable</p>';
-
-            var infowindow = new google.maps.InfoWindow();
-            
-            if (icon === green) {
-                
-                google.maps.event.addListener(parkingmark, 'click', (function(parkingmark, contentAvailable, infowindow) {
-                    return function() {
-                        infowindow.setContent(contentAvailable);
-                        infowindow.open(map, parkingmark);
-                    };
-                })(parkingmark, contentAvailable, infowindow)); 
-            }
-            else {
-                google.maps.event.addListener(parkingmark, 'click', (function(parkingmark, contentOccupied, infowindow) {
-                    return function() {
-                        infowindow.setContent(contentOccupied);
-                        infowindow.open(map, parkingmark); 
+                    if(parking[i].quantity < 1)
+                    {
+                        icon = red;
                     }
-                })(parkingmark, contentOccupied, infowindow));
-            }
-        }
+                    else
+                    {
+                        icon = green;
+                    }
+
+                    var parkingmark =  new google.maps.Marker(
+                        {
+                            position: {lat: parking[i].location.lat, lng:parking[i].location.lng},
+                            map : map,
+                            icon: icon
+                        });
+
+                    var addressId = parking[i].id;
+                    var buttonId = 'rent-button-' + i;
+
+                    console.log(userCars);
+                    console.log(userMail[i]);
+
+                    var contentAvailable = '<form method="post">' +
+                        '<div><input name="addressId" value="'+addressId+'" hidden/></div>' +
+                        '<div><label for="parking-time">Rent until: </label>' +
+                        '<input id="parking-time" name="time" type="datetime-local" required/></div>' +
+                        '<div><label id="parking-car">Select car: </label>' +
+                        '<select id="parking-car" name="car" required>' +
+                        '<option selected disabled hidden></option>' +
+                        userCars +
+                        '</select></div>' +
+                        '<div><input id="'+buttonId+'" type="submit" value="Click to rent!"/></div>' +
+                        '</form>' +
+                        '<form action="/Chat/Index" method="post">' +
+                        '<div><input name="username" value="'+userMail[i]+'" hidden/></div>' +
+                        '<div><input type="submit" value="Message renter"/></div>' +
+                        '</form>';
+
+                    console.log(contentAvailable);
+
+                    var contentOccupied = '<p>Spot currently unavailable</p>' +
+                    '</form>' +
+                    '<form action="/Chat/Index" method="post">' +
+                    '<div><input name="username" value="'+userMail[i]+'" hidden/></div>' +
+                    '<div><input type="submit" value="Message renter"/></div>' +
+                    '</form>';
+
+                    var infowindow = new google.maps.InfoWindow();
+
+                    if (icon === green) {
+
+                        google.maps.event.addListener(parkingmark, 'click', (function(parkingmark, contentAvailable, infowindow) {
+                            return function() {
+                                infowindow.setContent(contentAvailable);
+                                infowindow.open(map, parkingmark);
+                            };
+                        })(parkingmark, contentAvailable, infowindow));
+                    }
+                    else {
+                        google.maps.event.addListener(parkingmark, 'click', (function(parkingmark, contentOccupied, infowindow) {
+                            return function() {
+                                infowindow.setContent(contentOccupied);
+                                infowindow.open(map, parkingmark);
+                            }
+                        })(parkingmark, contentOccupied, infowindow));
+                    }
+                }
+            });
+        });
     });
 }
 
@@ -228,9 +248,3 @@ function initMap()
         });
 
 }
-
-
-
-
-
-

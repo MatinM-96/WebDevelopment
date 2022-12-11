@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 
 namespace mnacr22.Controllers;
 
+[Authorize]
 public class ChatController : Controller
 {
 
@@ -53,26 +54,27 @@ public class ChatController : Controller
         var user = _userManager.GetUserAsync(User).Result;
         var user2 = _userManager.FindByNameAsync(username).Result;
 
-        if (user2 == user)
+        if (user2 == user || user == null || user2 == null)
         {
             return View("Error");
         }
-
-        if (user2 != null)
-        {
-            ViewData["User1Id"] = user.Id;
-            ViewData["User1Firstname"] = user.Firstname;
-            ViewData["User1Lastname"] = user.Lastname;
-            ViewData["User1Email"] = user.Email;
+        
+        ViewData["User1Id"] = user.Id;
+        ViewData["User1Firstname"] = user.Firstname;
+        ViewData["User1Lastname"] = user.Lastname;
+        ViewData["User1Email"] = user.Email;
             
-            ViewData["User2Id"] = user2.Id;
-            ViewData["User2Firstname"] = user2.Firstname;
-            ViewData["User2Lastname"] = user2.Lastname;
-            ViewData["User2Email"] = user2.Email;
+        ViewData["User2Id"] = user2.Id;
+        ViewData["User2Firstname"] = user2.Firstname;
+        ViewData["User2Lastname"] = user2.Lastname;
+        ViewData["User2Email"] = user2.Email;
 
-            return View("Index");
-        }
+        return View("Index");
+    }
 
-        return View("Error");
+    [Authorize]
+    public IActionResult Error()
+    {
+        return View();
     }
 }

@@ -19,7 +19,13 @@ public class Info : Controller
         _um = um; 
     }
     
-
+    public JsonResult GetAddressUser()
+    {
+        var location = _db.Addresses.Where(x => x.Active == true).Include(a => a.User)
+            .ToList();
+        return Json(location);
+    }
+    
 
     public JsonResult GetAllParkings()
     {
@@ -36,7 +42,7 @@ public class Info : Controller
     {
         
         var user = _um.GetUserAsync(User).Result;
-        var cars = _db.Cars.Where(x => x.User != null && x.User.Contains(user));
+        var cars = _db.Cars.Where(x => x.User.Contains(user));
         string carsJson = JsonConvert.SerializeObject(cars);
 
         return (carsJson);
