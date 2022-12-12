@@ -74,7 +74,6 @@ namespace mnacr22.Areas.Identity.Pages.Account.Manage
         
         private async Task LoadAsync(ApplicationUser user)
         {
-            var userName = user.Nickname;
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var role = await _userManager.GetRolesAsync(user);
             var roleName = role[0];
@@ -83,7 +82,6 @@ namespace mnacr22.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                Nickname = userName,
                 PhoneNumber = phoneNumber,
                 Role = roleName
             };
@@ -126,13 +124,6 @@ namespace mnacr22.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            var username = user.Nickname;
-            if (Input.Nickname != username)
-            {
-                user.Nickname = Input.Nickname;
-                await _userManager.UpdateAsync(user);
-            }
-            
             var oldRole = await _userManager.GetRolesAsync(user);
             var roleName = oldRole[0];
 

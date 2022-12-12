@@ -33,7 +33,6 @@ public class ApplicationDbInitializer
                 Firstname = "Test",
                 Lastname = "User",
                 UserName = "user@uia.no",
-                Nickname = "User1",
                 Email = "user@uia.no",
                 EmailConfirmed = true,
                 DateOfBirth = new DateTime(1996, 08, 12)
@@ -45,7 +44,6 @@ public class ApplicationDbInitializer
             Firstname = "Test2",
             Lastname = "User2",
             UserName = "user2@uia.no",
-            Nickname = "User2",
             Email = "user2@uia.no",
             EmailConfirmed = true,
             DateOfBirth = new DateTime(1996, 08, 12)
@@ -64,7 +62,6 @@ public class ApplicationDbInitializer
             Firstname = "Admin",
             Lastname = "Admin",
             UserName = "admin@uia.no",
-            Nickname = "Admin1",
             Email = "admin@uia.no",
             EmailConfirmed = true,
             DateOfBirth = new DateTime(1950, 01, 01)

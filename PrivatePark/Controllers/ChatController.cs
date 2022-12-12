@@ -30,7 +30,7 @@ public class ChatController : Controller
         var user = _userManager.GetUserAsync(User).Result;
         
         ViewData["User1Id"] = user.Id;
-        ViewData["User1Name"] = user.Nickname;
+        ViewData["User1Name"] = user.Email;
         ViewData["User1Email"] = user.Email;
 
         if (ViewData["User2Id"] != null)
@@ -38,7 +38,7 @@ public class ChatController : Controller
             var user2 = _userManager.FindByIdAsync(ViewData["User2Id"].ToString()).Result;
 
             ViewData["User2Id"] = user2.Id;
-            ViewData["User2Name"] = user2.Nickname;
+            ViewData["User2Name"] = user2.Email;
             ViewData["User2Email"] = user2.Email;
 
             return View("Index");
