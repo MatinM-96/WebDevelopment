@@ -182,9 +182,12 @@ function googelmarker()
 
                     console.log(userCars);
                     console.log(userMail[i]);
+                    
+                    console.log(parking[i].price);
 
                     var contentAvailable = '<form method="post">' +
                         '<div><input name="addressId" value="'+addressId+'" hidden/></div>' +
+                        '<div>Price/hour: '+ parking[i].price +' NOK</div>' + 
                         '<div><label for="parking-time">Rent until: </label>' +
                         '<input id="parking-time" name="time" type="datetime-local" required/></div>' +
                         '<div><label id="parking-car">Select car: </label>' +
