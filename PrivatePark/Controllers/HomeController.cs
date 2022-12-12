@@ -53,36 +53,11 @@ public class HomeController : Controller
         
         return View();
     }
-   
 
-
-    [HttpPost]
-    [Authorize]
-    public IActionResult Index(int addressId, string car, DateTime time)
-    {
-        Console.WriteLine("\n\n" + addressId + "\n\n");
-        
-        var address = _db.Addresses.FirstOrDefault(a => a.Id == addressId);
-        var user = _userManager.GetUserAsync(User).Result;
-
-        if (time < DateTime.Now || user == null)
-        {
-            return RedirectToAction("Error");
-        }
-
-        TimeSpan tTime = time - DateTime.Now;
-
-        var price = (long)(tTime.TotalHours * address.Price);
-
-        return RedirectToAction("CreatePayment", new {priceToPay = price, aId = addressId, t = time, cr = car});
-    }
-    
     [HttpGet]
     [Authorize]
     public IActionResult RenterHistory()
     {
-        var user = _userManager.GetUserAsync(User).Result;
-        
         return View();
     }
 
@@ -100,9 +75,24 @@ public class HomeController : Controller
 
     public AuthMessageSenderOptions Options { get; }
     
+    [HttpPost]
     [Authorize]
-    public IActionResult CreatePayment(long priceToPay, int aId, DateTime t, string cr)
+    public IActionResult CreatePayment(int addressId, string car, DateTime time)
     {
+        Console.WriteLine("\n\n" + addressId + "\n\n");
+        
+        var address = _db.Addresses.FirstOrDefault(a => a.Id == addressId);
+        var user = _userManager.GetUserAsync(User).Result;
+
+        if (time < DateTime.Now || user == null)
+        {
+            return RedirectToAction("Error");
+        }
+
+        TimeSpan totalTime = time - DateTime.Now;
+
+        var priceToPay = (long)(totalTime.TotalHours * address.Price);
+        
         StripeConfiguration.ApiKey = Options.StripeKey;
         
         var domain = "https://localhost:7034";
@@ -142,11 +132,11 @@ public class HomeController : Controller
         
         Response.Headers.Add("Location", session.Url);
 
-        TempData["addressId"] = aId;
-        string time = t.ToString("yy-MM-dd HH:mm:ss");
-        TempData["time"] = time;
+        TempData["addressId"] = addressId;
+        string endTime = time.ToString("yy-MM-dd HH:mm:ss");
+        TempData["time"] = endTime;
         TempData["pricePaid"] = (int)priceToPay;
-        TempData["car"] = cr;
+        TempData["car"] = car;
         
         return new StatusCodeResult(303);
     }
