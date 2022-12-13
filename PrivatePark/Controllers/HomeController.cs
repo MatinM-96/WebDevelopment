@@ -55,14 +55,14 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    [Authorize]
+    [Authorize(Roles = "Renter, Admin, Both")]
     public IActionResult RenterHistory()
     {
         return View();
     }
 
     [HttpGet]
-    [Authorize]
+    [Authorize(Roles = "Rentee, Admin, Both")]
     public IActionResult RenteeHistory()
     {
         return View();
