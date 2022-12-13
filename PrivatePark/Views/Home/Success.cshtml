@@ -24,14 +24,16 @@
 
       var park = _db.Parkerings.FirstOrDefault(a => a.Id == parkId);
       
-      <div>Street: @park.Address.Street</div>
-      <div>City: @park.Address.City</div>
-      <div>Zip: @park.Address.ZiptCode</div>
-      <div>Renter: @park.Renter.Firstname @park.Renter.Lastname</div>
-      <div>Rented from: @park.StartTime</div>
-      <div>Rented until: @park.EndTime</div>
-      <div>Price paid: @park.PricePaid NOK</div>
-      <div>Vehicle: @park.Car</div>
+      <div class="card-pp">
+        <div><b>Street:</b> @park.Address.Street</div>
+        <div><b>City:</b> @park.Address.City</div>
+        <div><b>Zip:</b> @park.Address.ZiptCode</div>
+        <div><b>Renter:</b> @park.Renter.Firstname @park.Renter.Lastname</div>
+        <div><b>Rented from:</b> @park.StartTime</div>
+        <div><b>Rented until:</b> @park.EndTime</div>
+        <div><b>Price paid:</b> @park.PricePaid NOK</div>
+        <div><b>Vehicle:</b> @park.Car</div>
+      </div>
     }
   </p>
   @{
@@ -39,16 +41,10 @@
     {
       @using (Html.BeginForm("Index", "Chat", FormMethod.Post))
       {
-        <div class="row">
-          <div class="col-md-6">
-            <div>Have any questions about your booked parkingspot?</div>
-            <div class="form-floating">
-              <input id="username" name="username" type="text" value="@park.Renter.Email" class="form-control" hidden/>
-              <span class="text-danger"></span>
-            </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Send a message to the renter</button>
-          </div>
-        </div> 
+        <div>Have any questions about your booked parkingspot?</div>
+        <input id="username" name="username" type="text" value="@park.Renter.Email" class="form-control" hidden/>
+        <span class="text-danger"></span>
+        <button id="update-profile-button" type="submit" class="card-button">Send a message to the renter</button>
       }
     }
   }

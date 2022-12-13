@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using mnacr22.Services
+@using Microsoft.AspNetCore.Identity
 @using Microsoft.EntityFrameworkCore
 @using mnacr22.Data
 @model IEnumerable<Parkering>
@@ -12,40 +13,35 @@
     var applicationUser = await _userManager.GetUserAsync(User);
 }
 
+<div style="margin: auto">
+    <h1><strong>Rentee history</strong></h1>
+    <h2><strong>Your parking history</strong></h2>
 
-<h1><strong>Rentee history</strong></h1>
-<h2><strong>Your parking history</strong></h2>
+    @{
+        IEnumerable<Parkering> test = _db.Parkerings.Where(x => x.Rentee == applicationUser)
+            .Include(c => c.Address).Include(e => e.Rentee)
+            .Include(f => f.Renter);
 
-@{
-    IEnumerable<Parkering> test = _db.Parkerings.Where(x => x.Rentee == applicationUser)
-        .Include(c => c.Address).Include(e => e.Rentee)
-        .Include(f => f.Renter);
-
-    foreach (var park in test)
-    {
-        <p></p>
-        <div>Street: @park.Address.Street</div>
-        <div>City: @park.Address.City</div>
-        <div>Zip: @park.Address.ZiptCode</div>
-        <div>Start time: @park.StartTime</div>
-        <div>End time: @park.EndTime</div>
-        <div>Vehicle: @park.Car</div>
-        <div>Cost: @park.PricePaid NOK</div>
-        <div>Renter: @park.Renter.Firstname @park.Renter.Lastname</div>
-                                                                 
-            @using (Html.BeginForm("Index", "Chat", FormMethod.Post))
-            {
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input id="username" name="username" type="text" value="@park.Renter.Email" class="form-control" hidden/>
-                            <span class="text-danger"></span>
-                        </div>
-                        <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Send a message to the renter</button>
-                    </div>
-                </div> 
-            }
-        <p></p>
+        foreach (var park in test)
+        {
+            <div class="card-pp">
+                <div><b>Street:</b> @park.Address.Street</div>
+                <div><b>City:</b> @park.Address.City</div>
+                <div><b>Zipcode:</b> @park.Address.ZiptCode</div>
+                <div><b>Start time:</b> @park.StartTime</div>
+                <div><b>End time:</b> @park.EndTime</div>
+                <div><b>Vehicle:</b> @park.Car</div>
+                <div><b>Cost:</b> @park.PricePaid NOK</div>
+                <div><b>Renter:</b> @park.Renter.Firstname @park.Renter.Lastname</div>
+                                                                         
+                    @using (Html.BeginForm("Index", "Chat", FormMethod.Post))
+                    {
+                        <input id="username" name="username" type="text" value="@park.Renter.Email" class="form-control" hidden/>
+                        <span class="text-danger"></span>
+                        <button id="update-profile-button" type="submit" class="card-button">Send a message to the renter</button>
+                    }
+            </div>
+        }
     }
-}
 
+</div>

@@ -13,37 +13,41 @@ html {
   min-height: 100%;
 }
 
+
 :root {
   --brown: #312509;
 }
 
 body {
-  background-color: #a3bbad;
+  background-color: #D0DCD4;
   -webkit-text-fill-color: var(--brown);
-  font-family: 'Roboto', sans-serif;
 }
 
 .m-50 {
   margin-top: 15em;
-  margin-bottom: 20em;
+  margin-bottom: 5em;
 }
 
 .search-bar {
   width: 70%;
   background: rgba(255, 255, 255, 0.2);
-  align-items: center;
   border-radius: 20px;
   border: 0;
-  padding: 10px 20px;
+  padding: 10px;
+}
+
+.search-input{
+  width: 70%;
+  background: none;
+  outline: none;
+  border: 0;
 }
 
 .buttons {
-  width: 20%;
   background: rgba(255, 255, 255, 0.6);
-  align-items: center;
   border-radius: 20px;
   border: 0;
-  padding: 10px 20px;
+  padding: 10px;
 }
 
 .dropdown-menu {
@@ -66,6 +70,10 @@ body {
   border: 0;
   padding: 10px 20px;
   margin-top: 10px;
+}
+
+.logo{
+  width: 3em;
 }
 
 /* Customize the label (the container) */
@@ -153,7 +161,78 @@ button:focus-within .dropdown {
 }
 */
 
-#map {
-  height: 450px;
-  width: 100%;
+.card-pp{
+  background: #e8ecec;
+  border-radius: 10px;
+  border: 0;
+  padding: 10px;
+  padding-left: 15px;
+  width: 300px;
+  margin: 20px;
+}
+
+.card-button{
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  border: 0;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.email-pp{
+  background: #e8ecec;
+  border-radius: 10px;
+  border: 0;
+  padding: 10px;
+  width: 350px;
+  margin: auto;
+}
+
+.account-button{
+  background: #e8ecec;
+  border-radius: 0.25rem;
+  border: 0;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.nav-item{
+  
+}
+
+.form-floating{
+  margin-bottom: 5px;
+}
+
+.login-card{
+  background: #0E3B43;
+  border-radius: 20px;
+  border: 0;
+  padding: 20px;
+  margin: auto;
+  margin-bottom: 50px;
+  display: grid;
+  width: 30em;
+}
+
+.login-logo{
+  display: grid;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 50%;
+}
+
+.login-field{
+  -webkit-text-fill-color: #312509;
+  background-color: #A3BBAD;
+}
+
+.login-button{
+  background: #357266;
+  font-weight: bold;
+  font-size: 2rem;
+  border-radius: 0.25rem;
+  border: 0;
+  padding: 10px;
 }

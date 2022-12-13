@@ -5,16 +5,12 @@
 
 @using (Html.BeginForm("Index", "Chat", FormMethod.Post))
 {
-    <div class="row">
-        <div class="col-md-6">
-            <div>Enter email of user to start a chat with:</div>
-            <div class="form-floating">
-                <input id="username" name="username" type="text" class="form-control"/>
-                <span class="text-danger"></span>
-            </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Start chat</button>
-        </div>
-    </div> 
+    <div class="email-pp">
+        <b>Enter email of user to start a chat with:</b>
+            <input id="username" name="username" type="text" class="form-control"/>
+            <span class="text-danger"></span>
+        <button id="update-profile-button" type="submit" class="card-button">Start chat</button>
+    </div>
 }
 
 @{
