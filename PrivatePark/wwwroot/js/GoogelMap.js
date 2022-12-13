@@ -153,10 +153,16 @@ function googelmarker()
             $.get("/info/GetAllcarForEachUser", function (car) {
                 var cars = JSON.parse(car);
 
-                for (var k = 0; k < cars.length; k++) {
-                    userCars += '<option>'+ cars[k].RegistrationNumber +'</option>';
-                    console.log(cars[k].RegistrationNumber);
+                if (cars.length === 0) {
+                    userCars = '<option disabled>No cars available</option>'
                 }
+                else {
+                    for (var k = 0; k < cars.length; k++) {
+                        userCars += '<option>'+ cars[k].RegistrationNumber +'</option>';
+                        console.log(cars[k].RegistrationNumber);
+                    }
+                }
+                
                 console.log(userCars);
 
                 for(var i = 0; i < parking.length; i++)
