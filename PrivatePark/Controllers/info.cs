@@ -39,7 +39,6 @@ public class Info : Controller
     
     
     
-    [Authorize]
     public string GetAllcarForEachUser()
     {
         

@@ -184,22 +184,24 @@ function googelmarker()
                     console.log(userMail[i]);
                     console.log(parking[i].price);
                     
-                    var contentAvailable = '<form method="post" action="/Home/CreatePayment">' +
-                        '<div><input name="addressId" value="'+addressId+'" hidden/></div>' +
-                        '<div>Price/hour: '+ parking[i].price +' NOK</div>' + 
-                        '<div><label for="parking-time">Rent until: </label>' +
-                        '<input id="parking-time" name="time" type="datetime-local" required/></div>' +
-                        '<div><label id="parking-car">Select car: </label>' +
-                        '<select id="parking-car" name="car" required>' +
-                        '<option selected disabled hidden></option>' +
-                        userCars +
-                        '</select></div>' +
-                        '<div><input id="'+buttonId+'" type="submit" value="Click to rent!"/></div>' +
-                        '</form>' +
-                        '<form action="/Chat/Index" method="post">' +
-                        '<div><input name="username" value="'+userMail[i]+'" hidden/></div>' +
-                        '<div><input type="submit" value="Message renter"/></div>' +
-                        '</form>';
+                    var contentAvailable = 
+                            '<form method="post" action="/Home/CreatePayment">' +
+                                '<div><input name="addressId" value="'+addressId+'" hidden/></div>' +
+                                '<div class=""><b>Price/hour: </b>'+
+                                '<b class="price-pp rounded">'+ parking[i].price +' NOK</b></div>' +
+                                '<div><label for="parking-time"><b>Rent until: </b></label>' +
+                                '<input class="m-2" id="parking-time" name="time" type="datetime-local" required/></div>' +
+                                '<div><label id="parking-car"><b>Select car: </b></label>' +
+                                '<select class="m-2" id="parking-car" name="car" required>' +
+                                '<option selected disabled hidden></option>' +
+                                userCars +
+                                '</select></div>' +
+                                '<div><input class="map-button-pp" id="'+buttonId+'" type="submit" value="Click to rent!"/></div>' +
+                            '</form>' +
+                            '<form action="/Chat/Index" method="post">' +
+                                '<div><input name="username" value="'+userMail[i]+'" hidden/></div>' +
+                                '<div><input class="map-button-pp" style="background-color: #0E3B43" type="submit" value="Message renter"/></div>' +
+                            '</form>'
 
                     console.log(contentAvailable);
 

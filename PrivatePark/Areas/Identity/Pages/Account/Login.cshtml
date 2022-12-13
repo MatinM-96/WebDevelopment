@@ -11,7 +11,7 @@
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
-                <input asp-for="Input.Email" class="form-control login-field" autocomplete="username" aria-required="true" />
+                <input asp-for="Input.Email" class="form-control login-field" id="" autocomplete="username" aria-required="true" />
                 <label asp-for="Input.Email" class="form-label login-field"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
@@ -22,7 +22,7 @@
             </div>
             <div>
                 <div class="checkbox m-2">
-                    <label asp-for="Input.RememberMe" class="form-label" style="-webkit-text-fill-color: #A3BBAD">
+                    <label asp-for="Input.RememberMe" class="form-label" style="-webkit-text-fill-color: #D0DCD4">
                         <input class="form-check-input" asp-for="Input.RememberMe" />
                         @Html.DisplayNameFor(m => m.Input.RememberMe)
                     </label>
@@ -31,13 +31,13 @@
             <div>
                 <button id="login-submit" type="submit" class="w-100 login-button">Login</button>
             </div>
-            <div class="row m-2">
+            <div class="row mt-2">
                 <div class="col-sm">
-                    <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                    <a style="-webkit-text-fill-color: #D0DCD4" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
                 </div>
 
                 <div class="col-sm">
-                    <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                    <a style="-webkit-text-fill-color: #D0DCD4" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
                 </div>
             </div>
         </form>
@@ -55,7 +55,6 @@
                         about setting up this ASP.NET application to support logging in via external services</a>.
                     </p>
                 </div>
-<<<<<<< HEAD
             }
             else
             {
@@ -73,11 +72,6 @@
         }
     </section>
     -->
-=======
-            </form>
-        </section>
-    </div>
->>>>>>> 2e1667784a30e9692aa22f18feac1fbdc94c9ad7
 </div>
 
 @section Scripts {

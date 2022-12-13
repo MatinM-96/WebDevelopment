@@ -14,13 +14,9 @@ html {
 }
 
 
-:root {
-  --brown: #312509;
-}
-
 body {
   background-color: #D0DCD4;
-  -webkit-text-fill-color: var(--brown);
+  -webkit-text-fill-color: #312509;
 }
 
 .m-50 {
@@ -165,8 +161,7 @@ button:focus-within .dropdown {
   background: #e8ecec;
   border-radius: 10px;
   border: 0;
-  padding: 10px;
-  padding-left: 15px;
+  padding: 15px;
   width: 300px;
   margin: 20px;
 }
@@ -176,7 +171,9 @@ button:focus-within .dropdown {
   border-radius: 20px;
   border: 0;
   margin-top: 10px;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
 }
 
 .email-pp{
@@ -208,7 +205,7 @@ button:focus-within .dropdown {
   background: #0E3B43;
   border-radius: 20px;
   border: 0;
-  padding: 20px;
+  padding: 2rem;
   margin: auto;
   margin-bottom: 50px;
   display: grid;
@@ -225,14 +222,27 @@ button:focus-within .dropdown {
 
 .login-field{
   -webkit-text-fill-color: #312509;
-  background-color: #A3BBAD;
+  color: #D0DCD4;
 }
 
 .login-button{
+  -webkit-text-fill-color: #D0DCD4;
   background: #357266;
   font-weight: bold;
   font-size: 2rem;
   border-radius: 0.25rem;
   border: 0;
   padding: 10px;
+}
+
+.text-danger{
+  -webkit-text-fill-color: #D0DCD4;
+}
+
+.bg-0E3B43{
+  background-color: #0E3B43;
+}
+
+.text-dark{
+  -webkit-text-fill-color: #D0DCD4;
 }

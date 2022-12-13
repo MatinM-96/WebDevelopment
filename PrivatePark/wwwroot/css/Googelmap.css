@@ -22,3 +22,28 @@
     height: 100%;
     position: absolute;
 }
+
+.map-card{
+    border-radius: 10px;
+    border: 0;
+    padding: 5px;
+}
+
+.map-button-pp{
+    background-color: #357266;
+    -webkit-text-fill-color: #D0DCD4;
+    border-radius: 0.25rem;
+    border: 0;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.price-pp{
+    background-color: #357266;
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+    -webkit-text-fill-color: #D0DCD4;
+    
+}
