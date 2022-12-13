@@ -30,37 +30,50 @@ public class ApplicationDbInitializer
         {
             new ApplicationUser
             {
-                Firstname = "Test",
-                Lastname = "User",
+                Firstname = "Anders",
+                Lastname = "Johansen",
                 UserName = "user@uia.no",
                 Email = "user@uia.no",
                 EmailConfirmed = true,
-                DateOfBirth = new DateTime(1996, 08, 12)
+                DateOfBirth = new DateTime(1999, 10, 28)
             }
         };
 
         var user2 = new ApplicationUser()
         {
-            Firstname = "Test2",
-            Lastname = "User2",
+            Firstname = "Johan",
+            Lastname = "Andersen",
             UserName = "user2@uia.no",
             Email = "user2@uia.no",
             EmailConfirmed = true,
             DateOfBirth = new DateTime(1996, 08, 12)
-        };       
+        };  
+        
+        var user3 = new ApplicationUser()
+        {
+            Firstname = "Nils",
+            Lastname = "Persen",
+            UserName = "user3@uia.no",
+            Email = "user3@uia.no",
+            EmailConfirmed = true,
+            DateOfBirth = new DateTime(1996, 08, 12)
+        }; 
         
         um.CreateAsync(user[0], "Password1.").Wait();
         await um.AddToRoleAsync(user[0], "Both");
         
         um.CreateAsync(user2, "Password1.").Wait();
         await um.AddToRoleAsync(user2, "Both");
+        
+        um.CreateAsync(user3, "Password1.").Wait();
+        await um.AddToRoleAsync(user3, "Both");
 
 
         // Admin
         var admin = new ApplicationUser()
         {
-            Firstname = "Admin",
-            Lastname = "Admin",
+            Firstname = "Per",
+            Lastname = "Nilsen",
             UserName = "admin@uia.no",
             Email = "admin@uia.no",
             EmailConfirmed = true,
@@ -74,7 +87,7 @@ public class ApplicationDbInitializer
         //city  
         string city = "Grimstad";
         const string zicode = "4879";
-        string street = "jon lilletuns vei 2A";
+        string street = "Jon Lilletuns vei 2A";
         float price = 20;
 
 
@@ -91,9 +104,9 @@ public class ApplicationDbInitializer
 
         var address = new[]
         {
-            new Address(street, city, zicode, price, false, "Car", 1),
-            new Address(street2,city2,zicode2, price2, true, "Motorcycle", 0),
-            new Address(street3,city3,zicode3, price3, true, "Motorcycle", 2)
+            new Address(street, city, zicode, price, true, "Car", 1),
+            new Address(street2,city2,zicode2, price2, true, "Motorcycle", 1),
+            new Address(street3,city3,zicode3, price3, true, "Motorcycle", 1)
         };
         await db.Addresses.AddRangeAsync(address);
 
@@ -175,19 +188,19 @@ public class ApplicationDbInitializer
        {
 
            new Car("AJ57220", "Car", user[0]),
-           new Car("AJ57221", "motorcyscl", admin),
-           new Car("AJ57222", "vareBil", user[0]),
-           new Car("AJ57223", "Lastebil", user[0]),
+           new Car("AJ57221", "Motorcycle", admin),
+           new Car("AJ57222", "Car", user[0]),
+           new Car("AJ57223", "Van", user[0]),
 
            new Car("AJ57220", "Car", admin),
            new Car("EL1234", "Car", user2)
 
        };
        await db.Cars.AddRangeAsync(car);
-
+       
        var park = new Parkering
        {
-           StartTime = DateTime.Now,
+           StartTime = DateTime.Now.AddHours(-2),
            Address = address[0],
            Renter = user[0],
            Rentee = admin,
@@ -200,10 +213,10 @@ public class ApplicationDbInitializer
        
        var park2 = new Parkering
        {
-           StartTime = DateTime.Now,
+           StartTime = DateTime.Now.AddHours(-2),
            Address = address[1],
            Renter = user[0],
-           Rentee = admin,
+           Rentee = user2,
            Car = car[0].RegistrationNumber,
            EndTime = DateTime.Now,
            TotalTime = DateTime.Now - DateTime.Now,
@@ -213,10 +226,10 @@ public class ApplicationDbInitializer
        
        var park3 = new Parkering
        {
-           StartTime = DateTime.Now,
+           StartTime = DateTime.Now.AddHours(-2),
            Address = address[0],
            Renter = admin,
-           Rentee = user[0],
+           Rentee = user3,
            Car = car[0].RegistrationNumber,
            EndTime = DateTime.Now,
            TotalTime = DateTime.Now - DateTime.Now,
@@ -226,7 +239,7 @@ public class ApplicationDbInitializer
        
        var park4 = new Parkering
        {
-           StartTime = DateTime.Now,
+           StartTime = DateTime.Now.AddHours(-2),
            Address = address[2],
            Renter = user2,
            Rentee = user[0],
