@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Mvc.RazorPages
 @model AddAddress
 @{
-    ViewData["Title"] = "Add a address";
+    ViewData["Title"] = "Add an address";
     ViewData["ActivePage"] = ManageNavPages.AddAddress;
 }
 
@@ -57,12 +57,13 @@
                 <span asp-validation-for="Input.Active" class="text-danger"></span>
             </div>
             <div class="file-upload-pp">
-                <label for="fileupload">Confirm ownership of parkingspot by uploading pdf:</label>
+                <label class="mb-2">Confirm ownership of parkingspot by uploading pdf:</label>
+                <label class="file-upload-btn" for="fileupload">Browse local files</label>
                 <br/>
-                <input class="buttons" type="file" name="fileupload" value="fileupload" id="fileupload">
+                <input class="file-upload-pp-input" type="file" name="fileupload" value="fileupload" id="fileupload">
             </div>
             
-            <button id="update-profile-button" type="submit" class="w-100 login-button">Save</button>
+            <button id="update-profile-button" type="submit" class="w-100 account-button">Save</button>
         </form>
     </div>
 </div> 

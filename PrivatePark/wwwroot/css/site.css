@@ -21,7 +21,7 @@ body {
 
 .m-50 {
   margin-top: 10em;
-  margin-bottom: 10em;
+  margin-bottom: 5em;
 }
 
 .search-bar {
@@ -162,9 +162,18 @@ button:focus-within .dropdown {
   visibility: visible;
 }
 */
+.card-l-pp{
+  background: #e8ecec;
+  border-radius: 10px;
+  border: 0;
+  padding: 15px;
+  width: 500px;
+  margin: 20px;
+}
 
 .card-pp{
   background: #e8ecec;
+  -webkit-text-fill-color: #312509;
   border-radius: 10px;
   border: 0;
   padding: 15px;
@@ -203,9 +212,10 @@ button:focus-within .dropdown {
 }
 
 .button-delete{
-  background: #810909;
+  background: #a32929;
   -webkit-text-fill-color: #D0DCD4;
   font-size: 1rem;
+  font-weight: bold;
 
   border-radius: 0.25rem;
   border: 0;
@@ -278,8 +288,52 @@ button:focus-within .dropdown {
   border-radius: 0.25rem;
   border: 0;
   padding: 10px;
+  margin-bottom: 0.5em;
+}
+
+.file-upload-btn{
+  background-color: #312509;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.file-upload-pp-input{
+  opacity: 0;
+  position: absolute;
 }
 
 .bg-gainsboro{
   background-color: #D0DCD4;
+}
+
+.last-card{
+  -webkit-text-fill-color: #D0DCD4;
+  background: #0E3B43;
+  border-radius: 0.25rem;
+  border: 0;
+  padding: 2rem;
+  margin: auto;
+  display: grid;
+  width: 40%;
+}
+
+.card-pp-gr{
+  background: #357266;
+  -webkit-text-fill-color: #D0DCD4;
+  border-radius: 10px;
+  border: 0;
+  padding: 15px;
+  width: auto;
+  margin: auto;
+}
+
+.login-button-gr{
+  -webkit-text-fill-color: #D0DCD4;
+  background: #0E3B43;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  border: 0;
+  padding: 10px;
+  margin: auto;
 }

@@ -6,8 +6,10 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @{
-    ViewData["Title"] = "Manage your address";
+    ViewData["Title"] = "Manage your addresses";
     ViewData["ActivePage"] = ManageNavPages.YourAddresses;
+
+    int counter = 1;
 }
 
 <h3>@ViewData["Title"]</h3>
@@ -16,11 +18,11 @@
 @foreach (var user in Model.DisplayAddresses)
 {
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 card-l-pp">
             <form id="edit-Address-form" method="post">
                 <div class="row">
                     <div style="display: flex; align-items: center;">
-                        <h3 style="font-weight: bold; flex: 1">Address</h3>
+                        <h3 style="font-weight: bold; flex: 1">Address @counter</h3>
                         <input id="delete-profile-button" type="submit" class="button-delete" name="buttonType" value="Delete"/>
                     </div>
                 </div>
@@ -75,9 +77,9 @@
                 {
                     <input id="activate-as-parkingspot" type="submit" class="w-100 account-button" name="buttonType" value="Deactivate"/>
                 }
-
             </form>
-            <div><p></p></div>
         </div>
     </div>
+    
+    counter++;
 }
