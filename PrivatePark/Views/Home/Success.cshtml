@@ -33,21 +33,19 @@
         <div><b>Rented until:</b> @park.EndTime</div>
         <div><b>Price paid:</b> @park.PricePaid NOK</div>
         <div><b>Vehicle:</b> @park.Car</div>
+        @if (park.Renter != park.Rentee)
+        {
+          @using (Html.BeginForm("Index", "Chat", FormMethod.Post))
+          {
+            <div>Questions about the parkingspot?</div>
+            <input id="username" name="username" type="text" value="@park.Renter.Email" class="form-control" hidden/>
+            <span class="text-danger"></span>
+            <button id="update-profile-button" type="submit" class="card-button">Send a message to the renter</button>
+          }
+        }
       </div>
     }
   </p>
-  @{
-    if (park.Renter != park.Rentee)
-    {
-      @using (Html.BeginForm("Index", "Chat", FormMethod.Post))
-      {
-        <div>Have any questions about your booked parkingspot?</div>
-        <input id="username" name="username" type="text" value="@park.Renter.Email" class="form-control" hidden/>
-        <span class="text-danger"></span>
-        <button id="update-profile-button" type="submit" class="card-button">Send a message to the renter</button>
-      }
-    }
-  }
 </section>
 </body>
 </html>
