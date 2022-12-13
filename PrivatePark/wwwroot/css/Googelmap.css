@@ -1,5 +1,5 @@
 ﻿#map {
-    height: 400px;
+    height: 500px;
 }
 
 #search-box {
@@ -24,7 +24,7 @@
 }
 
 .map-card{
-    border-radius: 10px;
+    border-radius: 0.25em;
     border: 0;
     padding: 5px;
 }
@@ -34,6 +34,7 @@
     -webkit-text-fill-color: #D0DCD4;
     border-radius: 0.25rem;
     border: 0;
+    margin: auto;
     margin-top: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -45,5 +46,9 @@
     padding-right: 0.5em;
     padding-left: 0.5em;
     -webkit-text-fill-color: #D0DCD4;
-    
+}
+
+.map-select{
+    border-radius: 0.25em;
+    border: 1;
 }

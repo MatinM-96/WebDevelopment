@@ -56,12 +56,13 @@
                 <label asp-for="Input.Active"></label>
                 <span asp-validation-for="Input.Active" class="text-danger"></span>
             </div>
-            <div>
+            <div class="file-upload-pp">
                 <label for="fileupload">Confirm ownership of parkingspot by uploading pdf:</label>
-                <input type="file" name="fileupload" value="fileupload" id="fileupload">
+                <br/>
+                <input class="buttons" type="file" name="fileupload" value="fileupload" id="fileupload">
             </div>
             
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+            <button id="update-profile-button" type="submit" class="w-100 login-button">Save</button>
         </form>
     </div>
 </div> 

@@ -15,44 +15,46 @@
 <div class="container m-50">
     <div class="row">
         <div class="col-sm-4 mb-3">
-            <div class="m-lg-2">
+            <div class="mt-5">
                 <h1 class="display-4">PrivatePark<img style="width: 2em; padding-left: 0.2em" src="~/Icons/logo_dark.svg" alt="Logo"/></h1>
-                <h5>We help you find the closest parking</h5>
+                <h5 class="mb-4">We help you find the closest parking</h5>
                 
                 <div>
-                    <div class="search-bar mb-lg-1">
+                    <div class="search-bar">
                         <input class="search-input" id="sok" type="text" name="sok" placeholder="Address, Place or City">
-                        <button class="buttons logo" id="sokbutton" type="submit"><img src="Icons/search.svg"/></button>
+                        <button class="buttons logo" id="sokbutton" type="submit"><img src="~/Icons/search.svg"/></button>
+
+                        <input class="buttons dropdown dropdown-toggle logo" type="image" data-bs-toggle="dropdown" src="~/Icons/filter.svg"/>
+                        <ul class="dropdown-menu prevent-select" id="myDropdown">
+                            <li class="dropdown-item">
+                                <input type="checkbox" value="Availability" class="filter" id="available">
+                                <label for="filter1">Available</label>
+                            </li>
+                            <li class="dropdown-item">
+                                <input type="checkbox" value="Handicap" class="filter" id="handicap">
+                                <label for="filter2">Handicap</label>
+                            </li>
+                            <li class="dropdown-item">
+                                <input type="checkbox" value="El-Car" class="filter" id="el-car">
+                                <label for="filter3">El-Car</label>
+                            </li>
+                            <li class="dropdown-item">
+                                <input type="checkbox" value="Garage" class="filter" id="garage">
+                                <label for="filter4">Garage</label>
+                            </li>
+                            <li>
+                                <label class="CheckboxContainer">ASRock
+                                    <input type="checkbox" class="HiddenCheckbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                        </ul>
+                        <input type="submit" id ="currentposition" value="Current Location">
                     </div>
-                    <input class="buttons dropdown dropdown-toggle logo" type="image" data-bs-toggle="dropdown" src="Icons/filter.svg"/>
-                    <ul class="dropdown-menu prevent-select" id="myDropdown">
-                        <li class="dropdown-item">
-                            <input type="checkbox" value="Availability" class="filter" id="available">
-                            <label for="filter1">Available</label>
-                        </li>
-                        <li class="dropdown-item">
-                            <input type="checkbox" value="Handicap" class="filter" id="handicap">
-                            <label for="filter2">Handicap</label>
-                        </li>
-                        <li class="dropdown-item">
-                            <input type="checkbox" value="El-Car" class="filter" id="el-car">
-                            <label for="filter3">El-Car</label>
-                        </li>
-                        <li class="dropdown-item">
-                            <input type="checkbox" value="Garage" class="filter" id="garage">
-                            <label for="filter4">Garage</label>
-                        </li>
-                        <li>
-                            <label class="CheckboxContainer">ASRock
-                                <input type="checkbox" class="HiddenCheckbox">
-                                <span class="checkmark"></span>
-                            </label>
-                        </li>
-                    </ul>
-                    <input type="submit" id ="currentposition" value="Current Location">
                 </div>
             </div>
         </div>
+        
         <div class="col-sm-8">
             <div class="rounded" id="map"></div>
             <script type="text/javascript"

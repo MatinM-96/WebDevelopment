@@ -15,8 +15,15 @@
 @foreach (var user in Model.DisplayCars)
 {
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 card-pp">
             <form id="edit-car-form" method="post">
+                <div class="row">
+                    <div style="display: flex; align-items: center;">
+                        <h3 style="font-weight: bold; flex: 1">Vehicle</h3>
+                        <input id="delete-profile-button" type="submit" class="button-delete" name="buttonType" value="Delete"/>
+                    </div>
+                </div>
+
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div><input type="hidden" value="@user.Id" asp-for="Input.Id"/></div>
                 <div class="form-floating">
@@ -24,12 +31,11 @@
                     <label asp-for="Input.RegistrationNumber" class="form-label" readonly></label>
                     <span asp-validation-for="Input.RegistrationNumber" class="text-danger" readonly></span>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating br-eagle">
                     <input asp-for="Input.CarType" class="form-control" value="@user.CarType" readonly/>
                     <label asp-for="Input.CarType" class="form-label" readonly></label>
                     <span asp-validation-for="Input.CarType" class="text-danger" readonly></span>
                 </div>
-                <input id="delete-profile-button" type="submit" class="btn-danger" name="buttonType" value="Delete"/>
             </form>
             <div><p></p></div>
         </div>

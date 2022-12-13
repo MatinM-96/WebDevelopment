@@ -153,16 +153,10 @@ function googelmarker()
             $.get("/info/GetAllcarForEachUser", function (car) {
                 var cars = JSON.parse(car);
 
-                if (cars.length === 0) {
-                    userCars = '<option disabled>No cars available</option>'
+                for (var k = 0; k < cars.length; k++) {
+                    userCars += '<option>'+ cars[k].RegistrationNumber +'</option>';
+                    console.log(cars[k].RegistrationNumber);
                 }
-                else {
-                    for (var k = 0; k < cars.length; k++) {
-                        userCars += '<option>'+ cars[k].RegistrationNumber +'</option>';
-                        console.log(cars[k].RegistrationNumber);
-                    }
-                }
-                
                 console.log(userCars);
 
                 for(var i = 0; i < parking.length; i++)
@@ -191,14 +185,15 @@ function googelmarker()
                     console.log(parking[i].price);
                     
                     var contentAvailable = 
+                        '<div class="map-card">'+
                             '<form method="post" action="/Home/CreatePayment">' +
                                 '<div><input name="addressId" value="'+addressId+'" hidden/></div>' +
                                 '<div class=""><b>Price/hour: </b>'+
                                 '<b class="price-pp rounded">'+ parking[i].price +' NOK</b></div>' +
                                 '<div><label for="parking-time"><b>Rent until: </b></label>' +
-                                '<input class="m-2" id="parking-time" name="time" type="datetime-local" required/></div>' +
+                                '<input class="m-2 mt-3" id="parking-time" name="time" type="datetime-local" required/></div>' +
                                 '<div><label id="parking-car"><b>Select car: </b></label>' +
-                                '<select class="m-2" id="parking-car" name="car" required>' +
+                                '<select class="map-select m-2" id="parking-car" name="car" required>' +
                                 '<option selected disabled hidden></option>' +
                                 userCars +
                                 '</select></div>' +
@@ -208,14 +203,16 @@ function googelmarker()
                                 '<div><input name="username" value="'+userMail[i]+'" hidden/></div>' +
                                 '<div><input class="map-button-pp" style="background-color: #0E3B43" type="submit" value="Message renter"/></div>' +
                             '</form>'
+                        '</div>';
 
                     console.log(contentAvailable);
 
-                    var contentOccupied = '<p>Spot currently unavailable</p>' +
+                    var contentOccupied = 
+                    '<div class="map-card"><i>Spot currently unavailable</i></div>' +
                     '</form>' +
                     '<form action="/Chat/Index" method="post">' +
                     '<div><input name="username" value="'+userMail[i]+'" hidden/></div>' +
-                    '<div><input type="submit" value="Message renter"/></div>' +
+                    '<div><input class="map-button-pp" style="background-color: #0E3B43" type="submit" value="Message renter"/></div>' +
                     '</form>';
 
                     var infowindow = new google.maps.InfoWindow();
